@@ -5,6 +5,83 @@
 
 `dir(dict)`  
 
+### Python 相关  
+
+
+#### 装饰器  
+
+`__call__` 方法在可调用对象加括号的时候调用。  
+
+实例加括号会调用类的 `__call__` 方法，类加括号会调用元类的 `__call__` 方法。  
+
+
+```python
+from functools import wraps
+
+def arg_dec(ts=None):
+    s = ts
+    print(f'arg_dec:{s}')
+    def outer(func):
+        print(f'outer:{s}')
+        @wraps(func)
+        def inner(*args,**kwargs):
+            print(f'inner:{s}')
+            print(f'inner:{args}\t{kwargs}')
+            return func(*args,**kwargs)
+        print(f'inner finish:{s}')
+        return inner
+    print(f'outer finish:{s}')
+    return outer
+
+
+@arg_dec(45)
+def add(a,b):
+    return a+b
+```
+
+
+```python 
+from functools import wraps
+
+def arg_dec(ts=None):
+    print('arg_dec:{}'.format(ts))
+    def outer(func):
+        print('outer:{}'.format(ts))
+        @wraps(func)
+        def inner(*args,**kwargs):
+            print('inner:{}'.format(ts))
+            print('inner:{args}\t{kwargs}'.format(ts))
+            return func(*args,**kwargs)
+        print('inner finish:{}'.format(ts))
+        return inner
+    print('outer finish:{}'.format(ts))
+    return outer
+
+
+@arg_dec(45)
+def add(a,b):
+    return a+b
+```
+
+```python 
+def arg_dec():
+    def outer(func):
+        def inner(*args,**kwargs):
+            return func(*args,**kwargs)
+        return inner
+    return outer
+
+
+@arg_dec()
+def add(a,b):
+    return a+b
+```
+
+
+```python 
+```
+
+### 非 Python  
 
 #### 格式转换  
 
