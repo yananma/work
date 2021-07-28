@@ -5,8 +5,8 @@
 
 `dir(dict)`  
 
-### Python 相关  
 
+### Python 相关  
 
 #### 装饰器  
 
@@ -35,44 +35,6 @@ def arg_dec(ts=None):
 
 
 @arg_dec(45)
-def add(a,b):
-    return a+b
-```
-
-
-```python 
-from functools import wraps
-
-def arg_dec(ts=None):
-    print('arg_dec:{}'.format(ts))
-    def outer(func):
-        print('outer:{}'.format(ts))
-        @wraps(func)
-        def inner(*args,**kwargs):
-            print('inner:{}'.format(ts))
-            print('inner:{args}\t{kwargs}'.format(ts))
-            return func(*args,**kwargs)
-        print('inner finish:{}'.format(ts))
-        return inner
-    print('outer finish:{}'.format(ts))
-    return outer
-
-
-@arg_dec(45)
-def add(a,b):
-    return a+b
-```
-
-```python 
-def arg_dec():
-    def outer(func):
-        def inner(*args,**kwargs):
-            return func(*args,**kwargs)
-        return inner
-    return outer
-
-
-@arg_dec()
 def add(a,b):
     return a+b
 ```
