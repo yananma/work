@@ -10,4 +10,8 @@ from django.db.models import F, Q, Value, CharField
 Value(')'), output_field=CharField()))   # output_field 为必填字段  
 ```
 
-
+最后显示效果  
+```json
+"budget": "45.423 (2021)",
+"five_years_budget": "237.75 (2021-2025)",
+```
