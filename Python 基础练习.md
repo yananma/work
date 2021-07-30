@@ -1,5 +1,65 @@
 
-5、  
+6、题目：将一个列表的数据复制到另一个列表中。
+
+方法 1：  
+```python 
+l1 = [1, 2, 3]
+l2 = l1[:]
+print(id(l1))
+print(id(l2))
+```
+
+方法 2:
+```python 
+import copy
+
+l1 = [1, 2, 3]
+l2 = copy.copy(l1)
+```
+
+方法 3：  
+```python 
+l1 = [1, 2, 3]
+l2 = []
+for i in range(len(l1)):
+    l2.append(l1[i])
+```
+
+方法 4：  
+```python 
+l1 = [1, 2, 3]
+l2 = [i for i in l1] 
+```
+
+方法 5：  
+```python 
+l1 = [1, 2, 3]
+l2 = []
+l2.extend(l1)
+```
+
+方法 6：  
+```python 
+l1 = [1, 2, 3]
+l2 = l1 * 1
+```
+
+
+5、题目：斐波那契数列。
+
+```python
+class Solution:
+    def fibonacci(self, n):
+        if n == 0 or n == 1:
+            return n
+        fib0, fib1 = 0, 1
+        for i in range(n - 1):
+            fib0, fib1 = fib1, fib0 + fib1
+        return fib1
+
+solution = Solution()
+print(solution.fibonacci(3))
+```
 
 
 4、题目：输入三个整数 x,y,z，请把这三个数由小到大输出。
