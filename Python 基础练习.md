@@ -2,8 +2,9 @@
 #### 7、题目：输出 9 * 9 乘法口诀表。
 ```python 
 for i in range(10):
+    print(i)
     for j in range(1, i + 1):
-        print(f'\t{j}*{i}={i*j}', end=' ')
+        print(f'{j}x{i}={i*j}', end='\t')
     print()
 ```
 
