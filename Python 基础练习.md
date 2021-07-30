@@ -1,4 +1,14 @@
 
+#### 8、题目：暂停一秒输出，并格式化当前时间。 
+```python 
+import time, datetime
+
+time.sleep(1)
+TIME = datetime.datetime.now()
+print(TIME.strftime('%Y.%m.%d %H:%M:%S'))    # strftime：string format time
+```
+
+
 #### 7、题目：输出 9 * 9 乘法口诀表。
 ```python 
 for i in range(10):
