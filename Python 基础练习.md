@@ -1,5 +1,34 @@
 
+11、 题目：将一个正整数分解质因数。例如：输入90,打印出90=2*3*3*5。
 
+```python 
+# 质因数一定是在 2 到 sqrt(n) 之间的数字，先限定范围 2 到 (m + 1)
+# 遇到余 i 等于 0 的数字，说明 i 是 n 的质因数
+# 用 n 除以 i 得到商
+# 把商当做新的 n，重复上面的步骤
+# 如果没有了余 i 等于 0 的数字，就保存商，结束循环
+
+from math import sqrt
+
+n = int(input('请输入一个数字：'))
+k = n
+l = []
+while True:
+    m = int(sqrt(n))
+    flag = False  # 是否有被整除的数
+    for i in range(2, m + 1):
+        if n % i == 0:
+            flag = True
+            n = n / i
+            l.append(i)
+            break
+    if flag == False:
+        l.append(int(n))
+        break
+print(l)
+
+print(f"{k}={('*'.join('{}' for _ in range(len(l)))).format(*l)}")
+```
 
 
 #### 10、 题目：打印出所有的"水仙花数"，所谓"水仙花数"是指一个三位数，其各位数字立方和等于该数本身。例如：153是一个"水仙花数"，因为153=1的三次方＋5的三次方＋3的三次方。
