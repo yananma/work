@@ -1,5 +1,40 @@
 
+
+
+
+#### 10、 题目：打印出所有的"水仙花数"，所谓"水仙花数"是指一个三位数，其各位数字立方和等于该数本身。例如：153是一个"水仙花数"，因为153=1的三次方＋5的三次方＋3的三次方。
+
+```python 
+for n in range(100, 1000):
+    i = n // 100  # 百位 
+    j = n // 10 % 10  # 十位
+    k = n % 10  # 个位
+    if n == i ** 3 + j ** 3 + k ** 3:
+        print(n)
+```
+
+
+#### 9、题目：判断101-200之间有多少个素数，并输出所有素数。
+
+```python 
+from math import sqrt
+
+l = []
+for i in range(101, 200):
+    m = int(sqrt(i))  
+    for j in range(2, m + 1):    # 这里加 1 是因为 int 有向下取整的功能  
+        if i % j == 0:
+            break
+    else:
+        l.append(i)
+
+print(l)
+print(len(l))
+```
+
+
 #### 8、题目：暂停一秒输出，并格式化当前时间。 
+
 ```python 
 import time, datetime
 
@@ -10,6 +45,7 @@ print(TIME.strftime('%Y.%m.%d %H:%M:%S'))    # strftime：string format time
 
 
 #### 7、题目：输出 9 * 9 乘法口诀表。
+
 ```python 
 for i in range(10):
     print(i)
@@ -98,11 +134,11 @@ while True:
 #### 3、题目：一个整数，它加上 100 后是一个完全平方数，再加上 168 又是一个完全平方数，请问该数是多少？
 
 ```python 
-from math import sqrt, floor
+from math import sqrt
 
 x = 0
 while True:
-    if floor(sqrt(x + 100)) == sqrt(x + 100) and floor(sqrt(x + 268)) == sqrt(x + 268):
+    if int(sqrt(x + 100)) == sqrt(x + 100) and int(sqrt(x + 268)) == sqrt(x + 268):    # int 有向下取整的功能  
         print(x)
         break
     else:
