@@ -1,5 +1,25 @@
 
-11、 题目：将一个正整数分解质因数。例如：输入90,打印出90=2*3*3*5。
+#### 12、 题目：输入一行字符，分别统计出其中英文字母、空格、数字和其它字符的个数。
+
+```python 
+import re
+
+s = input('请输入一串字符：')
+letter, space, number, other = 0, 0, 0, 0
+for char in s:
+    if bool(re.match(r'[1-9]', char)):
+        number += 1
+    elif bool(re.match('\w', char)):
+        letter += 1
+    elif bool(re.match(' ', char)):
+        space += 1
+    else:
+        other += 1
+print(f'中英文字母{letter}个', f'空格{space}个', f'数字{number}个', f'其他字符{other}个')
+```
+
+
+#### 11、 题目：将一个正整数分解质因数。例如：输入 90,打印出 90=2\*3\*3*5。
 
 ```python 
 # 质因数一定是在 2 到 sqrt(n) 之间的数字，先限定范围 2 到 (m + 1)
