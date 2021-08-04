@@ -1,4 +1,21 @@
 
+#### 13、题目：求 s=a+aa+aaa+aaaa+aa...a 的值，其中 a 是一个数字。例如 2+22+222+2222+22222 (此时共有 5 个数相加)，几个数相加由键盘控制。  
+
+```python
+k = int(input('请输入个数：'))
+a = int(input('请输入数字：'))
+
+n = 0
+m = 0
+for i in range(k):
+    m += 10 ** i * a
+    print(m)
+    n += m
+
+print(f'和为{n}')
+```
+
+
 #### 12、 题目：输入一行字符，分别统计出其中英文字母、空格、数字和其它字符的个数。
 
 ```python 
@@ -15,6 +32,7 @@ for char in s:
         space += 1
     else:
         other += 1
+        
 print(f'中英文字母{letter}个', f'空格{space}个', f'数字{number}个', f'其他字符{other}个')
 ```
 
@@ -31,7 +49,7 @@ print(f'中英文字母{letter}个', f'空格{space}个', f'数字{number}个', 
 from math import sqrt
 
 n = int(input('请输入一个数字：'))
-k = n
+m = n
 l = []
 while True:
     m = int(sqrt(n))
@@ -47,7 +65,7 @@ while True:
         break
 print(l)
 
-print(f"{k}={('*'.join('{}' for _ in range(len(l)))).format(*l)}")
+print(f"{m}={('*'.join('{}' for _ in range(len(l)))).format(*l)}")
 ```
 
 
