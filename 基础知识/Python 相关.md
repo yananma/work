@@ -8,6 +8,17 @@
 
 ### Python 相关  
 
+#### reduce 函数  
+
+```python 
+from functools import reduce 
+
+l = [1, 2, 3, 4, 5] 
+reduce(lambda x, y: x + y, l)
+
+先 1 + 2，再 3 + 3，再 6 + 4 等等  
+```
+
 #### partial 函数  
 
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
