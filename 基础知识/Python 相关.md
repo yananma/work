@@ -8,6 +8,16 @@
 
 ### Python 相关  
 
+
+#### Path 函数  
+
+Path 拼接是 / 'program' / 'result.txt' 这样的形式  
+
+pandas 的 read_excel() 读取的类型是字符串，Path 的结果是一个 Path 对象，所以路径要变成字符串，方法就是 str(Path 对象)，或 Path 对象.\_\_str__()  
+
+可以用 open(路径字符串, 'w', encodig='utf-8') 写入文件，也可以在 path 对象后面跟 .open('w', encoding='utf-8') 写入文件  
+
+
 #### splitlines 函数  
 
 """字符串""".splitlines() 把字符串转换成列表   
@@ -27,6 +37,7 @@ reduce(lambda x, y: x + y, l)
 #### partial 函数  
 
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
+
 
 
 #### 装饰器  
