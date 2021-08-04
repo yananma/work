@@ -8,6 +8,11 @@
 
 ### Python 相关  
 
+#### splitlines 函数  
+
+"""字符串""".splitlines() 把字符串转换成列表   
+
+
 #### reduce 函数  
 
 ```python 
