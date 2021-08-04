@@ -22,3 +22,4 @@ Path 得到的是一个 path 对象，要用 \_\_str__() 变成字符串
 
 例子：`(settings.RESOURCE_ROOT / 'docs' / 'program' / '媒体库网站-网信办.xlsx').__str__()`  
 
+这个是把路径 path 对象转化成字符串  
