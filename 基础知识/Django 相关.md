@@ -15,3 +15,10 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 "budget": "45.423 (2021)",
 "five_years_budget": "237.75 (2021-2025)",
 ```
+
+#### Path 
+
+Path 得到的是一个 path 对象，要用 \_\_str__() 变成字符串  
+
+例子：`(settings.RESOURCE_ROOT / 'docs' / 'program' / '媒体库网站-网信办.xlsx').__str__()`  
+
