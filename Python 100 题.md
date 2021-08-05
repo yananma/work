@@ -1,4 +1,21 @@
 
+
+
+#### 14、题目：一个数如果恰好等于它的因子之和，这个数就称为"完数"。例如6=1＋2＋3.编程找出1000以内的所有完数。
+
+```python
+final_l = []
+for i in range(1, 1001):
+    l = []
+    for j in range(1, i):
+        if i % j == 0:
+            l.append(j)
+    if i == sum(l):
+        final_l.append(i)
+        print(f'{i}: {l}')
+```
+
+
 #### 13、题目：求 s=a+aa+aaa+aaaa+aa...a 的值，其中 a 是一个数字。例如 2+22+222+2222+22222 (此时共有 5 个数相加)，几个数相加由键盘控制。  
 
 ```python
