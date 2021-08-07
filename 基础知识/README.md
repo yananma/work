@@ -8,5 +8,6 @@
 
 工具：  
 1. 不知道什么方法的时候用 .，比如 pandas 取一行，用 iterrow()  
-2. 有问题 debug，试也要用 debug  
-3. 
+2. 有问题 debug，试也要用 debug，多用 watch 功能  
+3. 用 Python Console 测试 Django Shell，可以看到变量值  
+4. 
