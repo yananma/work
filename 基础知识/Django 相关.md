@@ -1,4 +1,11 @@
 
+#### value 和 value_list  
+
+value 返回字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
+
+value_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
+
+
 #### Django 字符串拼接  
 
 ```python
@@ -15,10 +22,4 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 "budget": "45.423 (2021)",
 "five_years_budget": "237.75 (2021-2025)",
 ```
-
-#### value 和 value_list  
-
-value 返回字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
-
-value_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
