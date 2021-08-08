@@ -52,25 +52,9 @@ Out[2]: datetime.datetime(2021, 8, 8, 18, 33, 2, 50696)
 In [3]: d.strftime("%Y-%m-%d %H:%M:%S")
 Out[3]: '2021-08-08 18:34:09'
 
-In [4]: d.year
-Out[4]: 2021
-
-In [5]: d.month
-Out[5]: 8
-
-In [6]: d.day
-Out[6]: 8
-
-In [7]: d.hour
-Out[7]: 18
-
-In [8]: d.minute
-Out[8]: 34
-
-In [9]: d.second
-Out[9]: 9
-
 ```
+
+datetime 可以通过 . 看都有什么方法，比如 year、month、day、hour、minute、second 等等  
 
 
 #### 装饰器  
