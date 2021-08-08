@@ -16,10 +16,9 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 "five_years_budget": "237.75 (2021-2025)",
 ```
 
-#### Path 
+#### value 和 value_list  
 
-Path 得到的是一个 path 对象，要用 \_\_str__() 变成字符串  
+value 返回字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
 
-例子：`(settings.RESOURCE_ROOT / 'docs' / 'program' / '媒体库网站-网信办.xlsx').__str__()`  
+value_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
-这个是把路径 path 对象转化成字符串  
