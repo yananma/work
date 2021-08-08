@@ -39,6 +39,39 @@ reduce(lambda x, y: x + y, l)
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
 
 
+#### 时间相关  
+
+时间相关的，多用 datetime。少用 time，time ，没什么方法，
+
+```python 
+In [1]: from datetime import datetime
+
+In [2]: datetime.now()
+Out[2]: datetime.datetime(2021, 8, 8, 18, 33, 2, 50696)
+
+In [3]: d.strftime("%Y-%m-%d %H:%M:%S")
+Out[3]: '2021-08-08 18:34:09'
+
+In [4]: d.year
+Out[4]: 2021
+
+In [5]: d.month
+Out[5]: 8
+
+In [6]: d.day
+Out[6]: 8
+
+In [7]: d.hour
+Out[7]: 18
+
+In [8]: d.minute
+Out[8]: 34
+
+In [9]: d.second
+Out[9]: 9
+
+```
+
 
 #### 装饰器  
 
