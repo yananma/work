@@ -92,34 +92,84 @@ class Command(BaseCommand):
 改成  
 
 ```python 
-query_dict = {
-            "query": {
-                "bool": {
-                    "must": [
-                        {
-                            "bool": {
-                                "should": [
-                                    {
-                                        "query_string": {
-                                            "fields": ['title', 'text'],
-                                            "query":' OR '.join(f'"{it}"' for it in source_data)
+import yaml
+import re
+from django.conf import settings
+from django.core.management import BaseCommand
+
+from data_analysis.connect import ESConnect, ConnectManager
+from data_analysis.piplines.es_craw_module import ESSpider
+
+from pathlib import Path
+
+
+class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-file',
+            dest='file',
+            default=settings.RESOURCE_ROOT / 'docs' / 'program' / 'ZKY_MAP_SETTING.yaml',
+            help='配置的yaml文件',
+        )
+        parser.add_argument(
+            '-si',
+            dest='sindex',
+            default='test-zky',
+            help='查询的索引',
+        )
+
+    def handle(self, *args, **options):
+        client: ESConnect = ConnectManager.ES.get_setting('DEBUG')
+        source_yaml = yaml.load(Path(options['file']).open('r', encoding='utf-8'), Loader=yaml.FullLoader)
+        source_data = source_yaml.get('zky_exclude_words', None)
+
+        query_dict = {
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "bool": {
+                                        "should": [
+                                            {
+                                                "query_string": {
+                                                    "fields": ['title', 'text'],
+                                                    "query":' OR '.join(f'"{it}"' for it in source_data)
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "range": {
+                                        "post_time": {
+                                            "gte": "2021-05-04 00:00:00",
+                                            "lt": "2021-08-05 00:00:00"
                                         }
                                     }
-                                ]
-                            }
-                        },
-                        {
-                            "range": {
-                                "post_time": {
-                                    "gte": "2021-05-04 00:00:00",
-                                    "lt": "2021-08-05 00:00:00"
                                 }
-                            }
+                            ]
                         }
-                    ]
+                    },
                 }
-            },
-        }
+
+
+        for data, next_search_after in ConnectManager.ES.get_setting('DEFAULT').search_by_page_with_searchafter(
+                options['sindex'],
+                doc=None,
+                fields=['title', 'text'],
+                query=query_dict,
+                sort_fields=[{'post_time': 'desc'}, {'include_time': 'desc'}],
+                return_sort=True
+        ):
+            titles = [it['title'] for it in data]
+            break
+
+
+        with (settings.RESOURCE_ROOT / 'docs' / 'program' / 'result.txt').open('w',encoding='utf8') as fp:
+            for title in titles:
+                title = re.sub(r'(<.*?>)|(\n)', '', title)    # 去掉标签和换行
+                fp.write(title + '\n')
+
 ```
 
 
