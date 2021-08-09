@@ -1,5 +1,19 @@
 
 
+#### 14、题目：一球从100米高度自由落下，每次落地后反跳回原高度的一半；再落下，求它在第10次落地时，共经过多少米？第10次反弹多高？
+
+```python
+n = 10
+sum_distance = 100
+distance = 100
+for i in range(2, n + 1):
+    sum_distance += distance
+    distance = distance / 2
+    if i == n:
+        print(f'第 10 次反弹的高度是：{distance / 2}')  # 第十次反弹为第十次落地距离的一半
+print(f'10 次反弹的总高度是：{sum_distance}')
+```
+
 
 #### 14、题目：一个数如果恰好等于它的因子之和，这个数就称为"完数"。例如6=1＋2＋3.编程找出1000以内的所有完数。
 
