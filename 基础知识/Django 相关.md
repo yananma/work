@@ -1,4 +1,6 @@
 
+
+
 #### value 和 value_list  
 
 value 返回字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
