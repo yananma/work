@@ -140,3 +140,25 @@ and 第一个为真就取第二个，第一个为假就取第一个
 `1 and 6` 取 6  
 
 
+
+#### 功能去重  
+
+```python 
+char_translate = str.maketrans({i: '' for i in
+                                        r"""!"#$%｜&'()*+,-./:;<=>?@[\]^_`{|}~“”？，！～＠＃％＾＊【】（）、。：；’／
+                                        ＼＿－＝☆★○●◎◇◆□€■△▲※→←↑↓¤♂♀〖〗『』」「‖〃‘……￥·"""})
+removed_duplicates_result = set()  
+for text in result:
+    title = text[0].translate(char_translate)
+    if title not in removed_duplicates_result:
+        removed_duplicates_result.add(title)
+    else:
+        continue
+```
+
+#### 展示去重  
+
+去除标题里的标签：`text0 = re.sub(r'(<.*?>)|(\n)', '', text[0])`  
+
+
+
