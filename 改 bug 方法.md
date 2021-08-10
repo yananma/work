@@ -14,4 +14,5 @@
 4. 看 log 日志  
 5. 自己在命令行里试  
 6. 用 Django 的 Python Console  
-7. 
+7. 复制出来一个文件，Python 运行  
+8. 
