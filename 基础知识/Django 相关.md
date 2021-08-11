@@ -1,4 +1,12 @@
 
+#### country_count 和 country_post 访问很慢  
+
+内容很多，可以自己在 views.py 里自己更改时间  
+
+```python 
+from_date = "2021-05-30"
+to_date = "2021-05-30"
+```
 
 
 #### value 和 value_list  
