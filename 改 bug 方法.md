@@ -15,4 +15,8 @@
 5. 自己在命令行里试  
 6. 用 Django 的 Python Console  
 7. 复制出来一个文件，Python 运行  
-8. 
+8. 查找函数在 Edit -> Find -> Find in Path 里  
+9. 
+
+
+
