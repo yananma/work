@@ -8,6 +8,7 @@
 
 #### 工具  
 
+0. 搜索引擎  
 1. PyCharm debug，views 有问题，debug Django 项目，命令有问题，debug Python 文件，配置参数  
 2. 多用 debug 的 watch 功能
 3. 中间 print  
