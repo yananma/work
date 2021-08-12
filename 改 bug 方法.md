@@ -18,7 +18,8 @@
 7. 用 Django 的 Python Console  
 8. 复制出来一个文件，Python 运行  
 9. 查找函数在 Edit -> Find -> Find in Path 里  
-10. 
+10. 把分析过程写下来，会清楚很多  
+11. 
 
 
 #### 其他  
