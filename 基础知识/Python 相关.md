@@ -8,6 +8,17 @@
 
 ### Python 相关  
 
+
+#### 字符串和索引拼接  
+
+```python 
+In [1]: s = "北国风光"
+
+In [2]: ''.join([f'[{i}]{val}' for i, val in enumerate(s)])
+Out[2]: '[0]北[1]国[2]风[3]光'
+ ```
+
+
 #### sort  
 
 sort 原地排序，不返回值，从小到大排序  
