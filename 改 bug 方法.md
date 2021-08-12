@@ -11,13 +11,20 @@
 0. 搜索引擎  
 1. PyCharm debug，views 有问题，debug Django 项目，命令有问题，debug Python 文件，配置参数  
 2. 多用 debug 的 watch 功能
-3. 中间 print  
-4. 看 log 日志  
-5. 自己在命令行里试  
-6. 用 Django 的 Python Console  
-7. 复制出来一个文件，Python 运行  
-8. 查找函数在 Edit -> Find -> Find in Path 里  
-9. 
+3. 简单的程序，pythontutor、pysnooper
+4. 中间 print  
+5. 看 log 日志  
+6. 自己在 ipython 里试  
+7. 用 Django 的 Python Console  
+8. 复制出来一个文件，Python 运行  
+9. 查找函数在 Edit -> Find -> Find in Path 里  
+10. 
+
+
+#### 其他  
+
+1. 导包看源码  
+2. 
 
 
 
