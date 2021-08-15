@@ -375,6 +375,41 @@ a.f() 就是 A.f(a)，在类中，实例方法是 def f(self)，这个就是把 
 链式调用，返回 self，self 就是传递信息用的。比如 a.f().f1() 就是先执行 A.f(a)，得到结果，返回 self，也就是 a，所以就成了 a.f1()，也就实现了链式调用。而且 f1() 函数还拿到了 f() 函数的信息。    
 property 装饰器，和 property() 是完全等效的。作用就是把一个方法变成可以像属性一样调用。外面调用的时候，看起来就想是个属性。主要是用于复杂的取值赋值操作，这样更符合操作习惯，而且有很好的可扩展性，外部完全不用改。  
 
+```python 
+class A:
+
+    @property
+    def size(self):
+        return self.k
+    
+    @size.setter
+    def size(self, val):
+        self.k = val
+        
+a = A()
+print(a.size)
+a.size = 16
+print(a.size)
+```
+
+和下面这种写法完全等效  
+
+```python 
+class A:
+
+    def get_size(self):
+        return self.k
+
+    def set_size(self, val):
+        self.k = val
+
+    size = property(get_size, set_size)
+
+a = A()
+print(a.size)
+a.size = 16
+print(a.size)
+```
 
 
 
