@@ -57,6 +57,8 @@ print(s.replace_to_default(li))
 
 彦彬的方法  
 
+思想就是没有到底就继续拆，到底了就取默认值，有更强的容错性。  
+
 ```python 
 class TransSimpleJson:
 
