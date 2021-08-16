@@ -41,9 +41,7 @@ class Solution:
                 if type(item[key]) == list:
                     self.replace_to_default(item[key])
                 elif type(item[key]) == dict:
-                    li = []
-                    li.append(item[key])
-                    self.replace_to_default(li)
+                    self.replace_to_default([item[key]])
                 if isinstance(item[key], bool):
                     item[key] = bool()
                 elif isinstance(item[key], str):
