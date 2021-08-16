@@ -1,4 +1,95 @@
 
+#### 08.16  
+
+我自己写的简单解决方法。  
+
+```python 
+li = [
+    {
+        'a': 6,
+        'b': [
+            {
+                'c': True,
+                'd': {
+                    'e': [
+                        {'k': 8, 'e': "xxx"},
+                        {'k': 10, 'e': 'asdas'}
+                    ],
+                    'm': "asdasd"
+                },
+            },
+            {
+                'c': True,
+                'd': {
+                    'e': [
+                        {'k': 123, 'e': "xxx"},
+                        {'k': 120, 'e': 'asdas'}
+                    ],
+                    'm': "mmasdasssd"
+                }
+            }
+        ]
+    },
+]
+
+
+class Solution:
+
+    def replace_to_default(self, list_of_items):
+        for item in list_of_items:
+            for key in item.keys():
+                if type(item[key]) == list:
+                    self.replace_to_default(item[key])
+                elif type(item[key]) == dict:
+                    li = []
+                    li.append(item[key])
+                    self.replace_to_default(li)
+                if isinstance(item[key], bool):
+                    item[key] = bool()
+                elif isinstance(item[key], str):
+                    item[key] = str()
+                elif isinstance(item[key], int):
+                    item[key] = int()
+        return list_of_items
+
+
+s = Solution()
+print(s.replace_to_default(li))
+```
+
+彦彬的方法  
+
+```python 
+class TransSimpleJson:
+
+    @classmethod
+    def visitor(cls, obj):
+        if isinstance(obj, list):
+            return cls.visitor_list(obj)
+        elif isinstance(obj, dict):
+            return cls.visitor_dict(obj)
+        else:
+            return cls.visitor_else(obj)
+
+    @classmethod
+    def visitor_list(cls, obj: list):
+        return [cls.visitor(it) for it in obj]
+
+    @classmethod
+    def visitor_dict(cls, obj: dict):
+        return {k: cls.visitor(v) for k, v in obj.items()}
+
+    @classmethod
+    def visitor_else(cls, obj):
+        # 取默认值
+        return obj.__class__()
+        # # 取原本的值
+        # return obj
+        
+print(TransSimpleJson().visitor(li))
+```
+
+
 #### 08.04  
 
 ```python 
