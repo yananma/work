@@ -8,6 +8,54 @@
 
 ### Python 相关  
 
+#### 多用 ?、help，多用 dir    
+
+```python 
+多用问号  
+getattr?  
+dict.get? 
+dict?
+
+help(getattr)
+help(dict.get)  
+```
+
+
+#### 列表切片  
+
+```python 
+In [25]: li = list(range(10))
+
+In [26]: li[2:6]
+Out[26]: [2, 3, 4, 5]
+
+In [27]: li[2:]
+Out[27]: [2, 3, 4, 5, 6, 7, 8, 9]
+
+In [28]: li[2:8:3]
+Out[28]: [2, 5]
+
+In [29]: li[2::3]  # 都是 start, stop, end，这里是把 end，省略了，所以有两个冒号，而且必须要有两个冒号，一个冒号就是最普通的切片了。  
+Out[29]: [2, 5, 8]
+```
+
+
+#### 列表转字典  
+
+```python 
+In [20]: t = ('a', 1), ('b', 2)
+
+In [21]: t
+Out[21]: (('a', 1), ('b', 2))
+
+In [22]: list(t)
+Out[22]: [('a', 1), ('b', 2)]
+
+In [23]: dict(list(t))
+Out[23]: {'a': 1, 'b': 2}
+```
+
+
 #### \n \t  
 
 \n 可能是 new line  
