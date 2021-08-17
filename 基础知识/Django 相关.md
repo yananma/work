@@ -1,4 +1,9 @@
 
+#### 去重  
+
+去重在 cache_worker.py 的 LastUpdatedOrderedDict 类中  
+
+
 #### country_count 和 country_post 访问很慢  
 
 内容很多，可以自己在 views.py 里自己更改时间  
