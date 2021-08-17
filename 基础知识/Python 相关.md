@@ -20,6 +20,28 @@ help(getattr)
 help(dict.get)  
 ```
 
+#### ord() 和 chr()
+
+```python 
+In [20]: ord('A')
+Out[20]: 65
+
+In [21]: chr(65)
+Out[21]: 'A'
+```
+
+
+#### casefold()    
+
+就是更彻底的 lower()  
+
+```python 
+In [15]: s = "Abc"
+
+In [16]: s.casefold()
+Out[16]: 'abc'
+```
+
 
 #### 列表切片  
 
