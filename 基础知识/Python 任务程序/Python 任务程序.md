@@ -1,7 +1,7 @@
 
 #### 08.16  
 
-我自己写的简单解决方法。  
+自己写的简单解决方法。  
 
 ```python 
 li = [
@@ -42,12 +42,14 @@ class Solution:
                     self.replace_to_default(item[key])
                 elif type(item[key]) == dict:
                     self.replace_to_default([item[key]])
-                if isinstance(item[key], bool):
-                    item[key] = bool()
-                elif isinstance(item[key], str):
-                    item[key] = str()
-                elif isinstance(item[key], int):
-                    item[key] = int()
+                else: 
+                    item[key] = type(item[key])()
+                # if isinstance(item[key], bool):
+                #     item[key] = bool()
+                # elif isinstance(item[key], str):
+                #     item[key] = str()
+                # elif isinstance(item[key], int):
+                #     item[key] = int()
         return list_of_items
 
 
