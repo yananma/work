@@ -3,6 +3,8 @@
 
 内容很多，可以自己在 views.py 里自己更改时间  
 
+可以在 middleware 的 es 函数里面，设置 key = 0，这样就不用每次删缓存了。  
+
 ```python 
 from_date = "2021-05-30"
 to_date = "2021-05-30"
