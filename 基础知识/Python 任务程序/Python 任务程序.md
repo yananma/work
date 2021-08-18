@@ -1,4 +1,23 @@
 
+
+
+
+#### 08.18 
+
+多个文件合并成一个文件
+
+```python 
+new_file_name = 'yuce.jsonl'
+file_names = ['yuce_1.jsonl', 'yuce_2.jsonl', 'yuce_3.jsonl', 'yuce_4.jsonl']
+for file_name in file_names:
+    with open(file_name, encoding='utf-8') as f:
+        lines = f.readlines()
+        for line in lines:
+            with open(new_file_name, 'a', encoding="utf-8") as fp:
+                fp.write(line)
+```
+
+
 #### 08.16  
 
 自己写的简单解决方法。  
