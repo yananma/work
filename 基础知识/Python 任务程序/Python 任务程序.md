@@ -2,20 +2,150 @@
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
 
-#### 08.18 
+#### 08.18 整理标注数据  
 
-多个文件合并成一个文件（写的不好，有待优化）
+(有一个问题就是不要一直写入文件读取文件，赋值给一个变量就好了)  
+
+1、多个文件合并成一个文件  
 
 ```python 
 new_file_name = 'yuce.jsonl'
 file_names = ['yuce_1.jsonl', 'yuce_2.jsonl', 'yuce_3.jsonl', 'yuce_4.jsonl']
-for file_name in file_names:
-    with open(file_name, encoding='utf-8') as f:
+with open(new_file_name, 'a', encoding="utf-8") as fp:    # 这么写要特别要注意的一点是，起的别名不能一样  
+    for file_name in file_names:
+        with open(file_name, encoding='utf-8') as f:
+            lines = f.readlines()
+            for line in lines:
+                    fp.write(line)
+```
+
+2、按文章内容 text 去重  
+
+```python
+import html
+
+char_translate = str.maketrans({i: '' for i in
+                                r"""!"#$%｜丨&'()*《》+＋,-—./:;<=>?@[\]^_`{|}~“．”？，！～＠＃％＾＊【】（）、。：；’／＼＿－＝
+                                ☆★○●◎◇◆□€■△▲※→←↑↓¤♂♀〖〗『』」「‖〃‘……￥·"""})
+
+
+def replace_all_not_word_char_to_null(s):
+    return ''.join(s.casefold().translate(char_translate).split())
+
+
+with open('yuce_result.jsonl', 'a', encoding="utf-8") as fp:
+    with open("yuce.jsonl", encoding="utf-8") as f:
+        count = 0
+        lines = f.readlines()
+        quchong_result = set()
+        for line in lines:
+            line = html.unescape(json.loads(line.strip()))
+            text = line['text']
+            clean_text = replace_all_not_word_char_to_null(text)
+            if clean_text not in quchong_result:
+                quchong_result.add(clean_text)
+            else:
+                continue
+            fp.write(json.dumps(line) + '\n')
+            count += 1
+        print(count)
+```
+
+排序
+
+指定排序规则的例子  
+
+```python 
+s = [
+    ('he',2,9),
+    ('t',1,8),
+    ('m',2,3),
+    ('k',1,9),
+    ('j',1,2),
+]
+
+print(sorted(s,key=lambda x:(x[1],x[2])))
+
+打印结果是：[('j', 1, 2), ('t', 1, 8), ('k', 1, 9), ('m', 2, 3), ('he', 2, 9)]  
+```
+
+添加标签数字列表(这种方法是可以的实现效果的，但是比较繁琐，因为要加一个字段，排完序以后还要再去掉这个字段，所以最后没有使用这种方法)  
+
+```python
+words = ["新兴", "突破", "颠覆", "前沿", "前景", "关键技术", "核心技术", "共性技术", "瓶颈", "难点",
+         "困境", "难题", "短板", "卡脖子", "管制", "使能技术"]
+
+with open('yuce_result1.jsonl', 'a', encoding="utf-8") as fp:
+    with open('yuce_result.jsonl', encoding='utf-8') as f:
         lines = f.readlines()
         for line in lines:
-            with open(new_file_name, 'a', encoding="utf-8") as fp:
-                fp.write(line)
+            line = json.loads(line.strip())
+            text = line['text']
+            li = []
+            for i, word in enumerate(words):
+                if word not in text:
+                    li.append(0)
+                else:
+                    li.append(1)
+            line['num'] = li
+            fp.write(json.dumps(line) + '\n')
+
+with open('yuce_result1.jsonl', encoding="utf-8") as f:
+    lines = f.readlines()
+    print(sorted(lines, key=lambda x: tuple((json.loads(x)["num"][i] for i in range(len(json.loads(x)["num"])))), reverse=True))
 ```
+
+最后使用的方法  
+
+```python 
+words = ["新兴", "突破", "颠覆", "前沿", "前景", "关键技术", "核心技术", "共性技术", "瓶颈", "难点",
+         "困境", "难题", "短板", "卡脖子", "管制", "使能技术"]
+
+sorted_list = sorted(
+    (json.loads(row) for row in open('yuce_result.jsonl', 'r', encoding='utf8')),
+    key=lambda x: tuple(keyword in x['text'] for keyword in words),
+    reverse=True
+)
+
+with open('final_sort_result.jsonl', 'a', encoding="utf-8") as f:
+    for it in sorted_list:
+        f.write(json.dumps(it) + '\n')
+```
+
+转成指定输出的格式，指定的格式为只包含 text 和 labels 两个键，text 的值就是 text，labels 的值是标签开始位置、标签结束位置和对应的标签组成的列表。  
+
+```python 
+import json
+
+label_files = ['label_1.json', 'label_2.json', 'label_3.json', 'label_4.json']
+
+li = []
+for label_file in label_files:
+    with open(label_file, 'r', encoding="utf-8") as fl:
+        label_lines = json.load(fl)
+        for label_line in label_lines:
+            li.append(label_line)
+
+d = {}
+for item in li:
+    d[item['id']] = item['text']
+
+final_dict = {}
+with open('result.json', 'a', encoding="utf-8") as fl:
+    with open("final_sort_result.jsonl", 'r', encoding="utf-8") as f:
+        lines = f.readlines()
+        for line in lines:
+            line = json.loads(line)
+            final_dict["text"] = line['text']
+            annotations = line['annotations']
+            final_dict["labels"] = []
+            for annotation in annotations:
+                final_dict["labels"].append(
+                    [annotation['start_offset'], annotation["end_offset"], d[annotation['label']]])
+            print(final_dict)
+            fl.write(json.dumps(final_dict) + "\n")
+```
+
 
 
 #### 08.16  
