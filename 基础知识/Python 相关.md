@@ -185,6 +185,25 @@ Out[3]: [1, 4, 6, 9]
 
 ### 字典  
 
+#### 字典 pop()  
+
+字典使用 pop 键的时候，如果存在就返回键的值，如果不存在就返回指定的默认值。  
+
+```python 
+In [66]: d
+Out[66]: {'a': 1, 'b': 2}
+
+In [67]: d.pop('a', 3)
+Out[67]: 1
+
+In [68]: d
+Out[68]: {'b': 2}
+
+In [69]: d.pop('a', 3)
+Out[69]: 3
+```
+
+
 #### 遍历字典  
 
 遍历字典，默认是遍历 key  
@@ -235,15 +254,161 @@ for 循环可以让计算机自动完成大量的重复的工作。
 
 for 循环，可以对每个元素执行任何操作。  
 
+for 循环本质上就是通过不断调用 next() 函数实现的。  
+
+```python 
+for x in [1, 2, 3, 4, 5]:
+    print(x)
+```
+
+本质上就是下面这种方式实现的。  
+
+```python 
+it = iter([1, 2, 3, 4, 5])
+while True:
+    try:
+        # 获得下一个值:
+        x = next(it)
+    except StopIteration:
+        # 遇到StopIteration就退出循环
+        break
+```
+
 
 ### if 语句 
 
 if 语句可以让我们在遍历列表的时候，对特定的元素采取特定的措施。  
 
 
+### 迭代器和生成器  
+
+很可能就是一个链表，每次指针移动一个位置。for 循环遍历很可能也是移动指针。  
+
+就是断点。  
+
+如果调用一个有 100 篇文章的列表，就会占用非常大的存储空间，如果我们仅仅需要看前几篇文章，那后面绝大多数元素占用的空间都白白浪费了。  
+
+所以，如果可以不必调用完整的列表，而是可以按需返回，那就可以节省大量的空间。这就是迭代器和生成器被创造出来和被广泛应用的原因。  
+
+这是一种惰性计算（lazy evaluation）。  
+
+有两种使用场景：
+1、按需生成。  
+2、某个事情执行一部分，另一部分在某个事件发生后再执行下一部分，实现异步。  
+
+
+#### 生成器  
+
+generator 就是 iterator 的一种，以更优雅的方式实现的 iterator。  
+
+一种是推导式
+
+```python 
+In [123]: g = (x ** 2 for x in range(10))
+
+In [124]: type(g)
+Out[124]: generator
+
+In [125]: next(g)
+Out[125]: 0
+
+In [126]: next(g)
+Out[126]: 1
+
+In [127]: next(g)
+Out[127]: 4
+
+In [128]: next(g)
+Out[128]: 9
+
+# 可以用 for 循环遍历生成器，生成器也是可迭代对象  
+In [129]: for i in g:
+     ...:     print(i)
+     ...: 
+16
+25
+36
+49
+64
+81
+```
+
+一种是使用 yield  
+
+```python 
+In [112]: def get_one_num():
+     ...:     for i in range(10):
+     ...:         yield i
+     ...: 
+
+In [113]: type(get_one_num)    # 不加括号是函数
+Out[113]: function
+
+In [114]: type(get_one_num())    # 加了括号是返回值，就是 yield 
+Out[114]: generator
+
+In [115]: gen = get_one_num()
+
+In [116]: next(gen)
+Out[116]: 0
+
+In [117]: next(gen)
+Out[117]: 1
+
+In [118]: next(gen)
+Out[118]: 2
+```
+
+
 ### 函数  
 
-#### map 函数  
+不加括号的时候是函数，加括号以后就是返回值。  
+
+```python 
+In [132]: def my_fun():
+     ...:     return 1
+     ...: 
+
+In [133]: type(my_fun)
+Out[133]: function
+
+In [134]: type(my_fun())
+Out[134]: int
+```
+
+
+### 类  
+
+不加括号是类，加了括号就是实例  
+
+```python 
+In [40]: type(list)
+Out[40]: type
+
+In [41]: type(list())
+Out[41]: list
+```
+
+
+
+
+
+### 内置函数  
+
+#### filter 类
+
+filter(function or None, iterable) --> filter object
+
+Return an iterator yielding those items of iterable for which function(item)
+is true. If function is None, return the items that are true.
+
+```python 
+n [72]: list(filter(abs, [-1, 0, 1]))
+Out[72]: [-1, 1]
+```
+
+
+#### map 类  
 
 map(func, \*iterables) --> map object
 
@@ -260,6 +425,13 @@ In [15]: def my_square(x):
 In [16]: list(map(my_square, [-2, -1, 0, 2, 5]))
 Out[16]: [4, 1, 0, 4, 25]
 ```
+
+#### next 函数 
+
+next(iterator[, default])
+
+Return the next item from the iterator. If default is given and the iterator
+is exhausted, it is returned instead of raising StopIteration.
 
 
 #### Path 函数  
@@ -287,17 +459,7 @@ reduce(lambda x, y: x + y, l)
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
 
 
-### 类  
 
-不加括号是类，加了括号就是实例  
-
-```python 
-In [40]: type(list)
-Out[40]: type
-
-In [41]: type(list())
-Out[41]: list
-```
 
 
 
