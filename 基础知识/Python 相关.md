@@ -18,6 +18,13 @@ help(getattr)
 help(dict.get)  
 ```
 
+### 基础  
+
+函数传参是变量赋值，for 循环也是变量赋值。  
+
+函数传参传的是引用，本质上都是指向一个东西，这个变了，所有的就都变了。  
+
+
 ### 字符串  
 
 #### translate() 和 maketrans() 
@@ -97,7 +104,39 @@ Out[2]: '[0]北[1]国[2]风[3]光'
 
 ### 列表  
 
-#### 列表::切片  
+#### 列表取值  
+
+一种是通过索引取值，比如 li[3]，一种是通过 for 循环遍历  
+
+
+#### 列表推导式  
+
+```python 
+In [28]: [x for x in range(7)]
+Out[28]: [0, 1, 2, 3, 4, 5, 6]
+
+In [29]: [x for x in range(7) if x > 3]
+Out[29]: [4, 5, 6]
+
+# 没有 else 的时候，if 必须要放在 for 循环后面，放在前面会报错  
+
+In [30]: [x ** 2 for x in range(7) if x > 3]
+Out[30]: [16, 25, 36]
+
+In [31]: [x ** 2 if x > 3 else x ** 3 for x in range(7)]
+Out[31]: [0, 1, 8, 27, 16, 25, 36]
+
+# 有 else 条件的时候，if 和 else 必须要放在 for 循环前面，否则会报错
+```
+
+#### 切片  
+
+切片是为了使用处理列表的部分元素  
+
+切片非常有用，用的地方非常多，比如文章分页，比如 batch 取数据  
+
+
+#### ::切片  
 
 ```python 
 In [25]: li = list(range(10))
@@ -144,7 +183,84 @@ Out[3]: [1, 4, 6, 9]
 ```
 
 
+### 字典  
+
+#### 遍历字典  
+
+遍历字典，默认是遍历 key  
+
+```python 
+In [53]: d = {'a': 1, 'b': 2}
+
+In [54]: d
+Out[54]: {'a': 1, 'b': 2}
+
+In [55]: for key in d:
+    ...:     print(key)
+    ...: 
+a
+b
+```
+
+如果已经进入了这一层了，要取到值就不能再遍历了，要用 d['a'] 这样的方式通过键取值。  
+
+```python 
+In [58]: for key, value in d.items():
+    ...:     print(key, value)
+    ...: 
+a 1
+b 2
+
+In [59]: for key in d.keys():
+    ...:     print(key)
+    ...: 
+a
+b
+
+In [60]: for value in d.values():
+    ...:     print(value)
+    ...: 
+1
+2
+```
+
+
+### for 循环  
+
+for 循环的作用就是批量处理数据，对所有的数据执行相同的操作。  
+
+for 循环可以让计算机自动完成大量的重复的工作。  
+
+如果没有 for，如果元素很多，就会包含大量重复的代码，而且如果元素个数发生变化的时候，就必须要修改代码，会非常麻烦。  
+
+for 循环，可以对每个元素执行任何操作。  
+
+
+### if 语句 
+
+if 语句可以让我们在遍历列表的时候，对特定的元素采取特定的措施。  
+
+
 ### 函数  
+
+#### map 函数  
+
+map(func, \*iterables) --> map object
+
+Make an iterator that computes the function using arguments from
+each of the iterables.
+
+```python 
+In [14]: list(map(abs, [-2, -1, 0, 2, 5]))
+Out[14]: [2, 1, 0, 2, 5]
+
+In [15]: def my_square(x):
+    ...:     return x ** 2
+
+In [16]: list(map(my_square, [-2, -1, 0, 2, 5]))
+Out[16]: [4, 1, 0, 4, 25]
+```
+
 
 #### Path 函数  
 
@@ -171,6 +287,19 @@ reduce(lambda x, y: x + y, l)
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
 
 
+### 类  
+
+不加括号是类，加了括号就是实例  
+
+```python 
+In [40]: type(list)
+Out[40]: type
+
+In [41]: type(list())
+Out[41]: list
+```
+
+
 
 ### 其他  
 
@@ -180,7 +309,10 @@ partial(函数，参数)，partial 函数，把参数绑定到函数上。
 \t tab 制表符  
 
 
-#### 多用 yield  
+#### yield  
+
+多用 yield  
+
 
 
 
@@ -530,7 +662,8 @@ a.f()
 
 
 
-链式调用，返回 self，self 就是传递信息用的。比如 a.f().f1() 就是先执行 A.f(a)，得到结果，返回 self，也就是 a，所以就成了 a.f1()，也就实现了链式调用。而且 f1() 函数还拿到了 f() 函数的信息。    
+链式调用，返回 self，self 就是传递信息用的。比如 a.f().f1() 就是先执行 A.f(a)，得到结果，返回 self，也就是 a，所以就成了 a.f1()，也就实现了链式调用。而且 f1() 函数还拿到了 f() 函数的信息。   
+
 property 装饰器，和 property() 是完全等效的。作用就是把一个方法变成可以像属性一样调用。外面调用的时候，看起来就想是个属性。主要是用于复杂的取值赋值操作，这样更符合操作习惯，而且有很好的可扩展性，外部完全不用改。  
 
 
