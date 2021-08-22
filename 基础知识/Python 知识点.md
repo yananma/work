@@ -386,11 +386,44 @@ In [134]: type(my_fun())
 Out[134]: int
 ```
 
+
+#### lambda 函数  
+
+lambda 返回一个函数，和 def f(x) 是一样的。  
+
+def 是用来处理大的任务的，lambda 是为了实现简单函数而设计的，用的时候简单清晰，不用再写一个函数，直接嵌套在代码段中就行。  
+
+简洁清晰，使用方便。  
+
+```python 
+In [29]: def f(x):
+    ...:     return x ** 2
+    ...: 
+
+In [30]: f(3)
+Out[30]: 9
+
+In [31]: f1 = lambda x: x ** 2
+
+In [32]: f1(3)
+Out[32]: 9
+
+# 冒号后面是 return 的值，lambda 后面的是参数。  
+
+In [33]: f2 = lambda x, y: x + y
+
+In [34]: f2(3, 4)
+Out[34]: 7
+```
+
+
 #### 参数  
 
 位置实参赋值本质上就是变量的对应位置赋值。  
 
+关键字参数就是分别赋值，所以位置无关紧要。  
 
+\*args 和 \*\*kwargs 很可能也都是变量赋值用的。  
 
 
 ### 类  
@@ -409,6 +442,26 @@ Out[41]: list
 
 
 ### 内置函数  
+
+#### exec 函数  
+
+这个函数支持动态执行 Python 代码。 object 必须是字符串或者代码对象。  
+
+```python 
+In [26]: exec('print("Hello world")')
+Hello world
+```
+
+
+#### eval 函数
+
+```python
+In [24]: x = 1
+
+In [25]: eval('x+1')
+Out[25]: 2
+```
+
 
 #### filter 类
 
