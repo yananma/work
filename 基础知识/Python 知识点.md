@@ -527,8 +527,102 @@ reduce(lambda x, y: x + y, l)
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
 
 
+### collections 包
 
+#### defaultdict 类  
 
+解决一键多值的问题  
+
+```python 
+In [1]: from collections import defaultdict
+
+In [2]: d = defaultdict(list)
+
+In [3]: d['a'].append(1)
+In [4]: d['a'].append(2)
+In [5]: d['a'].append(3)
+
+In [6]: d
+Out[6]: defaultdict(list, {'a': [1, 2, 3]})
+
+In [7]: d['b'].append(4)
+In [8]: d['b'].append(5)
+
+In [9]: d
+Out[9]: defaultdict(list, {'a': [1, 2, 3], 'b': [4, 5]})
+```
+
+也可以是集合  
+
+```python 
+In [13]: d = defaultdict(set)
+
+In [14]: d['a'].add(1)
+In [15]: d['a'].add(2)
+
+In [16]: d
+Out[16]: defaultdict(set, {'a': {1, 2}})
+
+In [17]: d['b'].add(3)
+In [18]: d['b'].add(4)
+
+In [19]: d
+Out[19]: defaultdict(set, {'a': {1, 2}, 'b': {3, 4}})
+
+```
+
+也可以使用字典自带的 setdefault 实现  
+
+```python 
+In [20]: d = {}
+
+In [21]: d.setdefault('a', []).append(1)
+
+In [22]: d
+Out[22]: {'a': [1]}
+
+In [23]: d.setdefault('a', []).append(2)
+
+In [24]: d
+Out[24]: {'a': [1, 2]}
+
+In [25]: d.setdefault('b', []).append(3)
+
+In [26]: d
+Out[26]: {'a': [1, 2], 'b': [3]}
+```
+
+#### OrderedDict 类  
+
+对字典进行迭代的时候，OrderedDict 会严格按照元素初始添加的顺序进行。  
+
+```python 
+n [34]: d = OrderedDict()
+
+In [35]: d['foo'] = 1
+
+In [36]: d['bar'] = 2
+
+In [37]: d['spam'] = 3
+
+In [38]: d['grok'] = 4
+
+In [39]: for key in d:
+    ...:     print(key, d[key])
+    ...: 
+foo 1
+bar 2
+spam 3
+grok 4
+
+In [40]: d
+Out[40]: OrderedDict([('foo', 1), ('bar', 2), ('spam', 3), ('grok', 4)])
+
+In [41]: import json
+
+In [42]: json.dumps(d)
+Out[42]: '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
+```
 
 
 ### 其他  
