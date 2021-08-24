@@ -438,7 +438,69 @@ In [41]: type(list())
 Out[41]: list
 ```
 
+### 其他  
 
+#### \n \t  
+
+\n 可能是 new line  
+\t tab 制表符  
+
+
+#### yield  
+
+多用 yield  
+
+
+
+
+#### 时间相关  
+
+时间相关的，多用 datetime。少用 time，time ，没什么方法，
+
+```python 
+In [1]: from datetime import datetime
+
+In [2]: datetime.now()
+Out[2]: datetime.datetime(2021, 8, 8, 18, 33, 2, 50696)
+
+In [3]: d.strftime("%Y-%m-%d %H:%M:%S")
+Out[3]: '2021-08-08 18:34:09'
+
+```
+
+datetime 可以通过 . 看都有什么方法，比如 year、month、day、hour、minute、second 等等  
+
+
+#### 装饰器  
+
+`__call__` 方法在可调用对象加括号的时候调用。  
+
+实例加括号会调用类的 `__call__` 方法，类加括号会调用元类的 `__call__` 方法。  
+
+
+```python
+from functools import wraps
+
+def arg_dec(ts=None):
+    s = ts
+    print(f'arg_dec:{s}')
+    def outer(func):
+        print(f'outer:{s}')
+        @wraps(func)
+        def inner(*args,**kwargs):
+            print(f'inner:{s}')
+            print(f'inner:{args}\t{kwargs}')
+            return func(*args,**kwargs)
+        print(f'inner finish:{s}')
+        return inner
+    print(f'outer finish:{s}')
+    return outer
+
+
+@arg_dec(45)
+def add(a,b):
+    return a+b
+```
 
 
 ### 内置函数  
@@ -624,70 +686,11 @@ In [42]: json.dumps(d)
 Out[42]: '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
 ```
 
+### typing 包
 
-### 其他  
+#### Union 
 
-#### \n \t  
-
-\n 可能是 new line  
-\t tab 制表符  
-
-
-#### yield  
-
-多用 yield  
-
-
-
-
-#### 时间相关  
-
-时间相关的，多用 datetime。少用 time，time ，没什么方法，
-
-```python 
-In [1]: from datetime import datetime
-
-In [2]: datetime.now()
-Out[2]: datetime.datetime(2021, 8, 8, 18, 33, 2, 50696)
-
-In [3]: d.strftime("%Y-%m-%d %H:%M:%S")
-Out[3]: '2021-08-08 18:34:09'
-
-```
-
-datetime 可以通过 . 看都有什么方法，比如 year、month、day、hour、minute、second 等等  
-
-
-#### 装饰器  
-
-`__call__` 方法在可调用对象加括号的时候调用。  
-
-实例加括号会调用类的 `__call__` 方法，类加括号会调用元类的 `__call__` 方法。  
-
-
-```python
-from functools import wraps
-
-def arg_dec(ts=None):
-    s = ts
-    print(f'arg_dec:{s}')
-    def outer(func):
-        print(f'outer:{s}')
-        @wraps(func)
-        def inner(*args,**kwargs):
-            print(f'inner:{s}')
-            print(f'inner:{args}\t{kwargs}')
-            return func(*args,**kwargs)
-        print(f'inner finish:{s}')
-        return inner
-    print(f'outer finish:{s}')
-    return outer
-
-
-@arg_dec(45)
-def add(a,b):
-    return a+b
-```
+联合类型；Union[X, Y] 的意思是，非 X 即 Y。  
 
 
 ```python 
