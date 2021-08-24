@@ -2,6 +2,73 @@
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
 
+#### 08.24 整理标注数据，返回格式是四个标签和标签对应的单词  
+
+```python
+import json
+
+import pandas as pd
+
+
+def read_label(label_file_name):
+    """
+    读取标签文件，获得每一条标签的 id 和 id 所对应的词
+    :param label_file_name: 文件名
+    :return: 标签列表
+    """
+    li = []
+    with open(label_file_name, encoding="utf-8") as fl:
+        label_lines = json.load(fl)
+        for label_line in label_lines:
+            li.append(label_line)
+    return li
+
+
+def map_label(li):
+    """
+    完成标签 id 和词的映射
+    :param li: 传入标签列表
+    :return: 返回映射字典
+    """
+    d = {}
+    for item in li:
+        d[item['id']] = item['text']
+    return d
+
+
+label_list = read_label('label_config.json')
+map_labels = map_label(label_list)
+
+print(map_labels)  # {105: '是', 106: '标志', 108: '犹豫', 109: '主体'}
+
+final_list = []
+with open('yuce_EN_840.jsonl', encoding="utf-8") as f:
+    lines = f.readlines()
+    for line in lines:
+        final_dict = {}
+        line = json.loads(line)
+        final_dict['text'] = line['text']
+        annotations = line['annotations']
+        final_dict["labels"] = []    # 这个是标签的名字，是标注的标签的名字，可能是一个，可能是两个等等
+        tmp_dict = {}    # 这个是各自的标签对应的句子里标注的词
+        for annotation in annotations:
+            final_dict["labels"].append(map_labels[annotation['label']])  # annotation['label'] 是数字，map_labels 是值
+            start = int(annotation['start_offset'])
+            end = int(annotation["end_offset"])
+            word = line['text'][start:end]
+            tmp_dict[map_labels[annotation['label']]] = word
+        final_dict_labels = final_dict.pop("labels")
+        if final_dict_labels:
+            for label in final_dict_labels:
+                final_dict[label] = tmp_dict[label] 
+        final_list.append(final_dict)
+
+
+# df = pd.DataFrame(final_list)
+# df.to_excel('标注.xlsx', index=False)
+```
+
+
 #### 08.18 整理标注数据  
 
 (有一个问题就是不要一直写入文件读取文件，赋值给一个变量就好了)  
@@ -525,5 +592,6 @@ def add_tag(self, source, target):
 
 # f'({source})' 和下面的内容是等价的  
 # s = '({})'.format(source)
-
 ```
+
+
