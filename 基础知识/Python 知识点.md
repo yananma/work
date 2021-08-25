@@ -698,6 +698,51 @@ Out[42]: '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
 
 ### 非 Python  
 
+#### 哈希  
+
+哈希算法也叫散列算法, 不过英文单词都是 Hash, 简单一句话概括, 就是可以把任意长度的输入信息通过算法变换成固定长度的输出信息, 输出信息也就是哈希值。  
+
+```python 
+In [30]: import hashlib
+
+In [31]: hashlib.md5('你好'.encode(encoding='UTF-8')).hexdigest()
+Out[31]: '7eca689f0d3389d9dea66ae112e5cfd7'
+
+In [32]: hashlib.md5('123'.encode(encoding='UTF-8')).hexdigest()
+Out[32]: '202cb962ac59075b964b07152d234b70'
+```
+
+自己实现的对类进行去重  
+
+```python 
+In [65]: hash('hello')
+Out[65]: 7769867404179893035
+
+In [66]: class Cat:
+    ...:     def __init__(self, name, age):
+    ...:         self.name = name
+    ...:         self.age = age
+    ...:     def __hash__(self):
+    ...:         return hash((self.name, self.age))
+    ...:     def __eq__(self, other):
+    ...:         return self.name == other
+    ...: 
+
+In [67]: hash(('hello', 3))
+Out[67]: -999010963045695219
+
+In [68]: cat2 = Cat('xiaohua', 3)
+
+In [69]: cat1 = Cat('xiaohua', 3)
+
+In [70]: cat3 = Cat('xiaohu', 3)
+
+In [71]: set([cat1, cat2, cat3])
+Out[71]: {<__main__.Cat at 0x7f7803899a10>, <__main__.Cat at 0x7f7811d81e10>}
+
+```
+
+
 #### 格式转换  
 
 Python 对象是不可以跨平台的，所以和前端交互要变成通用格式，比如 json 字符串或二进制流格式。  
@@ -1000,4 +1045,12 @@ super().\_\_init__(make, model, year)
 就是调用父类的初始化方法，使得子类拥有父类初始化方法中的属性，说白了就是把父类中的初始化方法中的代码复制到了子类的初始化方法中，如果不写 super，子类的初始化方法中没有父类定义的这些属性，因为子类方法会覆盖父类的同名方法。  
 
 
+
+周一：
+周二：江南小碗菜  
+周三：大同刀削面  
+周四：  
+周五：  
+周六：两份西三旗小碗菜  
+周日：爆肚粉、田老师  
 
