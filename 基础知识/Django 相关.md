@@ -1,4 +1,11 @@
 
+#### ForeignKey 查询 
+
+ForeignKey 就是多对一，写在多的多的里面，比如 comment 中写 topic 字段，使用 ForeignKey。  
+
+查询的时候，comment 的 topic 字段加两个下划线，就可以拿到 Topic 的字段。两个下划线和点的意思差不多，拿属性和方法。  
+
+
 #### 去重  
 
 去重在 cache_worker.py 的 LastUpdatedOrderedDict 类中  
