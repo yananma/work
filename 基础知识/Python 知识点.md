@@ -766,27 +766,12 @@ Python 的格式，只有 Python 会解释
 ```python
 d = {'a': 1}  
 
-json.dumps(d)
-Out[1]: '{"a": 1}'    # json.dumps() 把 Python 的格式转化成 str  
-
-# dumps 方法返回的是 JSONEncoder.encode(obj)
-# JSONEncoder.encode() 方法做的事情就是 Return a JSON string representation of a Python data structure. 
-# encode() 方法所做的事情非常简单 就是 return ''.join(chunks)  
-
 json.loads('{"a": 1}')
 Out[2]: {'a': 1}    # json.loads() 把 str 转化为 Python 对象  
 
-# loads 方法 Deserialize a JSON document to a Python object.  
+json.dumps(d)
+Out[1]: '{"a": 1}'    # json.dumps() 把 Python 的格式转化成 str  
 ```
-
-
-#### JSON  
-
-Json 内部必须是双引号  
-'{"a": 1}' 这种是正确的  
-"{'a': 1}" 这种是错误的  
-
-存数据库的时候用  
 
 
 #### and 和 or  
@@ -823,7 +808,6 @@ for text in result:
 #### 展示去重  
 
 去除标题里的标签：`text0 = re.sub(r'(<.*?>)|(\n)', '', text[0])`  
-
 
 
 
@@ -875,8 +859,6 @@ print(globals())
 ```
 
 
-
-
 #### 函数  
 
 在大函数里，所有的地方都可以使用大函数的变量，这就是函数作用域。  
@@ -887,6 +869,13 @@ global 的作用就是使用更外层的上下文。
 
 nonlocal 的作用就是在内层操作外层变量，就像是在外层操作外层变量完全等效，就相当于，把内层函数 def inner(): 这一行去掉，inner 函数的内容左移一个 tab 完全等效。  
 
+周一：
+周二：江南小碗菜  
+周三：大同刀削面  
+周四：  
+周五：  
+周六：
+周日：爆肚粉、田老师  
 
 
 #### 类 
@@ -1060,11 +1049,4 @@ super().\_\_init__(make, model, year)
 
 
 
-周一：
-周二：江南小碗菜  
-周三：大同刀削面  
-周四：  
-周五：  
-周六：两份西三旗小碗菜  
-周日：爆肚粉、田老师  
 
