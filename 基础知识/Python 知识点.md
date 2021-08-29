@@ -412,7 +412,7 @@ In [29]: def f(x):
 In [30]: f(3)
 Out[30]: 9
 
-In [31]: f1 = lambda x: x ** 2
+In [31]: f1 = lambda x: x ** 2    # 这一句是核心，以后看到 lambda 就要想到这一句
 
 In [32]: f1(3)
 Out[32]: 9
@@ -464,7 +464,7 @@ Out[41]: list
 
 #### 时间相关  
 
-时间相关的，多用 datetime。少用 time，time ，没什么方法，
+时间相关的，多用 datetime，少用 time。  
 
 ```python 
 In [1]: from datetime import datetime
@@ -536,14 +536,48 @@ Out[25]: 2
 
 #### filter 类
 
+返回 function(item) 为真的那些元素。  
+
 filter(function or None, iterable) --> filter object
 
 Return an iterator yielding those items of iterable for which function(item)
 is true. If function is None, return the items that are true.
 
 ```python 
-n [72]: list(filter(abs, [-1, 0, 1]))
+In [10]: list(filter(lambda x: x, [True, False, None, 1, 0]))
+Out[10]: [True, 1]
+
+In [72]: list(filter(abs, [-1, 0, 1]))
 Out[72]: [-1, 1]
+```
+
+filter 必须要传一个函数，所以才有了下面这种写法  
+
+```python 
+In [1]: s = '1,0,2,3'
+
+In [2]: s.split(',')
+Out[2]: ['1', '0', '2', '3']
+
+In [3]: filter(s.split(','))
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-3-088f38a34497> in <module>
+----> 1 filter(s.split(','))
+
+TypeError: filter expected 2 arguments, got 1
+
+In [4]: filter(lambda x: x, s.split(','))
+Out[4]: <filter at 0x7f7ca0c418d0>
+
+In [5]: list(filter(lambda x: x, s.split(',')))
+Out[5]: ['1', '0', '2', '3']    # 这里 0 没有被筛掉，是因为 0 是字符串  
+
+In [6]: sorted(filter(lambda x: x, s.split(',')))
+Out[6]: ['0', '1', '2', '3']
+
+In [8]: list(filter(lambda x: int(x), s.split(',')))
+Out[8]: ['1', '2', '3']
 ```
 
 
@@ -587,8 +621,10 @@ pandas 的 read_excel() 读取的类型是字符串，Path 的结果是一个 Pa
 ```python 
 from functools import reduce 
 
-l = [1, 2, 3, 4, 5] 
-reduce(lambda x, y: x + y, l)
+In [12]: li = [1, 2, 3, 4, 5]
+
+In [13]: reduce(lambda x, y: x + y, li)
+Out[13]: 15
 
 先 1 + 2，再 3 + 3，再 6 + 4 等等  
 ```
