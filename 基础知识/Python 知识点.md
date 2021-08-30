@@ -140,6 +140,49 @@ In [31]: [x ** 2 if x > 3 else x ** 3 for x in range(7)]
 Out[31]: [0, 1, 8, 27, 16, 25, 36]
 
 # 有 else 条件的时候，if 和 else 必须要放在 for 循环前面，否则会报错
+
+# 两层 for 循环，前面的那个 for 循环在外层  
+In [4]: num_list = [1, 2, 3]
+
+In [5]: char_list = ['a', 'b', 'c']
+
+In [6]: [(num, char) for num in num_list for char in char_list]
+Out[6]: 
+[(1, 'a'),
+ (1, 'b'),
+ (1, 'c'),
+ (2, 'a'),
+ (2, 'b'),
+ (2, 'c'),
+ (3, 'a'),
+ (3, 'b'),
+ (3, 'c')]
+
+In [8]: for num in num_list:
+   ...:     for char in char_list:
+   ...:         print((num, char))
+   ...: 
+(1, 'a')
+(1, 'b')
+(1, 'c')
+(2, 'a')
+(2, 'b')
+(2, 'c')
+(3, 'a')
+(3, 'b')
+(3, 'c')
+
+In [9]: [(num, char) for char in char_list for num in num_list]
+Out[9]: 
+[(1, 'a'),
+ (2, 'a'),
+ (3, 'a'),
+ (1, 'b'),
+ (2, 'b'),
+ (3, 'b'),
+ (1, 'c'),
+ (2, 'c'),
+ (3, 'c')]
 ```
 
 #### 切片  
