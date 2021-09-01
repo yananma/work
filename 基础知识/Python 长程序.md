@@ -1,6 +1,66 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.01 专家姓名规则  
+
+```python 
+import logging
+
+from LAC import LAC
+from django.conf import settings
+from django.core.management.base import BaseCommand
+import pandas as pd
+
+
+class Command(BaseCommand):
+    def add_arguments(self, parser):
+        self.lac = LAC(mode='lac')
+        self.lac.load_customization(str(settings.RESOURCE_ROOT / 'docs' / 'program' / 'lac_person_costom.txt'))
+        pass
+
+    def handle(self, *args, **options):
+        pmap = {
+            'n': '普通名词',
+            'f': '方位名词',
+            's': '处所名词',
+            'nw': '作品名',
+            'nz': '其他专名',
+            'v': '普通动词',
+            'vd': '动副词',
+            'vn': '名动词',
+            'a': '形容词',
+            'ad': '副形词',
+            'an': '名形词',
+            'd': '副词',
+            'm': '数量词',
+            'q': '量词',
+            'r': '代词',
+            'p': '介词',
+            'c': '连词',
+            'u': '助词',
+            'xc': '其他虚词',
+            'w': '标点符号',
+            'PER': '人名',
+            'LOC': '地名',
+            'ORG': '机构名',
+            'TIME': '时间',
+        }
+        li = []
+        for line in (settings.RESOURCE_ROOT / 'docs' / 'program' / '姓名测试新的例子.txt').read_text(encoding='utf8').splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            ws, ps = self.lac.run(line)
+            li.append(ws)
+            li.append(ps)
+            li.append([pmap[p] for p in ps])
+            li.append('\n')
+
+        dataframe = pd.DataFrame(li)
+        dataframe.to_csv(str(settings.RESOURCE_ROOT / 'docs' / 'program' / 'test_name.csv'), index=False, sep=',')
+        print('写入完毕。。。。。。')
+```
+
 
 #### 08.24 整理标注数据，返回格式是四个标签和标签对应的单词  
 
@@ -337,8 +397,6 @@ s = Solution()
 print(s.replace_to_default(li))
 ```
 
-彦彬的方法  
-
 思想就是没有到底就继续拆，到底了就取默认值，有更强的容错性。  
 
 ```python 
@@ -635,9 +693,9 @@ class TextTools(UserString):
         self.data = s
 
     def add_tag(self, source, target):
-        self.data = re.sub(source, "<TAG country='{}'>{}</TAG>".format(target, source), self.data)
+        self.data = re.sub(f'({source})', r"<TAG country='{}'>\1</TAG>".format(target), self.data)
         return self
-
+    
     def normalize(self):
         self.data = re.sub(r'[<>=\'\'/ ，]', '', self.data).strip()
         return self
@@ -646,16 +704,5 @@ class TextTools(UserString):
 print(TextTools('\t这是一个字符串，有中科院这个单词   ').add_tag(source='中科院', target='中国').normalize())
 ```
 
-
-改进方法  
-
-```python         
-def add_tag(self, source, target):
-    self.data = re.sub(f'({source})', r"<TAG country='{}'>\1</TAG>".format(target), self.data)
-    return self
-
-# f'({source})' 和下面的内容是等价的  
-# s = '({})'.format(source)
-```
 
 
