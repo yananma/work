@@ -123,7 +123,31 @@ with open('yuce_EN_840.jsonl', encoding="utf-8") as f:
 
 df = pd.DataFrame(final_list)
 df.to_excel('标注.xlsx', index=False)
+
+09.01 改成了 10 个标签，然后会有一键多值的问题，就只是改了最后一段。  
+
+final_list = []
+with open('技术治理-EN-213.jsonl', encoding="utf-8") as f:
+    lines = f.readlines()
+    for line in lines:
+        final_dict = {}
+        line = json.loads(line)
+        final_dict['text'] = line['text']
+        annotations = line['annotations']
+        tmp_dict = {}  # 这个是各自的标签对应的句子里标注的词
+        for value in map_labels.values():
+            tmp_dict[value] = []
+        for annotation in annotations:
+            start = int(annotation['start_offset'])
+            end = int(annotation["end_offset"])
+            word = line['text'][start:end]
+            tmp_dict[map_labels[annotation['label']]].append(word)
+        for label in tmp_dict.keys():
+            final_dict[label] = str(tmp_dict[label]).replace('[', '').replace(']', '') if tmp_dict[label] else '' # 去除左右列表符号
+        final_list.append(final_dict)
 ```
+
+
 
 
 原版  
