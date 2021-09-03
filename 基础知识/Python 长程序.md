@@ -1,6 +1,154 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.02 专家姓名规则匹配  
+
+```python 
+import re
+
+import LAC
+from django.core.management import BaseCommand
+
+from data_analysis.connect import ConnectManager
+from data_analysis.tools.text_tools import TextFactory
+
+
+class XMLTagMatchNode:
+    def __init__(self, tag=None, tag_re=None, val=None, val_re=None, count=''):
+        self.tag = tag or tag_re or r'([^<]+?)'
+        self.val = val or val_re or r'([^<]+?)'
+        self.count = count
+        self.re_str = rf'((<({self.tag})>{self.val}</({self.tag})>){self.count})'
+
+    def __add__(self, other):
+        self.re_str = rf'{self.re_str}{other.re_str}'
+        return self
+
+    def __or__(self, other):
+        self.re_str = rf'{self.re_str}|{other.re_str}'
+        return self
+
+    def __and__(self, other):
+        self.re_str = rf'{self.re_str}{other.re_str}'
+        return self
+
+    def __str__(self):
+        return self.re_str
+
+    def __invert__(self):
+        self.re_str = rf'(((?!{self.re_str}).)*)'
+        return self
+
+    def to_re(self):
+        return re.compile(self.re_str)
+
+
+N = XMLTagMatchNode
+
+lac = LAC.LAC(mode='lac')
+
+
+class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-si',
+            dest='sindex',
+            default='kejisousou-points-test',
+            help='查询的索引',
+        )
+
+    def handle(self, *args, **options):
+        source_data = ["6G", "物联网", "人工智能", "5G", "无人驾驶"]
+
+        query_dict = {
+            "query": {
+                "bool": {
+                    "should": [
+                        {
+                            "query_string": {
+                                "fields": ["point_text"],
+                                "query": ' OR '.join(f'"{data}"' for data in source_data)
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+
+        result_list = []
+        for data, next_search_after in ConnectManager.ES.get_setting('DEFAULT').search_by_page_with_searchafter(
+                options['sindex'],
+                doc=None,
+                fields=["point_text"],
+                query=query_dict,
+                sort_fields=[{'post_time': 'desc'}, {'include_time': 'desc'}],
+                return_sort=True,
+                limit=3000
+        ):
+            # print("开始查询......")
+            result_text = [it['point_text'] for it in data]
+            result_list.extend(result_text)
+            print("查询结束......")
+            break
+
+        pattern = (N(tag_re='(LOC)|(ORG)') + ~N(tag='w', val_re=r'[^、·]') + N('n') + N('PER')).to_re()
+        cpl = re.compile(pattern)
+        per_cpl = re.compile(r"(<PER>.*?</PER>)+")
+
+        chunk_text_list = []
+        count = 0
+        with open('not_match.txt', 'w', encoding='utf-8') as fs:
+            for line in result_list:
+
+                if line:
+                    text_with_tag = TextFactory(line).add_tag_from_lac(lac).now
+                    r = cpl.search(text_with_tag)
+                    if r:
+                        chunk_text_with_tag = TextFactory(text_with_tag).chunk_tag_with_max_size_v2(search_flag_str=r.group()).now.strip('…')
+                        chunk_text_no_tag = TextFactory(chunk_text_with_tag).replace_tag_to_others().now
+                        if chunk_text_no_tag not in chunk_text_list:
+                            chunk_text_list.append(chunk_text_no_tag)
+                            count += 1
+                            fs.write(f'{TextFactory(r.group()).replace_tag_to_others().now}\n\t{chunk_text_no_tag}\n\n')
+                            fs.write(f'{r.group()}\n\t{chunk_text_with_tag}\n\n')
+                            fs.write('*' * 80 + '\n\n')
+                            # print(f'{TextFactory(r.group()).replace_tag_to_others().now}\n\t{chunk_text_no_tag}\n')
+                            # print(f'{r.group()}\n\t{chunk_text_with_tag}\n')
+                            # print('*' * 80 + '\n')
+                            if count % 100 == 0:
+                                print(f'已经写入了{count}条数据。')
+                            if count == 1000:
+                                break
+                        else:
+                            continue
+                    else:    # 如果按照规则没有匹配到，那么就搜 PER，如果存在 PER 就返回 PER 相关的一段；如果没有 PER 就 pass
+                        per_r_list = per_cpl.findall(text_with_tag)
+                        if per_r_list:
+                            per_r_list = list(set(per_r_list))
+                            for per_r in per_r_list:
+                                chunk_text_with_tag = TextFactory(text_with_tag).chunk_tag_with_max_size_v2(
+                                    search_flag_str=per_r).now.strip('…')
+                                chunk_text_no_tag = TextFactory(chunk_text_with_tag).replace_tag_to_others().now
+                                if chunk_text_no_tag not in chunk_text_list:
+                                    chunk_text_list.append(chunk_text_no_tag)
+                                    count += 1
+                                    fs.write(f'{TextFactory(per_r).replace_tag_to_others().now}\n\t{chunk_text_no_tag}\n\n')
+                                    fs.write(f'{per_r}\n\t{chunk_text_with_tag}\n\n')
+                                    fs.write('*' * 80 + '\n\n')
+                                    if count % 100 == 0:
+                                        print(f'已经写入了{count}条数据。')
+                                    if count == 1000:
+                                        break
+                                    # print(f'{TextFactory(per_r).replace_tag_to_others().now}\n\t{chunk_text_no_tag}\n')
+                                    # print(f'{per_r}\n\t{chunk_text_with_tag}\n')
+                                    # print('*' * 80 + '\n')
+                                else:
+                                    continue
+                        else:
+                            pass
+```
+
+
 #### 09.01 专家姓名规则  
 
 ```python 
