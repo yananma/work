@@ -1,6 +1,48 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.04 把数据写入到数据库里（国家规则）  
+
+写在 ZKY_Backend 的 data_analysis\management\commands\test.py 中就行，没有需要配置的参数，就是用 manage.py 运行 test 命令  
+
+```python 
+import logging
+
+import pandas as pd
+from data_analysis.models import ZKYCountry
+from django.conf import settings
+from django.core.management.base import BaseCommand
+
+logger = logging.getLogger('mxlog')
+
+
+class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-file',
+            dest='file',
+            default=settings.RESOURCE_ROOT / 'docs' / 'program' / 'country_rule V3.xlsx',
+            help='配置的yaml文件',
+        )
+
+    def handle(self, *args, **options):
+        # ZKYCountry.objects.all().delete()
+        df: pd.DataFrame = pd.read_excel(options['file'].__str__())
+        for d in df.iterrows():
+            ZKYCountry.objects.update_or_create(
+                name=d[1]["name"],
+                defaults={
+                    'synonyms': d[1]["synonyms"] if d[1]["synonyms"] == d[1]["synonyms"] else '',
+                    'limiter': d[1]["limiter"] if d[1]["limiter"] == d[1]["limiter"] else '',
+                    'exclude_limiter': d[1]["exclude_limiter"] if d[1]["exclude_limiter"] == d[1][
+                        "exclude_limiter"] else '',
+                    'level': d[1]['level'] if d[1]["level"] == d[1]["level"] else '',
+                }
+            )
+        logger.info(f'完成')
+```
+
+
 #### 09.02 专家姓名规则匹配  
 
 ```python 
