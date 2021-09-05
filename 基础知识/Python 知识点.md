@@ -117,6 +117,31 @@ Out[2]: '[0]北[1]国[2]风[3]光'
 
 ### 列表  
 
+#### append 和 extend  
+
+```python
+# append 
+In [1]: nums = [1, 2, 3]
+
+In [2]: new_nums = [4, 5]
+
+In [3]: nums.append(new_nums)
+
+In [4]: nums
+Out[4]: [1, 2, 3, [4, 5]]
+
+# extend 
+In [5]: nums = [1, 2, 3]
+
+In [6]: new_nums = [4, 5]
+
+In [7]: nums.extend(new_nums)
+
+In [8]: nums
+Out[8]: [1, 2, 3, 4, 5]
+```
+
+
 #### 列表取值  
 
 一种是通过索引取值，比如 li[3]，一种是通过 for 循环遍历  
