@@ -306,6 +306,12 @@ In [60]: for value in d.values():
 2
 ```
 
+### 集合  
+
+集合可以去重是因为哈希，同样的内容会存在同一个地方，这样就实现了去重。  
+
+字典的键，不能有重复也是因为哈希。  
+
 
 ### for 循环  
 
@@ -695,8 +701,8 @@ In [1]: from collections import defaultdict
 
 In [2]: d = defaultdict(list)
 
-In [3]: d['a'].append(1)
-In [4]: d['a'].append(2)
+In [3]: d['a'].append(1)  # 先取值，没有返回 list，这次是没有，所以这次是先返回一个 list，然后再 append  
+In [4]: d['a'].append(2)  # 这次是已经取到值了，取到列表以后 append  
 In [5]: d['a'].append(3)
 
 In [6]: d
@@ -733,7 +739,7 @@ Out[19]: defaultdict(set, {'a': {1, 2}, 'b': {3, 4}})
 ```python 
 In [20]: d = {}
 
-In [21]: d.setdefault('a', []).append(1)
+In [21]: d.setdefault('a', []).append(1)  # 先取值，没有，返回空列表，然后 append  
 
 In [22]: d
 Out[22]: {'a': [1]}
