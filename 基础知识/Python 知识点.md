@@ -595,6 +595,73 @@ def add(a,b):
 
 ### 内置函数  
 
+#### all 函数  
+
+所有的都是 True，结果才是 True  
+
+```python 
+In [15]: all(1)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-15-4c9044af74f3> in <module>
+----> 1 all(1)
+
+TypeError: 'int' object is not iterable
+
+In [16]: all([1])
+Out[16]: True
+
+In [17]: all([1], [])
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-17-84117c3b7519> in <module>
+----> 1 all([1], [])
+
+TypeError: all() takes exactly one argument (2 given)
+
+In [18]: all([0, 1, 2])
+Out[18]: False
+
+In [19]: all([1, 2])
+Out[19]: True
+```
+
+
+#### any 函数  
+
+有一个为 True 就是 True  
+
+```python 
+In [9]: any(1)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-9-a63f73efd75c> in <module>
+----> 1 any(1)
+
+TypeError: 'int' object is not iterable
+
+In [10]: any([])
+Out[10]: False
+
+In [11]: any([1])
+Out[11]: True
+
+In [12]: any([1], [])
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-12-d956e6390cb8> in <module>
+----> 1 any([1], [])
+
+TypeError: any() takes exactly one argument (2 given)
+
+In [13]: any([0, 1, 2])
+Out[13]: True
+
+In [14]: any([0, False])
+Out[14]: False
+```
+
+
 #### exec 函数  
 
 这个函数支持动态执行 Python 代码。 object 必须是字符串或者代码对象。  
@@ -625,11 +692,11 @@ Return an iterator yielding those items of iterable for which function(item)
 is true. If function is None, return the items that are true.
 
 ```python 
-In [10]: list(filter(lambda x: x, [True, False, None, 1, 0]))
-Out[10]: [True, 1]
-
 In [72]: list(filter(abs, [-1, 0, 1]))
 Out[72]: [-1, 1]
+
+In [10]: list(filter(lambda x: x, [True, False, None, 1, 0]))
+Out[10]: [True, 1]
 ```
 
 filter 必须要传一个函数，所以才有了下面这种写法  
