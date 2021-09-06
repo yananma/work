@@ -525,6 +525,17 @@ Out[34]: 7
 
 \* 就是拆一层，\*args args 是元组，\*args 是元组中的元素。  
 
+args 是 (1, 2, 3, 4)，\*args 是 1, 2, 3, 4  
+
+```python 
+In [19]: def foo(*args):
+    ...:     print(f'args: {args}')
+    ...: 
+
+In [20]: foo(1, 2, 3, 4)
+args: (1, 2, 3, 4)
+```
+
 ```python 
 In [1]: t = (20, 8)
 
