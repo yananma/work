@@ -1,6 +1,13 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.06 创建相同表结构的数据表  
+
+从测试数据库导入数据到正式数据库。不知道配置，不知道字段的类型等等。就把原表导出为 CSV 格式，然后再导入这个表就行了。    
+
+一般的数据，直接全选，然后复制粘贴保存就行了。  
+
+
 #### 09.04 把数据写入到数据库里（国家规则）  
 
 写在 ZKY_Backend 的 data_analysis\management\commands\test.py 中就行，没有需要配置的参数，就是用 manage.py 运行 test 命令  
@@ -31,17 +38,20 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # ZKYCountry.objects.all().delete()
-        df: pd.DataFrame = pd.read_excel(options['file'].__str__())
+        df: pd.DataFrame = pd.read_excel(options['file'].__str__(), )
+        field_list = ['synonyms', 'limiter', 'exclude_limiter', 'level']
         for d in df.iterrows():
             ZKYCountry.objects.update_or_create(
                 name=d[1]["name"],
-                defaults={
-                    'synonyms': d[1]["synonyms"] if d[1]["synonyms"] == d[1]["synonyms"] else '',
-                    'limiter': d[1]["limiter"] if d[1]["limiter"] == d[1]["limiter"] else '',
-                    'exclude_limiter': d[1]["exclude_limiter"] if d[1]["exclude_limiter"] == d[1][
-                        "exclude_limiter"] else '',
-                    'level': d[1]['level'] if d[1]["level"] == d[1]["level"] else '',
-                }
+                defaults={field: d[1][field] if d[1][field] == d[1][field] else '' for field in field_list}  # 使用字典推导式
+
+                # defaults={
+                #     'synonyms': d[1]["synonyms"] if d[1]["synonyms"] == d[1]["synonyms"] else '',
+                #     'limiter': d[1]["limiter"] if d[1]["limiter"] == d[1]["limiter"] else '',
+                #     'exclude_limiter': d[1]["exclude_limiter"] if d[1]["exclude_limiter"] == d[1]["exclude_limiter"]
+                #                        else '',
+                #     'level': d[1]['level'] if d[1]["level"] == d[1]["level"] else '',
+                # }
             )
         logger.info(f'完成')
 ```
