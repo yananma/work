@@ -337,6 +337,20 @@ In [60]: for value in d.values():
 2
 ```
 
+#### fromkeys()  
+
+创建同 key 字典  
+
+```python 
+In [37]: d = {'a': 1, 'b': 2}
+
+In [40]: d1 = {}
+
+In [41]: d1.fromkeys(d)
+Out[41]: {'a': None, 'b': None}
+```
+
+
 ### 集合  
 
 集合可以去重是因为哈希，同样的内容会存在同一个地方，这样就实现了去重。  
@@ -524,6 +538,8 @@ Out[34]: 7
 \*args 里的 \* 是什么意思？它的功能是告诉 Python 把函数的所有参数都接收进来，然后放到名叫 args 的列表中去。  
 
 \* 就是拆一层，\*args args 是元组，\*args 是元组中的元素。  
+
+\* 可以把一个可迭代对象拆开作为函数的参数。  
 
 args 是 (1, 2, 3, 4)，\*args 是 1, 2, 3, 4  
 
@@ -839,6 +855,32 @@ partial(函数，参数)，partial 函数，把参数绑定到函数上。
 
 
 ### collections 包
+
+#### namedtuple 函数  
+
+```python 
+In [27]: from collections import namedtuple
+
+In [29]: Person = namedtuple('Person', ['name', 'age'])
+
+In [30]: type(Person)
+Out[30]: type
+
+In [32]: person = Person('mayanan', 30)
+
+In [33]: person
+Out[33]: Person(name='mayanan', age=30)
+
+In [34]: type(person)
+Out[34]: __main__.Person
+
+In [35]: person.name
+Out[35]: 'mayanan'
+
+In [36]: person.age
+Out[36]: 30
+```
+
 
 #### defaultdict 类  
 
