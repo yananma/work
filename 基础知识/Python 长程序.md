@@ -5,6 +5,10 @@
 
 写在 ZKY_Backend 的 data_analysis\management\commands\test.py 中就行，没有需要配置的参数，就是用 manage.py 运行 test 命令  
 
+因为 manage.py 默认用的是 settings_test，所以不传参数的时候使用的就是测试数据库。  
+
+如果要更新正式数据库，就要配置参数 --settings=ZKY_Backend.settings
+
 ```python 
 import logging
 
@@ -21,7 +25,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '-file',
             dest='file',
-            default=settings.RESOURCE_ROOT / 'docs' / 'program' / 'country_rule V3.xlsx',
+            default=settings.RESOURCE_ROOT / 'docs' / 'program' / 'country_rule V4.xlsx',
             help='配置的yaml文件',
         )
 
