@@ -935,6 +935,29 @@ In [42]: json.dumps(d)
 Out[42]: '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
 ```
 
+
+### itertools 包  
+
+#### zip_longest  
+
+```python 
+In [21]: a = ['a', 'b', 'c', 'd']
+
+In [22]: b = [1, 2]
+
+In [23]: list(zip(a, b))
+Out[23]: [('a', 1), ('b', 2)]
+
+In [24]: from itertools import zip_longest
+
+In [25]: list(zip_longest(a, b))
+Out[25]: [('a', 1), ('b', 2), ('c', None), ('d', None)]
+
+In [26]: list(zip_longest(a, b, fillvalue='42'))
+Out[26]: [('a', 1), ('b', 2), ('c', '42'), ('d', '42')]
+```
+
+
 ### typing 包
 
 #### Union 
