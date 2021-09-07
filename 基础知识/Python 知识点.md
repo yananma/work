@@ -1000,6 +1000,21 @@ Out[26]: [('a', 1), ('b', 2), ('c', '42'), ('d', '42')]
 ```
 
 
+### more_itertools 包  
+
+#### unzip  
+
+```python 
+>>> iterable = [('a', 1), ('b', 2), ('c', 3), ('d', 4)]
+>>> letters, numbers = unzip(iterable)
+>>> list(letters)
+['a', 'b', 'c', 'd']
+>>> list(numbers)
+[1, 2, 3, 4]
+```
+
+
+
 ### typing 包
 
 #### Union 
