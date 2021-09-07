@@ -882,6 +882,16 @@ Out[36]: 30
 ```
 
 
+#### ChainMap 类  
+
+这个类型可以容纳数个不同的映射对象，然后在进行键查找操作的时候，这些对象会被当作一个整体被逐个查找，直到键被找到为止。  
+
+```python 
+import builtins
+pylookup = ChainMap(locals(), globals(), vars(builtins))
+```
+
+
 #### defaultdict 类  
 
 解决一键多值的问题  
