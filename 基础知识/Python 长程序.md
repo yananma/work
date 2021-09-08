@@ -201,6 +201,8 @@ class Command(BaseCommand):
 
 #### 09.01 专家姓名规则  
 
+写在 test.py 中就行，如果只有几条，就写到一个列表里。  
+
 ```python 
 import logging
 
