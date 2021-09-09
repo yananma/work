@@ -1,0 +1,103 @@
+
+查看索引字段  
+`GET kejisousou`  
+
+在所有索引中查询，就是不指定索引名查询  
+`GET _search`  
+
+查看数量  
+`GET /kejisousou-testv5/_count`  
+
+
+
+query_string 查询  
+```python 
+GET test-zky/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "query_string": {
+            "default_field": "text",
+            "query":' OR '.join(f'"{data}"' for data in source_data)
+          }
+        }
+      ]
+    }
+  },
+  "_source": ["title","text","url","post_time"],
+  "size": 1000
+}
+```
+
+```python 
+GET test-zky/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "query_string": {
+            "default_field": "url",
+            "query": "\"http://kuaibao.qq.com/s/93560f119f336852\" or \"https://finance.sina.com.cn/tech/2021-07-16/doc-ikqcfnca7213437.shtml\""
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+```python 
+GET test-zky/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "query_string": {
+            "fields": ["title", "text"],
+            "query": "\"拉曼研究所\""
+          }
+        }
+      ]
+    }
+  },
+  "_source": ["title", "url", "post_time", "text"]
+}
+```
+
+title.keyword  
+```python 
+GET test-zky/_search 
+{
+  "query": {
+    "term": {
+      "title.keyword": {
+        "value": "落户合肥"
+      }
+    }
+  }, 
+  "_source": ["title", "text"]
+}
+```
+
+用 sort 排序实现查询第一条和最后一条
+```python 
+GET kejisousou-test/_search
+{
+  "size": 1,
+  "_source": "post_time",
+  "sort": [
+    {
+      "post_time": {
+        "order": "asc"
+      }
+    }
+  ]
+}
+```
+
+
+
