@@ -40,7 +40,8 @@ GET test-zky/_search
         {
           "query_string": {
             "default_field": "url",
-            "query": "\"http://kuaibao.qq.com/s/93560f119f336852\" or \"https://finance.sina.com.cn/tech/2021-07-16/doc-ikqcfnca7213437.shtml\""
+            "query": "\"http://kuaibao.qq.com/s/93560f119f336852\" 
+            or \"https://finance.sina.com.cn/tech/2021-07-16/doc-ikqcfnca7213437.shtml\""
           }
         }
       ]
@@ -99,5 +100,65 @@ GET kejisousou-test/_search
 }
 ```
 
+
+#### 聚合  
+
+按月份聚合  
+```python 
+GET /kejisousou-en-test/_search
+{
+  "size": 0,
+  "aggs": {
+    "time_aggs": {
+      "date_histogram": {
+        "field": "post_time",
+        "time_zone": "+08:00",
+        "interval": "month",
+        "format": "yyyy-MM"
+      }
+    }
+  }
+}
+```
+
+按分类聚合  
+```python 
+GET /kejisousou-en-test/_search
+{
+  "size": 0,
+  "aggs": {
+    "category_aggs": {
+      "terms": {
+        "field": "category.keyword"
+      }
+    }
+  }
+}
+```
+
+先按月份聚合，然后每个月按分类聚合  
+```python 
+GET /kejisousou-en-test/_search
+{
+  "size": 0,
+  "aggs": {
+    "time_aggs": {
+      "date_histogram": {
+        "field": "post_time",
+        "time_zone": "+08:00",
+        "interval": "month",
+        "format": "yyyy-MM"
+      },
+      "aggs": {
+        "category_aggs": {
+          "terms": {
+            "field": "category.keyword"
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 
