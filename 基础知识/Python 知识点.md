@@ -623,12 +623,21 @@ Out[41]: list
 In [1]: from datetime import datetime
 
 In [2]: datetime.now()
-Out[2]: datetime.datetime(2021, 8, 8, 18, 33, 2, 50696)
+Out[2]: datetime.datetime(2021, 9, 9, 17, 15, 22, 178434)    # 这里是输出  
 
-In [3]: d.strftime("%Y-%m-%d %H:%M:%S")
-Out[3]: '2021-08-08 18:34:09'
+In [3]: datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+Out[3]: '2021-09-09 17:16:14'
 
+In [4]: s = '2020-01'
+
+In [5]: datetime.strptime(s, '%Y-%m')
+Out[5]: datetime.datetime(2020, 1, 1, 0, 0)
+
+In [6]: datetime.strptime(s, '%Y-%m').strftime('%Y年%m月')
+Out[6]: '2020年01月'
 ```
+
+
 
 datetime 可以通过 . 看都有什么方法，比如 year、month、day、hour、minute、second 等等  
 
