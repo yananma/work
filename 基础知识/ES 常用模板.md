@@ -161,4 +161,37 @@ GET /kejisousou-en-test/_search
 }
 ```
 
+限定日期范围据核查询  
+
+```python 
+GET /kejisousou-en-test/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "post_time": {
+              "gte": "2020-01-01 00:00:00",
+              "lte": "2021-09-09 00:00:00"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "time_aggs": {
+      "date_histogram": {
+        "field": "post_time",
+        "time_zone": "+08:00", 
+        "interval": "month",
+        "format": "yyyy-MM"
+      }
+    }
+  }
+}
+```
+
 
