@@ -81,12 +81,12 @@ pattern = (
 cpl = re.compile(pattern)
 
 for line in origin_list:
-    text_with_tag = TextFactory(line).add_tag_from_lac(lac).now
+    text_with_tag = TextFactory(line).add_tag_from_lac(lac).now    # lac 打标签，输出的是带标签的文本    
     r = cpl.search(text_with_tag)
-    if r:
+    if r:    # 按照规则匹配成功  
         # print(r.group())
         pass
-    else:
+    else:    # 按照规则匹配失败  
         print(line)
         print(text_with_tag + '\n')
 ```
@@ -221,21 +221,31 @@ from data_analysis.tools.text_tools import TextFactory
 
 
 class XMLTagMatchNode:
-    def __init__(self, tag=None, tag_re=None, val=None, val_re=None, count=''):
+
+    def __init__(self, tag=None, tag_re=None, val=None, val_re=None, count='', empty=False):
+        if empty:
+            self.tag, self.val, self.re_str = '', '', ''
+            self.count = 0
         self.tag = tag or tag_re or r'([^<]+?)'
         self.val = val or val_re or r'([^<]+?)'
         self.count = count
         self.re_str = rf'((<({self.tag})>{self.val}</({self.tag})>){self.count})'
 
     def __add__(self, other):
+        if not other.re_str:
+            return self
         self.re_str = rf'{self.re_str}{other.re_str}'
         return self
 
     def __or__(self, other):
+        if not other.re_str:
+            return self
         self.re_str = rf'{self.re_str}|{other.re_str}'
         return self
 
     def __and__(self, other):
+        if not other.re_str:
+            return self
         self.re_str = rf'{self.re_str}{other.re_str}'
         return self
 
@@ -243,7 +253,11 @@ class XMLTagMatchNode:
         return self.re_str
 
     def __invert__(self):
-        self.re_str = rf'(((?!{self.re_str}).)*)'
+        self.re_str = rf'(((?!{self.re_str}).)*?)'
+        return self
+
+    def reverse(self):
+        self.re_str = rf'((.*?{self.re_str})+)'
         return self
 
     def to_re(self):
