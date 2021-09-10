@@ -1,6 +1,97 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.10 跑一批列表，找出不符合规则的句子  
+
+```python 
+import re
+import LAC
+from django.conf import settings
+import os
+from data_analysis.tools.text_tools import TextFactory
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ZKY_Backend.settings_test')
+
+
+class XMLTagMatchNode:
+
+    def __init__(self, tag=None, tag_re=None, val=None, val_re=None, count='', empty=False):
+        if empty:
+            self.tag, self.val, self.re_str = '', '', ''
+            self.count = 0
+        self.tag = tag or tag_re or r'([^<]+?)'
+        self.val = val or val_re or r'([^<]+?)'
+        self.count = count
+        self.re_str = rf'((<({self.tag})>{self.val}</({self.tag})>){self.count})'
+
+    def __add__(self, other):
+        if not other.re_str:
+            return self
+        self.re_str = rf'{self.re_str}{other.re_str}'
+        return self
+
+    def __or__(self, other):
+        if not other.re_str:
+            return self
+        self.re_str = rf'{self.re_str}|{other.re_str}'
+        return self
+
+    def __and__(self, other):
+        if not other.re_str:
+            return self
+        self.re_str = rf'{self.re_str}{other.re_str}'
+        return self
+
+    def __str__(self):
+        return self.re_str
+
+    def __invert__(self):
+        self.re_str = rf'(((?!{self.re_str}).)*?)'
+        return self
+
+    def reverse(self):
+        self.re_str = rf'((.*?{self.re_str})+)'
+        return self
+
+    def to_re(self):
+        return re.compile(self.re_str)
+
+
+N = XMLTagMatchNode
+
+lac = LAC.LAC(mode='lac')
+lac.load_customization(str(settings.RESOURCE_ROOT/'docs'/'program'/'lac_person_costom.txt'))
+
+origin_list = ['国外专业拆解机构IFixit首席执行官凯尔·维恩斯（Kyle Wiens）表示，',
+               '百度创始人、董事长兼CEO李彦宏给出了自己的答案。',
+               '江西南昌大学中国科学院院士，南昌大学副校长首席代表王光绪博士指出，南昌大学带来了世界上效率最高的黄光LED和绿光LED，',
+               '宁德市委常委、常务副市长缪绍炜表示，发展通航产业要做好规划和论证工作，']
+
+pattern = (
+                N(tag_re='(LOC)|(ORG)')
+                + ~(
+                    N(tag='w', val_re=r'[^、·]')
+                    |
+                    N('WHITE')
+                )
+                + N('n')
+                + N('PER')
+            ).to_re()
+
+cpl = re.compile(pattern)
+
+for line in origin_list:
+    text_with_tag = TextFactory(line).add_tag_from_lac(lac).now
+    r = cpl.search(text_with_tag)
+    if r:
+        # print(r.group())
+        pass
+    else:
+        print(line)
+        print(text_with_tag + '\n')
+```
+
+
 #### 09.09 从 es 查聚合结果  
 
 这个应该非常简单才是，结果花了很长时间。一个是函数用 search，而不是 search_by_page_with_searchafter，熟悉 search 函数花了一些时间。  
