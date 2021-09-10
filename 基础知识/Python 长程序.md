@@ -1,6 +1,72 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.09 从 es 查聚合结果  
+
+这个应该非常简单才是，结果花了很长时间。一个是函数用 search，而不是 search_by_page_with_searchafter，熟悉 search 函数花了一些时间。  
+
+一个是时间转换，strptime 和 strftime  
+
+一个是键值对匹配，本来这个非常简单，结果套用了原来复杂的代码，搞得很麻烦，也花了一些时间。  
+
+```python
+import pandas as pd
+from django.conf import settings
+from datetime import datetime
+from django.core.management import BaseCommand
+
+from data_analysis.connect import ConnectManager
+
+
+class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-si',
+            dest='sindex',
+            default='kejisousou-en-test',
+            help='查询的索引',
+        )
+
+    def handle(self, *args, **options):
+
+        query_dict = {
+            "size": 0,
+            "aggs": {
+                "time_aggs": {
+                    "date_histogram": {
+                        "field": "post_time",
+                        "time_zone": "+08:00",
+                        "interval": "month",
+                        "format": "yyyy-MM"
+                    },
+                    "aggs": {
+                        "category_aggs": {
+                            "terms": {
+                                "field": "category.keyword"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        final_list = []
+        data = ConnectManager.ES.get_setting('DEFAULT').search(options['sindex'], size=0, body=query_dict)
+        for month_data in data['aggregations']['time_aggs']['buckets']:
+            final_dict = {'月份': datetime.strptime(month_data['key_as_string'], '%Y-%m').strftime('%Y年%m月'),
+                          '全部数据': month_data['doc_count']}
+            for category in month_data['category_aggs']['buckets']:
+                key = category['key']
+                count = category['doc_count']
+                final_dict[key] = count
+            final_list.append(final_dict)
+            print(final_dict)
+        data_frame = pd.DataFrame(final_list)
+        data_frame.to_csv(str(settings.RESOURCE_ROOT / 'docs' / 'program' / '英文版每月分类统计.csv'), index=False, sep=',')
+
+        print("完成......")
+```
+
 
 #### 09.04 把数据写入到数据库里（国家规则）  
 
