@@ -90,6 +90,54 @@ In [16]: s.casefold()
 Out[16]: 'abc'
 ```
 
+
+#### center()  
+
+```python 
+In [4]: s = 'hello'
+
+In [5]: s.center(20)
+Out[5]: '       hello        '
+
+In [6]: s.center(10)
+Out[6]: '  hello   '
+
+In [7]: s.center(7)
+Out[7]: ' hello '
+
+In [8]: s.center(6)
+Out[8]: 'hello '
+
+In [9]: s.center(5)
+Out[9]: 'hello'
+
+In [10]: s.center(3)
+Out[10]: 'hello'
+```
+
+
+#### isspace()  
+
+如果字符串中只有空白字符且至少有一个字符则返回 True ，否则返回 False 。  
+
+```python 
+In [2]: s1 = ' hello world  '
+
+In [3]: s1.isspace()
+Out[3]: False
+
+In [4]: s2 = ' '
+
+In [5]: s2.isspace()
+Out[5]: True
+
+In [6]: s3 = '\t\n'
+
+In [7]: s3.isspace()
+Out[7]: True
+```
+
+
 #### 字符串和索引拼接  
 
 ```python 
@@ -807,6 +855,22 @@ Out[6]: ['0', '1', '2', '3']
 
 In [8]: list(filter(lambda x: int(x), s.split(',')))
 Out[8]: ['1', '2', '3']
+```
+
+#### sorted 函数  
+
+默认升序。  
+
+key 是函数，所以必须用 lambda，其实就是 key=x[0]。  
+
+```python 
+In [1]: l = [(3, 'cat'), (1, 'bag'), (2, 'apple')]
+
+In [2]: sorted(l, key=lambda x: x[0])
+Out[2]: [(1, 'bag'), (2, 'apple'), (3, 'cat')]
+
+In [3]: sorted(l, key=lambda x: x[1])
+Out[3]: [(2, 'apple'), (1, 'bag'), (3, 'cat')]
 ```
 
 
