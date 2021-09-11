@@ -11,26 +11,8 @@
 
 
 query_string 查询  
-```python 
-GET test-zky/_search
-{
-  "query": {
-    "bool": {
-      "should": [
-        {
-          "query_string": {
-            "default_field": "text",
-            "query":' OR '.join(f'"{data}"' for data in source_data)
-          }
-        }
-      ]
-    }
-  },
-  "_source": ["title","text","url","post_time"],
-  "size": 1000
-}
-```
 
+最常用的是这个  
 ```python 
 GET test-zky/_search
 {
@@ -49,6 +31,8 @@ GET test-zky/_search
   }
 }
 ```
+
+在多个字段中查询  
 
 ```python 
 GET test-zky/_search
