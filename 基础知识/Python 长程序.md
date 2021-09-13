@@ -1,6 +1,32 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.13 把 excel 文件转换成 jsonl 格式  
+
+```python 
+import json
+import re
+import pandas as pd
+
+
+df = pd.read_excel('技术预测-短板-不空.xlsx', engine='openpyxl', nrows=530)
+
+juzi_list = list(df['句子'])
+biaozhi_list = list(df['标志'])
+
+pattern = '短板'
+
+with open('技术预测-短板-不空.jsonl', 'a', encoding="utf-8") as f:
+    for sentence in juzi_list:
+        final_dict = {}
+        re_result = re.search(pattern, sentence)
+        final_dict['text'] = sentence
+        final_dict['labels'] = [[re_result.start(), re_result.end(), '标志']]
+        print(final_dict)
+        f.write(json.dumps(final_dict) + "\n")
+```
+
+
 #### 09.10 跑一批姓名规则列表，找出不符合规则的句子  
 
 ```python 
