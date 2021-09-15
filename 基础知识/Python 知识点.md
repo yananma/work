@@ -685,6 +685,15 @@ In [6]: datetime.strptime(s, '%Y-%m').strftime('%Y年%m月')
 Out[6]: '2020年01月'
 ```
 
+```python
+In [59]: import datetime
+
+In [60]: datetime.datetime.now()
+Out[60]: datetime.datetime(2021, 9, 15, 17, 52, 54, 6808)
+
+In [61]: datetime.datetime.now() - datetime.timedelta(days=365)
+Out[61]: datetime.datetime(2020, 9, 15, 17, 52, 59, 671453)
+```
 
 
 datetime 可以通过 . 看都有什么方法，比如 year、month、day、hour、minute、second 等等  
