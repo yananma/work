@@ -178,4 +178,43 @@ GET /kejisousou-en-test/_search
 }
 ```
 
+按 entry_id 聚合，这样可以看到都有哪些 entry_id。    
+
+```python 
+GET /kejisousou-en-testv1/_search
+{
+  "size": 0,
+  "aggs": {
+    "category_aggs": {
+      "terms": {
+        "field": "entry_id",
+        "size": 1000
+      }
+    }
+  }
+}
+```
+
+按照 id 筛选，再按照时间排序，就可以看到这个 id 下的按顺序排列的结果  
+
+```python 
+GET kejisousou-en-test/_search
+{
+  "query": {
+    "match_phrase": {
+      "entry_id": "647232"
+    }
+  }, 
+  "size": 161,
+  "_source": "post_time",
+  "sort": [
+    {
+      "post_time": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+```
+
 
