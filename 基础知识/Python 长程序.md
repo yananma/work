@@ -9,21 +9,26 @@ import re
 import pandas as pd
 
 
-def excel_to_jsonl(file_name, pattern):
-    df = pd.read_excel(f'{file_name}.xlsx', engine='openpyxl', nrows=530)
+def excel_to_jsonl(file_name, label_name):
+    df = pd.read_excel(f'{file_name}.xlsx', engine='openpyxl')
     text_list = list(df['句子'])
-    pattern = pattern
+    label_list = list(df[label_name])
     with open(f'{file_name}.jsonl', 'a', encoding="utf-8") as f:
-        for text in text_list:
-            final_dict = {}
-            re_result = re.search(pattern, text)
-            final_dict['text'] = text
-            final_dict['labels'] = [[re_result.start(), re_result.end(), '标志']]
+        for i, text in enumerate(text_list):
+            final_dict = {'text': text}
+            re_result = re.search(re.escape(label_list[i]), text)
+            final_dict['labels'] = [[re_result.start(), re_result.end(), label_name]]
             print(final_dict)
             f.write(json.dumps(final_dict) + "\n")
 
 
-excel_to_jsonl('技术预测-难题-空', '难题')  
+excel_to_jsonl('技术预测前50', '标志')
+```
+
+多标签加两句  
+```python 
+# shi_re_result = re.search(re.escape(shi_re_result), text)    # 多标签  
+# final_dict['labels'].append([shi_re_result.start(), shi_re_result.end(), '是'])            
 ```
 
 
