@@ -8,8 +8,6 @@
 查看数量  
 `GET /kejisousou-testv5/_count`  
 
-
-
 query_string 查询  
 
 最常用的是这个  
@@ -27,6 +25,36 @@ GET test-zky/_search
           }
         }
       ]
+    }
+  }
+}
+```
+
+```python 
+GET kejisousou-en-testv3/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "query_string": {
+            "fields": ["title", "text"],
+            "query": "math"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+```python 
+GET /kejisousou-en-testv3/_search
+{
+  "query": {
+    "query_string": {
+      "fields": ["title", "text"],
+      "query": "math"
     }
   }
 }
