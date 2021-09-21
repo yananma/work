@@ -1,4 +1,6 @@
 
+**踏踏实实地学懂每一个基本概念**  
+
 #### 代码怎么想的就怎么写，不要怕。  
 
 #### 文档，每天读一点，有个印象，遇到能想起来，到时候再深入学。   
@@ -865,6 +867,54 @@ Out[6]: ['0', '1', '2', '3']
 In [8]: list(filter(lambda x: int(x), s.split(',')))
 Out[8]: ['1', '2', '3']
 ```
+
+#### globals 和 locals 函数  
+
+在模块层级上，globals 和 locals 是同一个字段。`set(globals()) - set(locals())` 是空 set()。  
+
+locals 就是这个函数作用域的变量，如果是内层就只是内层，而且是在调用 locals() 之前的变量，如果是外层，只是外层，不包含内层的变量。  
+
+```python 
+In [18]: def f3():
+    ...:     c = 4
+    ...:     print(f'f3 函数的 locals：{locals()}')
+    ...:     def f4():
+    ...:         d = 5
+    ...:         print(f'f4 函数的 locals：{locals()}')
+    ...:     return f4()
+    ...: 
+
+In [19]: f3()
+f3 函数的 locals：{'c': 4}
+f4 函数的 locals：{'d': 5}
+```
+
+```python 
+In [26]: def f5():
+    ...:     f = 8
+    ...:     print(locals())
+    ...:     g = 9
+    ...:     print(locals())
+    ...: 
+
+In [27]: f5()
+{'f': 8}
+{'f': 8, 'g': 9}
+```
+
+globals 都差不多，就是因为内层的调用晚，所以多一个 e 变量，这个变量只是前后调用的影响造成的差别，并不是内外层造成的差别。  
+```python 
+In [20]: def f3():
+    ...:     d = 4
+    ...:     print(f'f3 函数的 locals：{locals()}')
+    ...:     print(f'f3 函数的 globals：{globals()}')
+    ...:     def f4():
+    ...:         e = 5
+    ...:         print(f'f4 函数的 locals：{locals()}')
+    ...:         print(f'f4 函数的 globals：{globals()}')
+    ...:     return f4()
+```
+
 
 #### sorted 函数  
 
