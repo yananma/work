@@ -1,6 +1,37 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.22 英文版 excel 转 jsonl，两个标签，有空值，有大小写不匹配  
+
+```python 
+import json
+import re
+import pandas as pd
+
+
+def excel_to_jsonl(file_name, label_name):
+    df = pd.read_excel(f'{file_name}.xlsx', engine='openpyxl')
+    text_list = list(df['text'])
+    label_list = list(df[label_name])
+    shi_list = list(df['是'])
+    with open(f'{file_name}.jsonl', 'a', encoding="utf-8") as f:
+        for i, text in enumerate(text_list):
+            final_dict = {'text': text}
+            if str(shi_list[i]) != 'nan':
+                shi_re_result = re.search(re.escape(shi_list[i].lower()), text.lower())
+                final_dict['labels'] = [[shi_re_result.start(), shi_re_result.end(), '是']]
+            else:
+                final_dict['labels'] = []
+            re_result = re.search(re.escape(label_list[i].lower()), text.lower())
+            final_dict['labels'].append([re_result.start(), re_result.end(), label_name])
+            print(final_dict)
+            f.write(json.dumps(final_dict) + "\n")
+
+
+excel_to_jsonl('技术预测EN新增', '标志')
+```
+
+
 #### 09.14 把上一个改成了函数  
 
 ```python 
