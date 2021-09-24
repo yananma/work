@@ -117,6 +117,35 @@ In [10]: s.center(3)
 Out[10]: 'hello'
 ```
 
+#### find()  
+
+str.find(sub[, start[, end]])  
+返回子字符串 sub 在 s[start:end] 切片内被找到的最小索引。 可选参数 start 与 end 可以理解为切片。 如果 sub 未被找到则返回 -1。  
+
+sub 是子字符串。  
+
+```python 
+In [2]: s = 'hello world'
+
+In [3]: s
+Out[3]: 'hello world'
+
+In [4]: type(s)
+Out[4]: str
+
+In [5]: s.find('l')
+Out[5]: 2
+
+In [6]: s.find('l', 2)
+Out[6]: 2
+
+In [7]: s.find('l', 3)
+Out[7]: 3
+
+In [8]: s.find('l', 4)
+Out[8]: 9
+```
+
 
 #### isspace()  
 
