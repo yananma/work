@@ -1068,8 +1068,9 @@ pylookup = ChainMap(locals(), globals(), vars(builtins))
 ```python 
 In [1]: from collections import defaultdict
 
-In [2]: d = defaultdict(list)
+In [2]: d = defaultdict(list)  # d 就是一个字典，字典的值是 list  
 
+# d['a'] 就是通过键取值  
 In [3]: d['a'].append(1)  # 先取值，没有返回 list，这次是没有，所以这次是先返回一个 list，然后再 append  
 In [4]: d['a'].append(2)  # 这次是已经取到值了，取到列表以后 append  
 In [5]: d['a'].append(3)
@@ -1077,11 +1078,19 @@ In [5]: d['a'].append(3)
 In [6]: d
 Out[6]: defaultdict(list, {'a': [1, 2, 3]})
 
-In [7]: d['b'].append(4)
-In [8]: d['b'].append(5)
+In [7]: d['b']
+Out[7]: []
 
-In [9]: d
-Out[9]: defaultdict(list, {'a': [1, 2, 3], 'b': [4, 5]})
+In [8]: d
+Out[8]: defaultdict(list, {'a': [1, 2, 3], 'b': []})
+
+In [9]: d['b'].append(4)
+In [9]: d['b'].append(5)
+
+In [10]: d
+Out[10]: defaultdict(list, {'a': [1, 2, 3], 'b': [4, 5]})
+
+
 ```
 
 也可以是集合  
