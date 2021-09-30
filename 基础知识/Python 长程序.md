@@ -1,6 +1,81 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 09.29 跑数据命令，从一个 es 索引中取数据到另一个索引中  
+
+```python 
+import datetime
+
+from django.core.management import BaseCommand
+
+from data_analysis.connect import ConnectManager
+from data_analysis.piplines.es_bluk_module import ESBulk
+from data_analysis.tools.data_pipline import DataPipline
+from data_analysis.tools.utils import get_logger
+from user.utils import trans_to_md5
+
+logger = get_logger(__file__)
+
+
+class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-i',
+            dest='index',
+            default='kejisousou-points-formal',  # 后面要拼月份
+            help='插入到的ES的索引',
+        )
+        parser.add_argument(
+            '-si',
+            dest='sindex',
+            default='kejisousou-points-formal-*',
+            help='查询的索引',
+        )
+
+    def load_datas(self, options):
+        for datas in ConnectManager.ES.get_setting('DEFAULT').search_by_page_with_searchafter(
+                options['sindex'],
+                doc=None,
+                return_sort=False,
+                no_sort=True,
+        ):
+            for post in datas:
+                yield post
+
+    def add_zky_include_time(self, post):
+        post['zky_include_time'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return post
+
+    def handle(self, *args, **options):
+        # 获取当前完成状态信息
+        points_bulk_module = ESBulk(bulk_index=options['index'], bulk_doc='zj_doc',
+                                    op_type=ESBulk.BulkModeEnum.IF_NOT_EXISTS_CREATE,
+                                    id_func=lambda post: trans_to_md5(post['point_text'][:100]),
+                                    has_search_after=False, split_date=True)
+
+        point_cache_posts = []
+        # 定义中文pipline
+        pipline = (
+            DataPipline()
+                .regist_func_by_data(self.add_zky_include_time)  # 添加日期
+        )
+        cache_size = 500
+        for post in pipline(self.load_datas(options)):
+            # 添加缓存
+            point_cache_posts.append(post)
+            # 大于cache_size进行专家观点提取和上ES
+            if len(point_cache_posts) > cache_size:
+                logger.info(f'will to zky es')
+                try:
+                    success, failed, _ = list(points_bulk_module.run(point_cache_posts))[0]
+                    logger.info(f'bulk to zky es success:{success} failed:{failed}')
+                except Exception as e:
+                    logger.exception('bulk to zky es error')
+
+                point_cache_posts.clear()
+```
+
+
 #### 09.22 英文版 excel 转 jsonl，两个标签，有空值，有大小写不匹配  
 
 ```python 
