@@ -1190,6 +1190,24 @@ Out[26]: [('a', 1), ('b', 2), ('c', '42'), ('d', '42')]
 ```
 
 
+#### chain
+
+差不多是拼接  
+
+```python
+In [1]: import itertools
+
+In [2]: itertools.chain('ABC', 'DEF')
+Out[2]: <itertools.chain at 0x7ff925349e10>
+
+In [3]: list(itertools.chain('ABC', 'DEF'))
+Out[3]: ['A', 'B', 'C', 'D', 'E', 'F']
+
+In [5]: list(itertools.chain('ABC', 'DEF', 'GHI'))
+Out[5]: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+```
+
+
 ### more_itertools 包  
 
 #### unzip  
