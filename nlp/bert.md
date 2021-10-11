@@ -5,7 +5,7 @@ B stands for 'beginning' (signifies beginning of an Named Entity, i.e. NE)
 I stands for 'inside' (signifies that the word is inside an NE)  
 O stands for 'outside' (signifies that the word is just a regular word outside of an NE)  
 
-2. BIOES  
+BIOES  
 B stands for 'beginning' (signifies beginning of an NE)  
 I stands for 'inside' (signifies that the word is inside an NE)  
 O stands for 'outside' (signifies that the word is just a regular word outside of an NE)  
