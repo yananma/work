@@ -1,4 +1,5 @@
 
+POS Part-of-speech tagging 词性标注  
 
 BIO  
 B stands for 'beginning' (signifies beginning of an Named Entity, i.e. NE)  
