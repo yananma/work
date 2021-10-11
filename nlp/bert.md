@@ -1,4 +1,18 @@
 
+
+BIO  
+B stands for 'beginning' (signifies beginning of an Named Entity, i.e. NE)  
+I stands for 'inside' (signifies that the word is inside an NE)  
+O stands for 'outside' (signifies that the word is just a regular word outside of an NE)  
+
+2. BIOES  
+B stands for 'beginning' (signifies beginning of an NE)  
+I stands for 'inside' (signifies that the word is inside an NE)  
+O stands for 'outside' (signifies that the word is just a regular word outside of an NE)  
+E stands for 'end' (signifies that the word is the end of an NE)  
+S stands for 'singleton'(signifies that the single word is an NE )  
+
+
 **彭老师的代码，自己 debug 20 遍**  
 
 
