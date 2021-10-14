@@ -1,6 +1,178 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 10.14 修改 yuce 索引一个字段脚本  
+
+```python 
+import bisect
+import logging
+import argparse
+import re
+from itertools import islice
+import csv
+import json
+
+from common.es_opts import get_point_datas, bulk_point_datas, BulkModeEnum
+from common.filters.base import BaseKeyFilter
+from common.models import ZKYDataVersion
+from common.mx_simhash import compute_simhash_v2
+from common.text_tools import TextFactory
+from common.utils import today, SectionCheck, trans_to_md5, AuthorNameSearchTool, lastday
+from resources.YUCE_KEYWORDS import NORMAL_KEYWORDS
+from yuce.yuce_process import Yuce
+from enum import Enum
+from typing import Union, Tuple, List, Dict
+
+from elasticsearch import helpers
+
+from common.ESConnect import es_default_connect
+from common.text_tools import TextFactory
+from common.utils import today, trans_to_md5
+
+logger = logging.getLogger(__file__)
+
+logger.setLevel(logging.INFO)
+logger_handle = logging.StreamHandler()
+formater = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+logger_handle.setFormatter(formater)
+logger.addHandler(logger_handle)
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+
+    ## Required parameters
+    parser.add_argument("--version", default=__file__, type=str,
+                        help="数据处理版本，用于区别各个不同的进程")
+    parser.add_argument("--from_date", default='2020-01-01 00:00:00', type=str,
+                        help="ES获取专家观点数据的起始时间")
+    parser.add_argument("--last", default=-1, type=int,
+                        help="ES获取专家观点数据时间的几天前开始跑")
+    parser.add_argument("--to_date", default=today(time_str=None, to_datetime_str=True), type=str,
+                        help="ES获取专家观点数据的结束时间")
+
+    parser.add_argument("--rank", default=-1, type=int,
+                        help="处理进程ID，默认主进程为-1")
+    parser.add_argument("--chunk_count", default=100, type=int,
+                        help="分批次处理数据的每批次的数量")
+    parser.add_argument("--debug", action='store_true',
+                        help="开启调试模式")
+    parser.add_argument("--store_backup", action='store_true',
+                        help="是否上数据到backup里")
+    parser.add_argument("--point_index", default='zhuanjiav2', type=str,
+                        help="专家观点所在索引")
+    parser.add_argument("--yuce_index", default='yuce-zky', type=str,
+                        help="预测文本的索引")
+    parser.add_argument("--search_time_field", default='post_time', type=str,
+                        help="ES搜索时，from_date生效的时间字段")
+    parser.add_argument("--time_desc", action='store_true',
+                        help="时间是否倒序")
+
+    args = parser.parse_args()
+    if args.last >= 0:
+        args.from_date = lastday(args.last, time_str='00:00:00', to_datetime_str=True)
+
+    logger.info('初始化VersionData')
+    # 初始化date_version
+    version_obj, created = ZKYDataVersion.get_or_create(
+        version=args.version or f'{__file__}_{args.from_date.split()[0]}_{args.to_date.split()[0]}',
+        defaults={
+            'state': 1
+        }
+    )
+
+    yuce = Yuce(args.rank)
+    search_after = json.loads(version_obj.search_after)
+    sentenceCheckTool = SectionCheck(BaseKeyFilter([[v[0], v[1:], [], []] for k, v in NORMAL_KEYWORDS.items()]), {})
+    authorNameTool = AuthorNameSearchTool()
+    logger.info(f'will read es datas,search_after is {search_after}')
+
+    # stop_char = ["\?", "\!", "。", "？", "！"]
+    # turn_char = ["\r", "\n"]
+
+    stop_cpl = re.compile(r"[\?\!。？！]")
+    stop_reverse_cpl = re.compile(r"(?:.*?[\?\!。？！])+")
+    turn_cpl = re.compile(r"[\r\n]")
+    turn_reverse_cpl = re.compile(r"(?:.*?[\r\n])+")
+
+    def get_datas(index='zhuanjia', doc='zj_doc', from_date: str = '2020-01-01 00:00:00',
+                  to_date: str = today(time_str=None, to_datetime_str=True), fields=None, search_after=None,
+                  sort_fields=[{'post_time': 'desc'}], search_time_field='post_time') -> Tuple[List[Dict], List[str]]:
+        es_conn = es_default_connect()
+        query_dict = {
+            'query': {
+                "bool": {
+                    "must": [
+                        {
+                            "query_string": {
+                                "default_field": search_time_field,
+                                "query": f"[\"{from_date}\"  TO \"{to_date}\"]"
+                            }
+                        }
+                    ]
+                }
+            },
+            **(
+                {'search_after': search_after} if search_after else {}
+            )
+        }
+        for data in es_conn.search_by_page_with_searchafter(index, query=query_dict, fields=fields, return_sort=True,
+                                                            doc=doc, sort_fields=sort_fields, size=2000):
+            yield data
+
+    for datas, next_search_after in get_datas(index=args.point_index, doc='yuce_doc', search_after=search_after,
+                                              fields=['point_text', 'text', 'is_split', 'can_split',
+                                                      'flag_range', 'post_time', 'yuce_author', 'yuce_text'], from_date=args.from_date,
+                                              to_date=args.to_date):
+        logger.info(f'read es datas finish,count:{len(datas)}')
+
+        for data in datas:
+            true_point_datas = set()
+            for flag_range in data['flag_range']:
+                flag_start_offset = flag_range[0]
+                flag_end_offset = flag_range[1]
+                if data['can_split'] and not data['is_split']:
+                    forward_search = turn_reverse_cpl.search(data['text'], 0, flag_start_offset)
+                    if forward_search:
+                        start_offset = forward_search.end()
+                    else:
+                        start_offset = 0
+                    afterward_search = turn_cpl.search(data['text'], flag_end_offset)
+                    if afterward_search:
+                        end_offset = afterward_search.start()
+                    else:
+                        end_offset = len(data['text'])
+                    data['point_text'] = data['text'][start_offset:end_offset+1].strip()
+                    true_point_datas.add(data['point_text'])
+                elif not data['is_split']:
+                    # try:
+                    forward_search = stop_reverse_cpl.search(data['text'], 0, flag_start_offset)
+                    if forward_search:
+                        start_offset = forward_search.end()
+                    else:
+                        start_offset = 0
+                    # except:
+                    #     logger.exception('错了！')
+                    #     logger.info(data)
+                    #     raise Exception
+                    afterward_search = stop_cpl.search(data['text'], flag_end_offset)
+                    if afterward_search:
+                        end_offset = afterward_search.start()
+                    else:
+                        end_offset = len(data['text'])
+                    data['point_text'] = data['text'][start_offset:end_offset+1].strip()
+                    true_point_datas.add(data['point_text'])
+            data['point_text'] = "\n".join(true_point_datas)
+
+        success, failed = bulk_point_datas(datas, index=args.yuce_index, op_type=BulkModeEnum.IF_EXISTS_UPDATE,
+                                           id_func=lambda post: trans_to_md5(
+                                               post['yuce_author'] + '||' + TextFactory(
+                                                   post['yuce_text']).replace_all_not_word_char_to_null().now)
+                                           )
+        logger.info(f'Chunk bulk origin finish. success:{success} faild:{failed}')
+```
+
+
 #### 09.29 跑数据命令，从一个 es 索引中取数据到另一个索引中  
 
 ```python 
