@@ -246,3 +246,23 @@ GET kejisousou-en-test/_search
 ```
 
 
+### script  
+
+```python 
+GET kejisousou-yuce-formal-v3/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "script": {
+            "script": "doc[\"point_text.raw\"].value.length()==0"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+
