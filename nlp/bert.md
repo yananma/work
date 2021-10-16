@@ -52,7 +52,7 @@ Multi-Head 最后的表现比较好，就是因为这种方法综合了多种特
 
 算 self-attention 的时候，损失了位置信息了，但是位置信息又是非常重要的，所以后面还要加上。  
 
-加了残差连接  
+加了残差连接(因为有残差连接，所以可以堆叠很多层)  
 
 在 decoder 端加入了 mask 机制，是因为比如机器翻译的时候，后面的词是要预测的值，如果不进行 mask 就相当于看到答案了。  
 
@@ -212,7 +212,7 @@ run_classfier.py 参数：DATA_DIR 是训练数据所在的文件夹，BERT_BASE
 
 各种 NLP 任务只需要少量数据进行微调就能实现非常好的效果  
 
-1、简介  
+#### 1、简介  
 
 BERT 的核心过程非常简洁，它会先从数据集抽取两个句子，其中第二句是第一句的下一句的概率是 50%，这样就能学习句子之间的关系。  
 
@@ -229,7 +229,7 @@ Transformer，其实越大的数据量就越能显示出这个结构的优点，
 
 每一个文件都包含了三部分，即保存预训练模型与权重的 ckpt 文件、将 WordPiece 映射到单词 id 的 vocab 文件，以及指定模型超参数的 json 文件。  
 
-2、Transformer 概览  
+#### 2、Transformer 概览  
 
 在整个 Transformer 架构中，它只使用了注意力机制和全连接层来处理文本，因此 Transformer 确实没使用循环神经网络或卷积神经网络实现「特征抽取」这一功能。此外，Transformer 中最重要的就是自注意力机制，这种在序列内部执行 Attention 的方法可以视为搜索序列内部的隐藏关系，这种内部关系对于翻译以及序列任务的性能有显著提升。  
 
@@ -241,7 +241,7 @@ Transformer，其实越大的数据量就越能显示出这个结构的优点，
 
 Multi-head Attention 其实就是多个点乘注意力并行处理并将最后的结果拼接在一起。这种注意力允许模型联合关注不同位置的不同表征子空间信息，我们可以理解为在参数不共享的情况下，多次执行点乘注意力。  
 
-3、BERT 论文解读  
+#### 3、BERT 论文解读  
 
 BERT 的全称是基于 Transformer 的双向编码器表征，其中「双向」表示模型在处理某一个词时，它能同时利用前面的词和后面的词两部分信息。这种「双向」的来源在于 BERT 与传统语言模型不同，它不是在给定所有前面词的条件下预测最可能的当前词，而是随机遮掩一些词，并利用所有没被遮掩的词进行预测。  
 
@@ -286,44 +286,142 @@ BERT 最核心的就是预训练过程，简单而言，模型会从数据集抽
 
 ### 七、[BERT介绍](https://blog.csdn.net/triplemeng/article/details/83053419)  
 
+BERT 做了两项改进：  
+
+采取新的预训练的目标函数：the “masked language model” (MLM) 随机 mask 输入中的一些 tokens，然后在预训练中对它们进行预测。这样做的好处是学习到的表征能够融合两个方向上的 context。这个做法非常像 skip-gram。过去的同类算法在这里有所欠缺，比如 ELMo，它用的是两个单向的 LSTM 然后把结果拼接起来；还有 OpenAI GPT，虽然它一样使用了 transformer，但是只利用了一个方向的注意力机制，本质上也一样是单项的语言模型。  
+
+增加句子级别的任务：“next sentence prediction”。作者认为很多 NLP 任务比如 QA 和 NLI 都需要对两个句子之间关系的理解，而语言模型不能很好的直接产生这种理解。为了理解句子关系，作者同时 pre-train 了一个 “next sentence prediction” 任务。具体做法是随机替换一些句子，然后利用上一句进行 IsNext/NotNext 的预测。  
+
+在实际的预训练中，这两个任务是 jointly training。  
+
+BERT BASE：L=12, H=768, A=12, Total Parameters=110M  
+BERT LARGE：L=24, H=1024, A=16, Total Parameters=340M  
+L 是 layers 层数(即 Transformer blocks 个数)，H 是 hidden vector size, A 是 self-attention 的 head 数(因为 h 表示 hidden 了)。  
+
+每句话的第一个 token 总是 [CLS]。对应它的最终的 hidden state(即 Transformer 的输出)用来表征整个句子，可以用于下游的分类任务。  
+
+模型能够处理句子对。为区别两个句子，用一个特殊 token [SEP] 隔开它们，另外针对不同的句子，把学习到的 Segment embeddings 加到每个 token 的 embedding 上  
+
+单个句子仅使用一个 Segment embedding  
+
+Masked LM：为了达到真正的 bidirectional 的 LM 的效果，作者创新性地提出了 Masked LM，但是缺点是如果常常把一些词 mask 起来，未来的 fine tuning 过程中模型有可能没见过这些词。这个量积累下来还是很大的。因为作者在他的实现中随机选择了句子中 15% 的 WordPiece tokens 作为要 mask 的词。  
+
+Next Sentence Prediction：很多 NLP 的任务比如 QA 和 NLI 都需要理解两个句子之间的关系，而语言模型并不能直接反应这种关系。为了是预训练出来的模型很好的适应这些任务，作者提出了这样的一个预训练任务。实验表明，增加这样的一个任务在针对下游的 QA 和 NLI 任务时效果非常好。   
+
+对于句子级的分类任务，BERT 的微调方法非常直观。论文用 [CLS] 来对应整个句子的表征。我们只需要把它作为输入通过一层网络，最后做 softmax 就可以了。  
+
+GLUE 是一个自然语言任务集合。  
+
+General Language Understanding Evaluation  
 
 
+### 八、[BERT 源码分析及使用方法](https://cloud.tencent.com/developer/article/1454853)  
+
+BERT是一种能够生成句子中词向量表示以及句子向量表示的深度学习模型，其生成的向量表示可以用于词级别的自然语言处理任务（如序列标注）和句子级别的任务（如文本分类）。  
+
+input_ids（句子中词 id 组成的 tensor）到 sequence_output（句子中每个词的向量表示） pooled_output（句子的向量表示）  
+
+BertConfig 类包含了一个 BertModel 所需的超参数  
+
+vocab 词表  
+
+is_training：如果训练则填 true，否则填 false，该参数会决定是否执行 dropout。    
+
+先按照 token_type_id（即输入的句子中各个词语的 type，如对两个句子的分类任务，用 type_id 区分第一个句子还是第二个句子）    
+
+输入的 input_mask（即与句子真实长度匹配的 mask，如 batch_size 为 2，句子实际长度分别为 2，3，则 mask 为 [[1, 1, 0], [1, 1, 1]]）  
 
 
+### 九、[使用 BERT 进行词嵌入](https://www.infoq.cn/article/QK7zfPgQPCmZyITumZNG)  
+
+BERT 模型使用大型句子语料库进行预训练。简而言之，训练是通过在一个句子中对一些单词进行掩码（大约为 15% 的单词），然后让模型去预测那些被掩码的单词。随着模型的预测训练，它学会了生成一个强大的单词内部表示，即词嵌入（Word embedding）。  
+
+Bert-as-a-service 是一个 Python 库，它使我们能够在本地机器上部署预训练 BERT 模型并运行推理。它可以用于服务任何已发布的模型类型，也可以服务于针对特定下游任务进行微调的模型。  
+
+### 十、[bert 算法介绍](https://www.itcast.cn/news/20200907/13593265501.shtml)  
+
+BERT 采用了 Transformer Encoder block 进行连接(就当成是 LSTM 就行，本质上是一样的)  
+
+词嵌入向量: word embeddings  
+
+语句分块向量: segmentation embeddings  
+
+位置编码向量: position embeddings  
+
+最终的 embedding 向量是将上述的 3 个向量直接做加和的结果。  
+
+Transformer Encoder 在训练的过程中, 并不知道它将要预测哪些单词，哪些单词是原始的， 哪些单词被遮掩成了[MASK]，哪些单词被替换成了其他单词。正是在这样一种高度不确定的情况下, 逼着模型学习该 token 的分布式上下文的语义, 尽最大努力学习原始语言说话的样子。同时因为原始文本中只有 15% 的 token 参与了 MASK 操作, 并不会破坏原语言的表达能力和语言规则。  
+
+整个 Bert 在 11 项语言模型大赛中，基本思路就是双向 Transformer 负责提取特征，然后整个网络加一个全连接线性层作为 fine-tuning 微调。就是傻瓜式操作。  
 
 
+### 十一、[理解 BERT 模型](https://baijiahao.baidu.com/s?id=1651912822853865814&wfr=spider&for=pc)  
+
+Masked LM，在句子中随机遮盖一部分单词，然后同时利用上下文的信息预测遮盖的单词，这样可以更好地根据全文理解单词的意思。Masked LM 是 BERT 的重点。  
+
+Next Sentence Prediction (NSP)，下一句预测任务，这个任务主要是让模型能够更好地理解句子间的关系。  
+
+![bert pre-train and fine-tune](https://pics6.baidu.com/feed/574e9258d109b3dee994cc84f0bfb484800a4c3c.png?token=a8fb7222089a0143d0c3aaff2dc37b79&s=F980CB1A8FE4491B4EC0ADC8030090B3)  
+
+左侧的图表示了预训练的过程，右边的图是对于具体任务的微调过程。  
+
+BERT 的输入可以包含一个句子对 (句子 A 和句子 B)，也可以是单个句子。  
+
+[CLS] 标志放在第一个句子的首位，经过 BERT 得到的的表征向量 C 可以用于后续的分类任务。  
+[SEP] 标志用于分开两个输入句子，例如输入句子 A 和 B，要在句子 A，B 后面增加 [SEP] 标志。  
+[MASK] 标志用于遮盖句子中的一些单词，将单词用 [MASK] 遮盖之后，再利用 BERT 输出的 [MASK] 向量预测单词是什么。  
+
+例如给定两个句子 "my dog is cute" 和 "he likes palying" 作为输入样本，BERT 会转为 "[CLS] my dog is cute [SEP] he likes play ##ing [SEP]"。BERT 里面用了 WordPiece 方法，会将单词拆成子词单元 (SubWord)，所以有的词会拆出词根，例如 "palying" 会变成 "paly" + "##ing"。  
+
+BERT 得到要输入的句子后，要将句子的单词转成 Embedding，Embedding 用 E表示。BERT 的输入 Embedding 由三个部分相加得到：Token Embedding，Segment Embedding，Position Embedding。  
+
+Token Embedding：单词的 Embedding，例如 [CLS] dog 等，通过训练学习得到。  
+
+Segment Embedding：用于区分每一个单词属于句子 A 还是句子 B，如果只输入一个句子就只使用 EA，通过训练学习得到。  
+
+Position Embedding：编码单词出现的位置，与 Transformer 使用固定的公式计算不同，BERT 的 Position Embedding 也是通过学习得到的，在 BERT 中，假设句子最长为 512。  
+
+![bert pre-train](https://pics6.baidu.com/feed/728da9773912b31b4e5f008cbd18ee7fdab4e16f.png?token=11ad868c3006ac5573d77892b3720d49&s=1FA07D2383DE55C81EEC0DC20200E0B2)  
+
+预训练得到的 BERT 模型可以在后续用于具体 NLP 任务的时候进行微调 (Fine-tuning 阶段)，BERT 模型可以适用于多种不同的 NLP 任务，如下图所示。  
+
+![nlp tasks](https://pics4.baidu.com/feed/b8389b504fc2d562fc1f1c01db1148ea77c66cc9.png?token=1c54f81e6247afb39523cc8c6bf149e6&s=F980CB1A590F40CC18DC34DB030050B1)  
+
+一对句子的分类任务：例如自然语言推断 (MNLI)，句子语义等价判断 (QQP) 等，如上图 (a) 所示，需要将两个句子传入 BERT，然后使用 [CLS] 的输出值 C进行句子对分类。  
+
+单个句子分类任务：例如句子情感分析 (SST-2)，判断句子语法是否可以接受 (CoLA) 等，如上图 (b) 所示，只需要输入一个句子，无需使用 [SEP] 标志，然后也是用 [CLS] 的输出值 C 进行分类。  
+
+问答任务：如 SQuAD v1.1 数据集，样本是语句对 (Question, Paragraph)，Question 表示问题，Paragraph 是一段来自 Wikipedia 的文本，Paragraph 包含了问题的答案。而训练的目标是在 Paragraph 找出答案的起始位置 (Start，End)。如上图 (c) 所示，将 Question 和 Paragraph 传入 BERT，然后 BERT 根据 Paragraph 所有单词的输出预测 Start 和 End 的位置。  
+
+单个句子标注任务：例如命名实体识别 (NER)，输入单个句子，然后根据 BERT 对于每个单词的输出 T预测这个单词的类别，是属于 Person，Organization，Location，Miscellaneous 还是 Other (非命名实体)。  
+
+Word2Vec 的 CBOW：通过单词 i 的上文和下文信息预测单词 i，但是采用的是词袋模型，不知道单词的顺序信息。例如预测单词 "自然" 的时候，会同时采用上文 "我/喜欢/学习" 和下文 "语言/处理" 进行预测。CBOW 在训练时是相当于把 "自然" 这个单词 Mask 的。  
+
+ELMo：ELMo 在训练的时候使用 biLSTM，预测 "自然" 的时候，前向 LSTM 会 Mask "自然" 之后的所有单词，使用上文 "我/喜欢/学习" 预测；后向 LSTM 会 Mask "自然" 之前的单词，使用下文 "语言/处理" 进行预测。然后再将前向 LSTM 和后向 LSTM 的输出拼接在一起，因此 ELMo 是将上下文信息分隔开进行预测的，而不是同时利用上下文信息进行预测。  
+
+OpenAI GPT：OpenAI GPT 是另外一种使用 Transformer 训练语言模型的算法，但是 OpenAI GPT 使用的是 Transformer 的 Decoder，是一种单向的结构。预测 "自然" 的时候只使用上文 "我/喜欢/学习"，Decoder 中包含了 Mask 操作，将当前预测词之后的单词都 Mask。  
+
+BERT 的作者认为在预测单词时，要同时利用单词 left (上文) 和 right (下文) 信息才能最好地预测。将 ELMo 这种分别进行 left-to-right 和 right-to-left 的模型称为 shallow bidirectional model (浅层双向模型)，BERT 希望在 Transformer Encoder 结构上训练出一种深度双向模型 deep bidirectional model，因此提出了 Mask LM 这种方法进行训练。  
+
+Mask LM 是用于防止信息泄露的，例如预测单词 "自然" 的时候，如果不把输入部分的 "自然" Mask 掉，则预测输出的地方是可以直接获得 "自然" 的信息。  
+
+BERT 在训练时只预测 [Mask] 位置的单词，这样就可以同时利用上下文信息。但是在后续使用的时候，句子中并不会出现 [Mask] 的单词，这样会影响模型的性能。因此在训练时采用如下策略，随机选择句子中 15% 的单词进行 Mask，在选择为 Mask 的单词中，有 80% 真的使用 [Mask] 进行替换，10% 不进行替换，剩下 10% 使用一个随机单词替换。  
+
+BERT 的第二个预训练任务是 Next Sentence Prediction (NSP)，即下一句预测，给定两个句子 A 和 B，要预测句子 B 是否是句子 A 的下一个句子。  
+
+BERT 使用这一预训练任务的主要原因是，很多下游任务，例如问答系统 (QA)，自然语言推断 (NLI) 都需要模型能够理解两个句子之间的关系，但是通过训练语言模型达不到这个目的。  
+
+BERT 在进行训练的时候，有 50% 的概率会选择相连的两个句子 A B，有 50% 的概率会选择不相连得到两个句子 A B，然后通过 [CLS] 标志位的输出 C预测句子 A 的下一句是不是句子 B。  
+
+输入 = [CLS] 我 喜欢 玩 [Mask] 联盟 [SEP] 我 最 擅长 的 [Mask] 是 亚索 [SEP]类别 = B 是 A 的下一句  
+输入 = [CLS] 我 喜欢 玩 [Mask] 联盟 [SEP] 今天 天气 很 [Mask] [SEP]类别 = B 不是 A 的下一句  
+
+因为 BERT 预训练时候采用了 Masked LM，每个 batch 只会训练 15% 的单词，因此需要更多的预训练步骤。ELMo 之类的顺序模型，会对每一个单词都进行预测。  
+
+BERT 使用了 Transformer 的 Encoder 和 Masked LM 预训练方法，因此可以进行双向预测；而 OpenAI GPT 使用了 Transformer 的 Decoder 结构，利用了 Decoder 中的 Mask，只能顺序预测。  
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### 十二、[什么是BERT？](https://zhuanlan.zhihu.com/p/98855346)  
 
 
 
