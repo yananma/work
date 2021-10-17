@@ -385,7 +385,7 @@ Position Embedding：编码单词出现的位置，与 Transformer 使用固定�
 
 预训练得到的 BERT 模型可以在后续用于具体 NLP 任务的时候进行微调 (Fine-tuning 阶段)，BERT 模型可以适用于多种不同的 NLP 任务，如下图所示。  
 
-![nlp tasks](https://pics4.baidu.com/feed/b8389b504fc2d562fc1f1c01db1148ea77c66cc9.png?token=1c54f81e6247afb39523cc8c6bf149e6&s=F980CB1A590F40CC18DC34DB030050B1)  
+![nlp tasks](https://camo.githubusercontent.com/db8527714875965eb7c2120534b2580cab1092d3d0fc05ec373a58fc88ca7e30/68747470733a2f2f696d6167652e6a6971697a686978696e2e636f6d2f75706c6f6164732f656469746f722f65363165653733322d363665342d343936312d383362622d3334613038363534653335342f313534313036303338333634342e706e67)  
 
 一对句子的分类任务：例如自然语言推断 (MNLI)，句子语义等价判断 (QQP) 等，如上图 (a) 所示，需要将两个句子传入 BERT，然后使用 [CLS] 的输出值 C进行句子对分类。  
 
