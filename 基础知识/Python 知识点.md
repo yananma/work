@@ -721,7 +721,7 @@ Out[41]: list
 
 #### \n \t  
 
-\n 可能是 new line  
+\n 是 newline  
 \t tab 制表符  
 
 
