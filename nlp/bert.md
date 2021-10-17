@@ -423,6 +423,44 @@ BERT 使用了 Transformer 的 Encoder 和 Masked LM 预训练方法，因此可
 
 ### 十二、[什么是BERT？](https://zhuanlan.zhihu.com/p/98855346)  
 
+BERT 的全称为 Bidirectional Encoder Representation from Transformers，是一个预训练的语言表征模型。它强调了不再像以往一样采用传统的单向语言模型或者把两个单向语言模型进行浅层拼接的方法进行预训练，而是采用新的 masked language model（MLM），以致能生成深度的双向语言表征。BERT 论文发表时提及在 11 个 NLP（Natural Language Processing，自然语言处理）任务中获得了新的 state-of-the-art 的结果，令人目瞪口呆。    
+
+该模型有以下主要优点：  
+
+1）采用 MLM 对双向的 Transformers 进行预训练，以生成深层的双向语言表征。  
+
+2）预训练后，只需要添加一个额外的输出层进行 fine-tune，就可以在各种各样的下游任务中取得 state-of-the-art 的表现。在这过程中并不需要对 BERT 进行任务特定的结构修改。   
+
+为了完成具体的分类任务，除了单词的 token 之外，作者还在输入的每一个序列开头都插入特定的分类 token（[CLS]），该分类 token 对应的最后一个 Transformer 层输出被用来起到聚集整个序列表征信息的作用。  
+
+由于 BERT 是一个预训练模型，其必须要适应各种各样的自然语言任务，因此模型所输入的序列必须有能力包含一句话（文本情感分类，序列标注任务）或者两句话以上（文本摘要，自然语言推断，问答任务）。那么如何令模型有能力去分辨哪个范围是属于句子 A，哪个范围是属于句子 B 呢？BERT 采用了两种方法去解决：  
+
+1）在序列 tokens 中把分割 token（[SEP]）插入到每个句子后，以分开不同的句子 tokens。  
+
+2）为每一个 token 表征都添加一个可学习的分割 embedding 来指示其属于句子 A 还是句子 B。   
+
+Transformer的特点就是有多少个输入就有多少个对应的输出（存疑，注意一下是不是这样以及为什么是这样）  
+
+C 为分类 token（[CLS]）对应最后一个 Transformer 的输出，T 则代表其他 token 对应最后一个 Transformer 的输出。对于一些 token 级别的任务（如，序列标注和问答任务），就把 T 输入到额外的输出层中进行预测。对于一些句子级别的任务（如，自然语言推断和情感分类任务），就把 C 输入到额外的输出层中，这里也就解释了为什么要在每一个 token 序列前都要插入特定的分类 token。    
+
+最后训练样例长这样：  
+
+Input1=[CLS] the man went to [MASK] store [SEP] he bought a gallon [MASK] milk [SEP]  
+
+Label1=IsNext  
+
+Input2=[CLS] the man [MASK] to the store [SEP] penguin [MASK] are flight ##less birds [SEP]  
+
+Label2=NotNext  
+
+把每一个训练样例输入到 BERT 中可以相应获得两个任务对应的 loss，再把这两个 loss 加在一起就是整体的预训练 loss。（也就是两个任务同时进行训练）  
+
+可以明显地看出，这两个任务所需的数据其实都可以从无标签的文本数据中构建（自监督性质），比 CV 中需要人工标注的 ImageNet 数据集可简单多了。    
+
+
+### 十三、[彻底搞懂 BERT](https://www.cnblogs.com/rucwxb/p/10277217.html)  
+
+传统意义上来讲，词向量模型是一个工具，可以把真实世界抽象存在的文字转换成可以进行数学公式操作的向量，而对这些向量的操作，才是 NLP 真正要做的任务。因而某种意义上，NLP 任务分成两部分，预训练产生词向量，对词向量操作（下游具体 NLP 任务）。    
 
 
 
