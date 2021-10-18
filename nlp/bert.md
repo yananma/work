@@ -13,8 +13,14 @@ O stands for 'outside' (signifies that the word is just a regular word outside o
 E stands for 'end' (signifies that the word is the end of an NE)  
 S stands for 'singleton'(signifies that the single word is an NE )  
 
+BMES 四位序列标注法
 
-**彭老师的代码，自己 debug 20 遍**  
+B 表示一个词的词首位值，M 表示一个词的中间位置，E 表示一个词的末尾位置，S 表示一个单独的字词。  
+
+我/S 是/S 广/B 东/M 人/E    （符号标注，‘东’是‘广’和‘人’的中间部分，‘广东人’是个实体）  
+
+
+**彭老师的代码，debug 20 遍**  
 
 
 现在能见到的 NLP 任务，基本上都能用 bert 解决。自己准备好数据，往里一丢就完事儿了。  
