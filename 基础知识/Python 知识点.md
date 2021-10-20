@@ -1196,6 +1196,20 @@ Out[42]: '{"foo": 1, "bar": 2, "spam": 3, "grok": 4}'
 ```
 
 
+### bisect 包  
+
+根据给定的数值，查找数值的索引。  
+
+```python 
+In [37]: import bisect
+
+In [38]: li = [1, 3, 5, 7, 9, 11, 13, 15]
+
+In [39]: bisect.bisect(li, 7)
+Out[39]: 4
+```
+
+
 ### itertools 包  
 
 #### zip_longest  
@@ -1256,6 +1270,8 @@ Out[5]: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 #### Union 
 
 联合类型；Union[X, Y] 的意思是，非 X 即 Y。  
+
+
 
 
 ```python 
