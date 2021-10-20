@@ -150,7 +150,54 @@ In [15]: print(f([4, 5]))
 [[4, 5]]
 ```
 
+如果这些参数不是独立的，则要在调用函数时，用 * 操作符把实参从列表或元组解包出来  
+```python 
+>>> list(range(3, 6))            # normal call with separate arguments
+[3, 4, 5]
+>>> args = [3, 6]
+>>> list(range(*args))            # call with arguments unpacked from a list
+[3, 4, 5]
+```
+
+同样，字典可以用 ** 操作符传递关键字参数  
+```python 
+>>> def parrot(voltage, state='a stiff', action='voom'):
+...     print("-- This parrot wouldn't", action, end=' ')
+...     print("if you put", voltage, "volts through it.", end=' ')
+...     print("E's", state, "!")
+...
+>>> d = {"voltage": "four million", "state": "bleedin' demised", "action": "VOOM"}
+>>> parrot(**d)
+-- This parrot wouldn't VOOM if you put four million volts through it. E's bleedin' demised !
+```
+
+
 lambda 关键字用于创建小巧的匿名函数。  
+
+Lambda 函数可用于任何需要函数对象的地方。在语法上，匿名函数只能是单个表达式。  
+
+可以把匿名函数用作传递的实参。  
+
+```python 
+>>> pairs = [(1, 'one'), (2, 'two'), (3, 'three'), (4, 'four')]
+>>> pairs.sort(key=lambda pair: pair[1])
+>>> pairs
+[(4, 'four'), (1, 'one'), (3, 'three'), (2, 'two')]
+```
+
+函数注解：标注 以字典的形式存放在函数的 __annotations__ 属性中，并且不会影响函数的任何其他部分。 形参标注的定义方式是在形参名后加冒号，后面跟一个表达式，该表达式会被求值为标注的值。 返回值标注的定义方式是加组合符号 ->，后面跟一个表达式，该标注位于形参列表和表示 def 语句结束的冒号之间。  
+
+```python
+>>> def f(ham: str, eggs: str = 'eggs') -> str:
+...     print("Annotations:", f.__annotations__)
+...     print("Arguments:", ham, eggs)
+...     return ham + ' and ' + eggs
+...
+>>> f('spam')
+Annotations: {'ham': <class 'str'>, 'return': <class 'str'>, 'eggs': <class 'str'>}
+Arguments: spam eggs
+'spam and eggs'
+```
 
 编码风格  
 
