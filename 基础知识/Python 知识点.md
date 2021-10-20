@@ -348,6 +348,20 @@ In [1]: l = [1, 9, 4, 6]
 In [2]: l.sort()
 In [3]: l
 Out[3]: [1, 4, 6, 9]
+
+In [1]: li = [3, 5, 2, 6]
+
+In [2]: sort_li = li.sort()
+
+In [3]: sort_li
+
+In [4]: sort_li
+
+In [5]: print(sort_li)
+None
+
+In [6]: li
+Out[6]: [2, 3, 5, 6]
 ```
 
 
