@@ -816,6 +816,23 @@ def add(a,b):
 
 ### 内置函数  
 
+#### repr 函数  
+
+```python 
+In [5]: s = 'hello world\n'
+
+In [6]: print(s)
+hello world
+
+
+In [7]: repr(s)
+Out[7]: "'hello world\\n'"
+
+In [8]: print(repr(s))
+'hello world\n'
+```
+
+
 #### all 函数  
 
 所有的都是 True，结果才是 True  
