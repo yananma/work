@@ -295,4 +295,23 @@ GET kejisousou-yuce-formal-v3/_search
 }
 ```
 
+### 正则  
+
+不用 raw，会分词，分词以后就不是正则了，就成了单个字和符号的匹配了  
+
+```python 
+GET kejisousou-zhili-formal-v3/_search
+{
+  "query": {
+    "regexp": {
+      "point_text.raw": ".*只是因为.*"
+    }
+  }
+}
+```
+
+
+
+
+
 
