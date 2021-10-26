@@ -227,12 +227,44 @@ GET /kejisousou-en-test/_search
     "time_aggs": {
       "date_histogram": {
         "field": "post_time",
-        "time_zone": "+08:00", 
-        "interval": "month",
-        "format": "yyyy-MM"
+        "interval": "month"
       }
     }
   }
+}
+```
+
+聚合后根据聚合结果的数量排序  
+
+```python 
+GET page/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "include_time": {
+              "gte": "2021-10-01 00:00:00",
+              "lte": "2021-10-25 00:00:00"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "aggs": {
+    "NAME": {
+      "date_histogram": {
+        "field": "include_time",
+        "interval": "day",
+        "order": {
+          "_count": "asc"
+        }
+      }
+    }
+  },
+  "size": 0
 }
 ```
 
