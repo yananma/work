@@ -451,6 +451,12 @@ In [41]: d1.fromkeys(d)
 Out[41]: {'a': None, 'b': None}
 ```
 
+#### 字典按值排序  
+
+降序排列  
+
+`(ocr_dict.items(), key=lambda d:d[1], reverse=True)`  
+
 
 ### 集合  
 
