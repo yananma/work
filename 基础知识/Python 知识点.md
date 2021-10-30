@@ -1020,6 +1020,12 @@ In [20]: def f3():
 ```
 
 
+#### global 和 nonlocal  
+
+global 就是把变量放到 globals() 字典中  
+nonlocal 就是把内层变量放到外层的函数的 locals() 字典中  
+
+
 #### sorted 函数  
 
 默认升序。  
