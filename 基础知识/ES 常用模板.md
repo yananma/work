@@ -71,14 +71,9 @@ GET kejisousou-en-yuce-formal-v2/_search
         {
           "terms": {
             "url.raw": [
-              "https://medium.com/@seerlabs_crypto/seerlabs-jackson-full-analysis-of-synthetic-88b62e50fd1a",
               "https://news.mit.edu/2021/automated-machine-learning-veeramachaneni-1006", 
               "https://oraclesinvestmentgroup.medium.com/oig-ama-with-darenft-50be70784ef4", 
-              "https://medium.com/geekculture/cryptocurrencies-defi-nfts-e48f0dfd4208", 
-              "https://medium.com/@kai.schmied/truly-green-energy-trades-with-blockchain-based-certificates-a-proof-of-concept-to-embed-a-232479d14c39", 
-              "https://medium.com/@dagmfekadu/how-to-build-a-scalable-data-collection-system-9703a2367735", 
               "https://www.nsf.gov/discoveries/disc_summ.jsp?cntn_id=303606&org=NSF&from=news",
-              "https://medium.com/@tagx.shireen/how-image-annotation-is-empowering-medical-ai-d273d26c76d3", 
               "https://news.mit.edu/2021/does-artificial-intelligence-play-well-others-1004"
             ]
           }
@@ -341,9 +336,4 @@ GET kejisousou-zhili-formal-v3/_search
   }
 }
 ```
-
-
-
-
-
 
