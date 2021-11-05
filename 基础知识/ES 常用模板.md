@@ -273,10 +273,11 @@ GET /kejisousou-en-testv1/_search
     "category_aggs": {
       "terms": {
         "field": "entry_id",
-        "size": 1000
+        "size": 1000    # 这个 size 是 agg 的类别条数，不是具体内容的条数
       }
     }
-  }
+  },
+  "size": 0
 }
 ```
 
