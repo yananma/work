@@ -784,8 +784,29 @@ In [61]: datetime.datetime.now() - datetime.timedelta(days=365)
 Out[61]: datetime.datetime(2020, 9, 15, 17, 52, 59, 671453)
 ```
 
-
 datetime 可以通过 . 看都有什么方法，比如 year、month、day、hour、minute、second 等等  
+
+```python 
+In [1]: from datetime import date
+
+In [2]: now = date.today()
+
+In [3]: now
+Out[3]: datetime.date(2021, 11, 7)
+
+In [4]: nian = date(2022, 2, 1)
+
+In [5]: nian
+Out[5]: datetime.date(2022, 2, 1)
+
+In [6]: days = nian - now
+
+In [8]: days
+Out[8]: datetime.timedelta(days=86)
+
+In [9]: days.days
+Out[9]: 86
+```
 
 
 #### 装饰器  
