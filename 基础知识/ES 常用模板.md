@@ -198,7 +198,7 @@ GET /kejisousou-en-test/_search
 }
 ```
 
-限定日期范围据核查询  
+限定日期范围聚合查询  
 
 ```python 
 GET /kejisousou-en-test/_search
