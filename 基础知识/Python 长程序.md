@@ -1,6 +1,155 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 读两个 JSON 文件，写入到一个 JSON 文件中 11.10
+
+```python 
+with open(origin_json_file, encoding='utf-8') as of:
+    with open(predict_json, encoding='utf-8') as pf:
+        with open('concate_dev.json', 'a', encoding='utf-8') as cf:
+            for o_line, p_line in zip(of, pf):
+                o_line, p_line = json.loads(o_line), json.loads(p_line) 
+                o_line['predict_label'] = p_line['label'] 
+                cf.write(json.dumps(o_line) + '\n')
+                
+with open('concate_dev_unicode.json', encoding='utf-8') as f:
+    with open('error_examples.json', 'a', encoding='utf-8') as fp:
+        for line in f:
+            line = json.loads(line)
+            if line['label'] != int(line['predict_label']):
+                fp.write(json.dumps(line) + '\n')
+            else:
+                continue
+```
+
+
+#### 更新治理 flag 字段脚本 11.09  
+
+```python 
+import bisect
+import logging
+import argparse
+import re
+from itertools import islice
+import csv
+import json
+
+from common.es_opts import get_point_datas, bulk_point_datas, BulkModeEnum
+from common.filters.base import BaseKeyFilter
+from common.models import ZKYDataVersion
+from common.mx_simhash import compute_simhash_v2
+from common.text_tools import TextFactory
+from common.utils import today, SectionCheck, trans_to_md5, AuthorNameSearchTool, lastday
+from resources.YUCE_KEYWORDS import NORMAL_KEYWORDS
+from yuce.yuce_process import Yuce
+from enum import Enum
+from typing import Union, Tuple, List, Dict
+
+from elasticsearch import helpers
+
+from common.ESConnect import es_default_connect
+from common.text_tools import TextFactory
+from common.utils import today, trans_to_md5
+
+logger = logging.getLogger(__file__)
+
+logger.setLevel(logging.INFO)
+logger_handle = logging.StreamHandler()
+formater = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+logger_handle.setFormatter(formater)
+logger.addHandler(logger_handle)
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+
+    ## Required parameters
+    parser.add_argument("--version", default=__file__, type=str,
+                        help="数据处理版本，用于区别各个不同的进程")
+    parser.add_argument("--last", default=-1, type=int,
+                        help="ES获取专家观点数据时间的几天前开始跑")
+    parser.add_argument("--from_date", default='2020-01-01 00:00:00', type=str,
+                        help="ES获取专家观点数据的起始时间")
+    parser.add_argument("--to_date", default=today(time_str=None,to_datetime_str=True), type=str,
+                        help="ES获取专家观点数据的结束时间")
+
+    parser.add_argument("--rank", default=-1, type=int,
+                        help="处理进程ID，默认主进程为-1")
+    parser.add_argument("--bulk_count", default=100, type=int,
+                        help="满多少bulk一次")
+    parser.add_argument("--point_index", default='zhuanjiav2', type=str,
+                        help="专家观点所在索引")
+    parser.add_argument("--zhili_index", default='zhili-zky', type=str,
+                        help="治理文本的索引")
+    parser.add_argument("--search_time_field", default='post_time', type=str,
+                        help="ES搜索时，from_date生效的时间字段")
+    parser.add_argument("--time_desc", action='store_true',
+                        help="时间是否倒序")
+
+    args = parser.parse_args()
+
+    if args.last>=0:
+        args.from_date = lastday(args.last,time_str='00:00:00',to_datetime_str=True)
+    logger.info('初始化VersionData')
+    # 初始化date_version
+    version_obj,created = ZKYDataVersion.get_or_create(
+        version=f'{args.version}_{args.from_date.split()[0]}_{args.to_date.split()[0]}',
+        defaults={
+            'state':1
+        }
+    )
+    search_after = json.loads(version_obj.search_after)
+
+    all_count = 0
+    logger.info(f'will read es datas,search_after is {search_after}')
+
+    zhili_origin_bulk_results = []
+    zhili_bulk_results = []
+    for datas,next_search_after in get_point_datas(index=args.point_index,
+                                                   doc="zhili_doc",
+                                                   search_after=search_after,
+                                                   fields=['flag','flag_range', 'zhili_text'],
+                                                   from_date=args.from_date,
+                                                   to_date=args.to_date,
+                                                   sort_fields=[{args.search_time_field:'desc' if args.time_desc else 'asc'}],
+                                                   search_time_field=args.search_time_field):
+        logger.info(f'read es datas finish,count:{len(datas)}')
+        zhili_bulk_results = []
+        for data in datas:
+            zhili_data_dict = {"zhili_text": data['zhili_text']}
+            flag_split_list = data['flag'].split('#')
+            for flag_index, flag in enumerate(flag_split_list):
+                if flag == "科研基础设施":
+                    flag_split_list[flag_index] = "科研基础设施建设"
+                    zhili_data_dict['flag'] = '#'.join(flag_split_list)
+                    data_flag_range = json.loads(data['flag_range'])
+                    logger.info(data_flag_range)
+                    for tag_index, (*_, ((_, keyword),)) in enumerate(data_flag_range):
+                        if keyword == "科研基础设施":
+                            data_flag_range[tag_index][3][0][1] = "科研基础设施建设"
+                            zhili_data_dict['flag_range'] = json.dumps(data_flag_range)
+                    zhili_bulk_results.append(zhili_data_dict)
+                else:
+                    continue
+            if len(zhili_bulk_results):
+                logger.info(f'will bulk zhili data,count:{len(zhili_bulk_results)}')
+                success,faild = bulk_point_datas(
+                    zhili_bulk_results,
+                    index=args.zhili_index,
+                    doc='zhili_doc',
+                    op_type = BulkModeEnum.IF_EXISTS_UPDATE,
+                    id_func=lambda post:trans_to_md5(TextFactory(post['zhili_text']).replace_all_not_word_char_to_null().now)
+                )
+                logger.info(f'bulk zhili data success:{success} faild:{faild}')
+                # 更新 dataversion
+                zhili_bulk_results.clear()
+        version_obj.search_after = json.dumps(next_search_after)
+        version_obj.save()
+    logger.info('完成')
+```
+
+
 #### 10.14 修改 yuce 索引一个字段脚本  
 
 ```python 
