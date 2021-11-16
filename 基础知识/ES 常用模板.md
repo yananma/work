@@ -32,6 +32,19 @@ GET test-zky/_search
 }
 ```
 
+query_string 查多个 id，最开始和结束都有斜杠  
+```python 
+GET kejisousou-en-formal/_search
+{
+  "query": {
+    "query_string": {
+      "default_field": "entry_id",
+      "query": "\"647520\" OR \"647521\" OR \"647522\" OR \"647542\""
+    }
+  }
+}
+```
+
 ```python 
 GET kejisousou-en-testv3/_search
 {
