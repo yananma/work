@@ -218,6 +218,14 @@ In [8]: nums
 Out[8]: [1, 2, 3, 4, 5]
 ```
 
+#### 计算文本相似度  
+
+```python 
+import difflib 
+
+difflib.SequenceMatcher(None, last_word, sentence).quick_ratio() > 0.8
+```
+
 
 #### 列表取值  
 
