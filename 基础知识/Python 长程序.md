@@ -1,6 +1,20 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 找所有 keyword 的位置 11.16 
+
+```python 
+def find_keyword_idx(keyword, text):
+    keyword_idx = []
+    if len(keyword) > 0:
+        pos = text.find(keyword)
+        while pos >= 0:
+            keyword_idx.append([pos, pos + len(keyword)])
+            pos = text.find(keyword, pos+1)
+    return keyword_idx 
+```
+
+
 #### 读两个 JSON 文件，写入到一个 JSON 文件中 11.10
 
 ```python 
