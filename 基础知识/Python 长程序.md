@@ -1,6 +1,124 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+
+#### 从 es 取数据，过动词匹配，title 去重  
+
+```python 
+import re
+
+import pandas as pd
+from django.conf import settings
+from django.core.management import BaseCommand
+
+from data_analysis.connect import ConnectManager
+from data_analysis.tools.text_tools import TextFactory
+
+
+class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-si',
+            dest='sindex',
+            default='page',
+            help='查询的索引',
+        )
+
+    def handle(self, *args, **options):
+        source_data = ["说，", "说。", "说：", "说道，", "说道。", "表示，", "表示。", "回答：", "回答道", "呼吁，", "呼吁：", "强调，", "介绍，", "介绍道，",
+                       "认为", "坦言，", "指出：", "看来，", "称，", "称。", "建议，", "建议。", "建议：", "她建议", "他建议", "建议包括", "提到，", "提到：",
+                       "提出，", "告诉记者", "指出，", "报道，", ]
+        verb_pat = re.compile("(" + ")|(".join(source_data) + ")")
+
+        query_dict = {
+            "query": {
+                "bool": {
+                    "filter": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "range": {
+                                        "post_time": {
+                                            "gte": "2021-01-01 00:00:00",
+                                            "lt": "2022-01-01 00:00:00"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match_phrase": {
+                                        "text": "皮卡"
+                                    }
+                                },
+                                {
+                                    "term": {
+                                        "site_name": {
+                                            "value": "媒体库"
+                                        }
+                                    }
+                                },
+                                {
+                                    "query_string": {
+                                        "fields": ["text"],
+                                        "query": ' OR '.join(f'"{data}"' for data in source_data)
+                                    }
+                                },
+                                {
+                                    "bool": {
+                                        "must_not": [
+                                            {
+                                                "match_phrase": {
+                                                    "text": "皮卡丘"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+
+        result_list = []
+        for batch_data in ConnectManager.ES.get_setting('DEFAULT').search_by_page_with_searchafter(
+                options['sindex'],
+                doc=None,
+                fields=["text", 'title', 'url', 'post_time'],
+                query=query_dict,
+                sort_fields=[{'post_time': 'desc'}, {'include_time': 'desc'}],
+                return_sort=False,
+                size=10000
+        ):
+            for data in batch_data:
+                text = data['text']
+                m = verb_pat.search(text)
+                if m:
+                    result_list.append(data)
+                    continue
+                else:
+                    if re.search(r'据([^称,\.，。？\?!！;；]+?)称|据([^称,\.，。？\?!！;；]+?)报道', text):
+                        result_list.append(data)
+                        continue
+            print('next batch')
+
+        print(len(result_list))
+
+        true_data_list = []
+        title_dedupe_set = set()
+        for data in result_list:
+            title = TextFactory(data['title']).replace_all_not_word_char_to_null().now
+            if title not in title_dedupe_set:
+                title_dedupe_set.add(title)
+                true_data_list.append(data)
+            else:
+                continue
+
+        data_frame = pd.DataFrame(true_data_list)
+        data_frame.to_csv(str(settings.RESOURCE_ROOT / 'docs' / 'program' / 'pika.csv'), index=False, sep=',')
+```
+
+
 #### 找所有 keyword 的位置 11.16 
 
 ```python 
