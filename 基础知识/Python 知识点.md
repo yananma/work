@@ -1123,6 +1123,21 @@ Out[13]: 15
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
 
 
+### os  
+
+#### os.makedirs()  
+
+```python 
+import os 
+
+# 创建文件夹，如果文件夹已存在，会报错 FileExistsError  
+os.makedirs('文件夹名')  
+
+# 创建文件夹，文件夹存在不报错  
+os.makedirs('文件夹名', exist_ok=True)  
+```
+
+
 ### collections 包
 
 #### namedtuple 函数  
