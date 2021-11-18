@@ -182,6 +182,23 @@ def find_keyword_idx(keyword, text):
 ```
 
 
+#### 预测结果分组 
+
+```python 
+import more_itertools 
+
+with open('test_prediction.json', 'w', encoding='utf-8') as tf:
+    with open('clue_classifier/model/trainv6/bert/test_prediction.json', 'r', encoding='utf-8') as f:
+        lines = f.readlines() 
+        groups = more_itertools.split_into(lines, sent_num_list)
+        for idx, group in enumerate(groups):
+            json_d = {}
+            json_d['id'] = idx 
+            json_d['label'] = '1' if any(json.loads(item)['label']=='1' for item in group) else '0'
+            tf.write(json.dumps(json_d) + '\n')
+```
+
+
 #### 读两个 JSON 文件，写入到一个 JSON 文件中 11.10
 
 ```python 
