@@ -2,6 +2,45 @@
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
 
+#### 专家姓名匹配提取 11.18 
+
+```python 
+import re
+import pandas as pd
+from common.utils import AuthorNameSearchTool
+
+
+df = pd.read_csv('resources/pika_tag2020.csv')
+
+authorNameTool = AuthorNameSearchTool()
+name_pat = authorNameTool.name_rule_cpl
+
+result_list = []
+for line in df.iterrows():
+    result_dict = {}
+    text = line[1]['text'].strip()
+    if not text:
+        continue
+    tag_text = line[1]['tag_text']
+    result_dict['author_names'] = []
+    for tag_author_name in name_pat.finditer(tag_text):
+        author_name = re.sub(r'<[/a-zA-Z]+?.*?>', '', tag_author_name.group())  # 去掉 tag  
+        result_dict['author_names'].append(author_name)
+    result_dict['author_names'] = '\n'.join(result_dict['author_names'])
+    result_dict['title'] = line[1]['title']
+    result_dict['text'] = line[1]['text']
+    result_dict['url'] = line[1]['url']
+    result_dict['post_time'] = line[1]['post_time']
+    result_dict['tag_text'] = line[1]['tag_text']
+    result_list.append(result_dict)
+
+data_frame = pd.DataFrame(result_list)
+data_frame.to_csv('resources/pika_author_name2020.csv', index=False, sep=',')
+print('写入完毕。。。。。。')
+```
+
+
+
 #### LAC 分词 11.17 
 
 ```python 
