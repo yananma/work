@@ -40,6 +40,7 @@ class Command(BaseCommand):
             result_dict['text'] = line[1]['text'] 
             result_dict['url'] = line[1]['url'] 
             result_dict['post_time'] = line[1]['post_time']
+            result_dict['tag_text'] = tag_text 
             result_list.append(result_dict)
 
         print('用时 %.2f sec' % (time.time() - start))
