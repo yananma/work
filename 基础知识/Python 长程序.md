@@ -2,7 +2,55 @@
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
 
-#### 从 es 取数据，过动词匹配，title 去重  
+#### LAC 分词 11.17 
+
+```python 
+import logging
+import time
+
+from LAC import LAC
+from django.conf import settings
+from django.core.management.base import BaseCommand
+import pandas as pd
+
+logger = logging.getLogger('mxlog')
+
+
+class Command(BaseCommand):
+
+    def __init__(self, stdout=None, stderr=None, no_color=False, force_color=False):
+        super().__init__(stdout=None, stderr=None, no_color=False, force_color=False)
+        self.lac = LAC(mode='lac')
+
+    def add_arguments(self, parser):
+        self.lac.load_customization(str(settings.RESOURCE_ROOT / 'docs' / 'program' / 'lac_person_costom.txt'))
+
+    def handle(self, *args, **options):
+        result_list = []
+        df = pd.read_csv(str(settings.RESOURCE_ROOT / 'docs' / 'program' / 'pika.csv'))
+        print(len(df))
+        start = time.time()
+        for line in df.iterrows():
+            result_dict = {}
+            text = line[1]['text'].strip()
+            if not text:
+                continue
+            tag_text = ''.join(f'<{t}>{w}</{t}>' for w, t in zip(*self.lac.run(text)))
+            result_dict['title'] = line[1]['title'] 
+            result_dict['text'] = line[1]['text'] 
+            result_dict['url'] = line[1]['url'] 
+            result_dict['post_time'] = line[1]['post_time']
+            result_list.append(result_dict)
+
+        print('用时 %.2f sec' % (time.time() - start))
+
+        data_frame = pd.DataFrame(result_list)
+        data_frame.to_csv(str(settings.RESOURCE_ROOT / 'docs' / 'program' / 'pika_tag.csv'), index=False, sep=',')
+        print('写入完毕。。。。。。')
+```
+
+
+#### 从 es 取数据，过动词匹配，title 去重 11.17   
 
 ```python 
 import re
