@@ -1,6 +1,15 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 读取 JSON  
+
+每一行是一个字符串  
+```python 
+with open('concate.json', 'r', encoding='utf-8') as f:
+    lines = f.readlines()
+    lines = [json.loads(line) for line in lines]
+```
+
 
 #### 专家姓名匹配提取 11.18 
 
