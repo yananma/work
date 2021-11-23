@@ -45,6 +45,11 @@ GET kejisousou-en-formal/_search
 }
 ```
 
+拼接用 print，不过前后要手动加上引号  
+```python 
+print(('\\" OR \\"').join(li)) 
+```
+
 ```python 
 GET kejisousou-en-testv3/_search
 {
