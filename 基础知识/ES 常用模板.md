@@ -1,4 +1,6 @@
 
+### 一般情况下，手写查询，不再复制  
+
 查询 text 类型，使用 query_string 或 match_phrase，完全匹配关键字类型，用 term.  
 
 查看索引字段  
