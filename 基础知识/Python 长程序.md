@@ -1,6 +1,138 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+
+#### 索引更新 include_time 字段  
+
+```python 
+import bisect
+import logging
+import argparse
+import re
+from itertools import islice
+import csv
+import json
+
+from common.es_opts import get_point_datas, bulk_point_datas, BulkModeEnum
+from common.filters.base import BaseKeyFilter
+from common.models import ZKYDataVersion
+from common.mx_simhash import compute_simhash_v2
+from common.text_tools import TextFactory
+from common.utils import today, SectionCheck, trans_to_md5, AuthorNameSearchTool, lastday
+from resources.YUCE_KEYWORDS import NORMAL_KEYWORDS
+from yuce.yuce_process import Yuce
+from enum import Enum
+from typing import Union, Tuple, List, Dict
+
+from elasticsearch import helpers
+
+from common.ESConnect import es_default_connect
+from common.text_tools import TextFactory
+from common.utils import today, trans_to_md5
+
+logger = logging.getLogger(__file__)
+
+logger.setLevel(logging.INFO)
+logger_handle = logging.StreamHandler()
+formater = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+logger_handle.setFormatter(formater)
+logger.addHandler(logger_handle)
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+
+    ## Required parameters
+    parser.add_argument("--version", default=__file__, type=str,
+                        help="数据处理版本，用于区别各个不同的进程")
+    parser.add_argument("--last", default=-1, type=int,
+                        help="ES获取专家观点数据时间的几天前开始跑")
+    parser.add_argument("--from_date", default='2020-01-01 00:00:00', type=str,
+                        help="ES获取专家观点数据的起始时间")
+    parser.add_argument("--to_date", default=today(time_str=None,to_datetime_str=True), type=str,
+                        help="ES获取专家观点数据的结束时间")
+
+    parser.add_argument("--rank", default=-1, type=int,
+                        help="处理进程ID，默认主进程为-1")
+    parser.add_argument("--bulk_count", default=100, type=int,
+                        help="满多少bulk一次")
+    parser.add_argument("--from_index", default='zhuanjiav2', type=str,
+                        help="查询索引")
+    parser.add_argument("--to_index", default='zhili-zky', type=str,
+                        help="目标索引")
+    parser.add_argument("--doc_type", default='yuce_doc', type=str,
+                        help="类型")
+    parser.add_argument("--search_time_field", default='post_time', type=str,
+                        help="ES搜索时，from_date生效的时间字段")
+    parser.add_argument("--time_desc", action='store_true',
+                        help="时间是否倒序")
+
+    args = parser.parse_args()
+
+    if args.last>=0:
+        args.from_date = lastday(args.last,time_str='00:00:00',to_datetime_str=True)
+    # logger.info('初始化VersionData')
+    # # 初始化date_version
+    # version_obj,created = ZKYDataVersion.get_or_create(
+    #     version=f'{args.version}_{args.from_date.split()[0]}_{args.to_date.split()[0]}',
+    #     defaults={
+    #         'state':1
+    #     }
+    # )
+    # search_after = json.loads(version_obj.search_after)
+    #
+    # all_count = 0
+    # logger.info(f'will read es datas,search_after is {search_after}')
+
+    bulk_results = []
+    for datas,next_search_after in get_point_datas(index=args.from_index,
+                                                   doc=args.doc_type,
+                                                   # search_after=search_after,
+                                                   fields=['include_time', 'title_hash', 'yuce_text'],
+                                                   from_date=args.from_date,
+                                                   to_date=args.to_date,
+                                                   sort_fields=[{args.search_time_field:'desc' if args.time_desc else 'asc'}],
+                                                   search_time_field=args.search_time_field):
+        logger.info(f'read es datas finish,count:{len(datas)}')
+        bulk_results = []
+        bulk_size = 100
+        for data in datas:
+            data_dict = {"yuce_text": data['yuce_text'], "title_hash": data['title_hash'], "include_time": "2021-11-25 08:00:00"}
+            bulk_results.append(data_dict)
+
+            if len(bulk_results) >= bulk_size:
+                logger.info(f'will bulk zhili data,count:{len(bulk_results)}')
+                success,faild = bulk_point_datas(
+                    bulk_results,
+                    index=args.to_index,
+                    doc=args.doc_type,
+                    op_type=BulkModeEnum.IF_EXISTS_UPDATE,
+                    id_func=lambda post: trans_to_md5(post['title_hash'] + '||' + TextFactory(post['yuce_text']).replace_all_not_word_char_to_null().now)
+                )
+                logger.info(f'bulk zhili data success:{success} faild:{faild}')
+                # 更新 dataversion
+                bulk_results.clear()
+        else:
+            if len(bulk_results) > 0:
+                logger.info(f'will bulk zhili data,count:{len(bulk_results)}')
+                success, faild = bulk_point_datas(
+                    bulk_results,
+                    index=args.to_index,
+                    doc=args.doc_type,
+                    op_type=BulkModeEnum.IF_EXISTS_UPDATE,
+                    id_func=lambda post: trans_to_md5(post['title_hash'] + '||' + TextFactory(post['yuce_text']).replace_all_not_word_char_to_null().now)
+                )
+                logger.info(f'bulk zhili data success:{success} faild:{faild}')
+                # 更新 dataversion
+                bulk_results.clear()
+
+        # version_obj.search_after = json.dumps(next_search_after)
+        # version_obj.save()
+    logger.info('完成')
+```
+
+
 #### 读取 JSON  
 
 每一行是一个字符串  
