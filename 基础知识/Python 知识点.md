@@ -1130,6 +1130,14 @@ Out[13]: 15
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
 
 
+
+### random 模块  
+
+随机采样  
+```python 
+random.sample(c_groups_result_list, k=1042)   
+```
+
 ### os  
 
 #### os.makedirs()  
