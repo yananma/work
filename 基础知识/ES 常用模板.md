@@ -159,6 +159,24 @@ GET kejisousou-test/_search
 }
 ```
 
+按字段是否存在查询  
+```python 
+GET kejisousou-yuce-formal-v4/_search 
+{
+  "query": {
+    "bool": {
+      "must_not": [
+        {
+          "exists": {
+            "field": "include_time"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
 
 #### 聚合  
 
