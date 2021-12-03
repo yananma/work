@@ -1,4 +1,7 @@
 
+## 做完再说，少说大话  
+
+
 把注意力机制发挥到极致。  
 
 mastery comes from practice.  
