@@ -832,8 +832,8 @@ excel_to_jsonl('技术预测前50', '标志')
 
 多标签加两句  
 ```python 
-# shi_re_result = re.search(re.escape(shi_re_result), text)    # 多标签  
-# final_dict['labels'].append([shi_re_result.start(), shi_re_result.end(), '是'])            
+shi_re_result = re.search(re.escape(shi_re_result), text)    # 多标签  
+final_dict['labels'].append([shi_re_result.start(), shi_re_result.end(), '是'])            
 ```
 
 
@@ -1381,8 +1381,6 @@ with open('技术治理-EN-213.jsonl', encoding="utf-8") as f:
 ```
 
 
-
-
 原版  
 
 ```python
@@ -1451,8 +1449,6 @@ with open('yuce_EN_840.jsonl', encoding="utf-8") as f:
 
 
 #### 08.18 整理标注数据  
-
-(有一个问题就是不要一直写入文件读取文件，赋值给一个变量就好了)  
 
 1、多个文件合并成一个文件  
 
@@ -1598,8 +1594,6 @@ with open('result.json', 'a', encoding="utf-8") as fl:
 
 #### 08.16  
 
-自己写的简单解决方法。  
-
 ```python 
 li = [
     {
@@ -1652,38 +1646,6 @@ class Solution:
 
 s = Solution()
 print(s.replace_to_default(li))
-```
-
-思想就是没有到底就继续拆，到底了就取默认值，有更强的容错性。  
-
-```python 
-class TransSimpleJson:
-
-    @classmethod
-    def visitor(cls, obj):
-        if isinstance(obj, list):
-            return cls.visitor_list(obj)
-        elif isinstance(obj, dict):
-            return cls.visitor_dict(obj)
-        else:
-            return cls.visitor_else(obj)
-
-    @classmethod
-    def visitor_list(cls, obj: list):
-        return [cls.visitor(it) for it in obj]
-
-    @classmethod
-    def visitor_dict(cls, obj: dict):
-        return {k: cls.visitor(v) for k, v in obj.items()}
-
-    @classmethod
-    def visitor_else(cls, obj):
-        # 取默认值
-        return obj.__class__()
-        # # 取原本的值
-        # return obj
-        
-print(TransSimpleJson().visitor(li))
 ```
 
 
