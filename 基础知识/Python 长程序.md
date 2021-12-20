@@ -1,6 +1,22 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+
+#### 截取指定区间的 json 文件  
+
+```python 
+def trunc_json(all_file, part_file, trunc_start, trunc_end):
+    """截取指定区间的 JSON 文件，相当于切片"""
+    with open(all_file, 'r', encoding='utf-8') as af: 
+        with open(part_file, 'w', encoding='utf-8') as pf: 
+            lines = af.readlines() 
+            lines = [json.loads(line) for line in lines] 
+            trunc_lines = lines[trunc_start: trunc_end]
+            for line in trunc_lines: 
+                pf.write(json.dumps(line, ensure_ascii=False) + '\n') 
+```
+
+
 #### 把 json 转换成指定的 Excel 格式  
 
 ```python 
