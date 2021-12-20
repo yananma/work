@@ -1,6 +1,36 @@
 
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
+#### 把 json 转换成指定的 Excel 格式  
+
+```python 
+def convert_json_to_list(json_file) -> list:
+    """把 JSON 文件转换为第一行有序号，后面没有序号的格式"""
+    with open(json_file, 'r', encoding='utf-8') as f: 
+        result_list = []
+        for line in f:
+            line = json.loads(line) 
+            for idx, sent in enumerate(line['sentence']):
+                result_dict = {}
+                if idx == 0: 
+                    result_dict['序号'] = line['docid']
+                    result_dict['原始标签'] = line['label']
+                    result_dict['all_label'] = line['label']
+                    result_dict['监控对象'] = line['brand'] 
+                    result_dict['命中词'] = line['keyword'] 
+                    result_dict['文本内容'] = sent.strip() 
+                    result_list.append(result_dict)
+                else:
+                    result_dict['序号'] = ''
+                    result_dict['原始标签'] = ''
+                    result_dict['all_label'] = line['label']
+                    result_dict['监控对象'] = ''
+                    result_dict['命中词'] = ''
+                    result_dict['文本内容'] = sent.strip()
+                    result_list.append(result_dict)
+        return result_list 
+```
+
 
 #### 索引更新 include_time 字段  
 
