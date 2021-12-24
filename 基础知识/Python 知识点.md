@@ -1093,6 +1093,11 @@ In [16]: list(map(my_square, [-2, -1, 0, 2, 5]))
 Out[16]: [4, 1, 0, 4, 25]
 ```
 
+```python 
+list(map(lambda x: x ** 2, [i for i in range(5)]))  
+```
+
+
 #### next 函数 
 
 next(iterator[, default])
