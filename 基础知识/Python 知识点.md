@@ -935,6 +935,19 @@ Out[13]: True
 
 In [14]: any([0, False])
 Out[14]: False
+
+In [366]: any([0, True])
+Out[366]: True
+```
+
+使用案例  
+
+```python 
+result_dict = {}
+if any(filter(lambda x: x['label']=='1', group)):
+    result_dict['label'] = '1' 
+else:
+    result_dict['label'] = '0' 
 ```
 
 
