@@ -670,9 +670,9 @@ Out[32]: 9
 
 # 冒号后面是 return 的值，lambda 后面的是参数。  
 
-In [33]: f2 = lambda x, y: x + y
+In [33]: add = lambda x, y: x + y
 
-In [34]: f2(3, 4)
+In [34]: add(3, 4)
 Out[34]: 7
 ```
 
@@ -689,7 +689,7 @@ Out[34]: 7
 
 \* 可以把一个可迭代对象拆开作为函数的参数。  
 
-args 是 (1, 2, 3, 4)，\*args 是 1, 2, 3, 4  
+args 是 (1, 2, 3, 4)，\*args 去掉了外层的括号，结果是 1, 2, 3, 4  
 
 ```python 
 In [19]: def foo(*args):
@@ -735,6 +735,29 @@ TypeError: divmod expected 2 arguments, got 1
 In [8]: divmod(*t)    # t 是 (20, 8) 是一个元组，是一个元素。*t 是 20， 8 是元组里面的元素，在这里是两个元素，可以是多个元素  
 Out[8]: (2, 4)
 ```
+
+
+\*\*kwargs   
+
+d 是字典，\*\*d 是去掉了最外层的字段括号  
+
+```python 
+In [406]: d
+Out[406]: {'a': 1, 'b': 2}
+
+In [407]: def foo(**kwargs):
+     ...:     print(kwargs)
+     ...: 
+
+In [408]: foo(**d)
+{'a': 1, 'b': 2}
+
+In [409]: foo(a=1, b=2)
+{'a': 1, 'b': 2}
+```
+
+
+
 
 ### 类  
 
