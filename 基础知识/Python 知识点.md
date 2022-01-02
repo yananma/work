@@ -1091,7 +1091,82 @@ In [20]: def f3():
 #### global 和 nonlocal  
 
 global 就是把变量放到 globals() 字典中  
-nonlocal 就是把内层变量放到外层的函数的 locals() 字典中  
+
+nonlocal 就是把外层变量放到内层的函数的 locals() 字典中，在内层可以修改外层的变量  
+
+在最开始 f2 函数的 locals 是没有 a 变量的  
+```python 
+In [426]: def f1():
+     ...:     a = 1
+     ...:     print(f"f1 函数的 locals 是：{locals()}")
+     ...:     def f2():
+     ...:         b = 2
+     ...:         print(f"f2 函数的 locals 是：{locals()}")
+     ...:     print(f"最后 f1 函数的 locals 是：{locals()}")
+     ...:     return f2
+     ...: 
+
+In [427]: f1()
+f1 函数的 locals 是：{'a': 1}
+最后 f1 函数的 locals 是：{'a': 1, 'f2': <function f1.<locals>.f2 at 0x7f7d3d5b4b90>}
+Out[427]: <function __main__.f1.<locals>.f2()>
+
+In [428]: f1()()
+f1 函数的 locals 是：{'a': 1}
+最后 f1 函数的 locals 是：{'a': 1, 'f2': <function f1.<locals>.f2 at 0x7f7d3d5cfb90>}
+f2 函数的 locals 是：{'b': 2}    # 这里没有 a  
+```
+
+加了 nonlocal 以后，内层的 locals 就有了 a 变量  
+
+```python 
+In [429]: def f1():
+     ...:     a = 1
+     ...:     print(f"f1 函数的 locals 是：{locals()}")
+     ...:     def f2():
+     ...:         nonlocal a
+     ...:         b = 2
+     ...:         print(f"f2 函数的 locals 是：{locals()}")
+     ...:     print(f"最后 f1 函数的 locals 是：{locals()}")
+     ...:     return f2
+     ...: 
+
+In [430]: f1()
+f1 函数的 locals 是：{'a': 1}
+最后 f1 函数的 locals 是：{'a': 1, 'f2': <function f1.<locals>.f2 at 0x7f7d35594440>}
+Out[424]: <function __main__.f1.<locals>.f2()>
+
+In [431]: f1()()
+f1 函数的 locals 是：{'a': 1}
+最后 f1 函数的 locals 是：{'a': 1, 'f2': <function f1.<locals>.f2 at 0x7f7d3d5cf0e0>}
+f2 函数的 locals 是：{'b': 2, 'a': 1}    # 这里有了 a 变量  
+``` 
+
+通过 nonlocal 在内层函数修改了变量以后，完成变量的值还是保持不变  
+
+```python 
+In [432]: def f1():
+     ...:     a = 1
+     ...:     print(f"f1 函数的 locals 是：{locals()}")
+     ...:     def f2():
+     ...:         nonlocal a
+     ...:         b = 2
+     ...:         a = 3
+     ...:         print(f"f2 函数的 locals 是：{locals()}")
+     ...:     print(f"最后 f1 函数的 locals 是：{locals()}")
+     ...:     return f2
+     ...: 
+
+In [433]: f1()
+f1 函数的 locals 是：{'a': 1}
+最后 f1 函数的 locals 是：{'a': 1, 'f2': <function f1.<locals>.f2 at 0x7f7d3d5b4d40>}
+Out[421]: <function __main__.f1.<locals>.f2()>
+
+In [434]: f1()()
+f1 函数的 locals 是：{'a': 1}
+最后 f1 函数的 locals 是：{'a': 1, 'f2': <function f1.<locals>.f2 at 0x7f7d4df77560>}   # 在这里，外层 a 还是 1 
+f2 函数的 locals 是：{'b': 2, 'a': 3}   # 但是在内层，a 已经是 3 了  
+```
 
 
 #### sorted 函数  
