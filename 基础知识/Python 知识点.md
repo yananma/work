@@ -1090,7 +1090,32 @@ In [20]: def f3():
 
 #### global 和 nonlocal  
 
-global 就是把变量放到 globals() 字典中  
+global 就是在函数内可以修改 global 作用域的变量    
+
+```python 
+In [13]: a = 1
+
+In [14]: def f1():
+    ...:     a = 2
+    ...: 
+
+In [15]: a
+Out[15]: 1
+
+In [16]: def f2():
+    ...:     global a
+    ...:     a = 2
+    ...: 
+
+In [17]: a
+Out[17]: 1
+
+In [18]: f2()
+
+In [19]: a
+Out[19]: 2
+```
+
 
 nonlocal 就是把外层变量放到内层的函数的 locals() 字典中，在内层可以修改外层的变量  
 
