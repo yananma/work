@@ -1291,6 +1291,36 @@ os.makedirs('文件夹名')
 os.makedirs('文件夹名', exist_ok=True)  
 ```
 
+#### os.path  
+
+```python 
+In [441]: import os
+
+In [442]: path = "work/v13/危机预警.csv"
+
+In [443]: path
+Out[443]: 'work/v13/危机预警.csv'
+
+In [444]: dir_name = os.path.dirname(path)
+
+In [445]: dir_name
+Out[445]: 'work/v13'
+
+In [446]: file_name = os.path.basename(path)
+
+In [447]: file_name
+Out[447]: '危机预警.csv'
+
+In [448]: os.path.splitext(file_name)
+Out[448]: ('危机预警', '.csv')
+
+In [449]: os.path.splitext(file_name)[0]
+Out[449]: '危机预警'
+
+In [450]: os.path.splitext(file_name)[1]
+Out[450]: '.csv'
+```
+
 
 ### collections 包
 
