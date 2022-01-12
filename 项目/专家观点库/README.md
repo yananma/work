@@ -1,4 +1,5 @@
 
+### 数据统计  
 
 1. 新浪微博，community2 索引，用 entry_name="新浪微博" 
 
@@ -27,6 +28,34 @@
 1. 重新整理每一个 sheet  
 2. 把配置索引、正向查询等配置信息删除  
 3. 给每一个 sheet 的每一列加上表头  
+
+
+
+
+
+### 字段  
+
+```python 
+author_name    # 文章作者  
+include_time    
+is_split
+talent_text_hash   
+post_time
+text    # 原文
+title
+url
+author   # 提出观点的专家  
+author_type   # 类型，全称还是 PER  
+talent_text   # 观点段落或句子  
+title_hash
+
+# 4 个保留字段  
+reserve_field  ""  
+author_id  -1  
+reserve_type  -1  
+random_num  随机数    
+```
+
 
 
 
