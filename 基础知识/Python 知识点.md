@@ -1362,6 +1362,13 @@ Out[450]: '.csv'
 ```
 
 
+#### 获取当前路径  
+
+```python 
+os.getcwd()
+```
+
+
 ### collections 包
 
 #### namedtuple 函数  
