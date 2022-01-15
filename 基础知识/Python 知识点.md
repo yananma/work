@@ -885,27 +885,41 @@ Out[9]: 86
 
 
 ```python
-from functools import wraps
+In [2]: import time
 
-def arg_dec(ts=None):
-    s = ts
-    print(f'arg_dec:{s}')
-    def outer(func):
-        print(f'outer:{s}')
-        @wraps(func)
-        def inner(*args,**kwargs):
-            print(f'inner:{s}')
-            print(f'inner:{args}\t{kwargs}')
-            return func(*args,**kwargs)
-        print(f'inner finish:{s}')
-        return inner
-    print(f'outer finish:{s}')
-    return outer
+In [3]: def exec_time(func):
+   ...:     def wrapper(*args, **kwargs):
+   ...:         start = time.time()
+   ...:         res = func(*args, **kwargs)
+   ...:         print(f"exec time is {time.time() - start} s")
+   ...:         return res
+   ...:     return wrapper
+   ...: 
+
+In [4]: @exec_time
+   ...: def foo():
+   ...:     time.sleep(0.5)
+   ...: 
+
+In [5]: foo()
+exec time is 0.5005528926849365 s
+```
 
 
-@arg_dec(45)
-def add(a,b):
-    return a+b
+#### 协程  
+
+```python 
+def grep():
+    while True:
+        lines = (yield) 
+        for line in lines:
+            print(line) 
+        
+        
+search = grep() 
+next(search) 
+search.send([1, 2, 3, 4, 5, 6])  
+search.send(["a", "b", "c", "d"])  
 ```
 
 
@@ -1763,19 +1777,6 @@ global 的作用就是使用更外层的上下文。
 
 nonlocal 的作用就是在内层操作外层变量，就像是在外层操作外层变量完全等效，就相当于，把内层函数 def inner(): 这一行去掉，inner 函数的内容左移一个 tab 完全等效。  
 
-周一：
-周二：江南小碗菜  
-周三：大同刀削面  
-周四：  
-周五：  
-周六：
-周日：爆肚粉、田老师  
-
-干锅侠分量很大，周六日中午点  
-田老师宫保鸡丁太酸了，不再吃  
-淮南牛肉汤不要再点牛杂，换个别的  
-翻滚吧炒饭不好吃，油腻  
-
 
 #### 类 
 
@@ -1794,10 +1795,6 @@ Out[4]: True
 ```
 
 类是一种模板，改模板，所有的就都变了。  
-
-对象可能是抽象层面的东西。  
-
-对象是一种模板。  
 
 ```python 
 a = A()  
@@ -1842,11 +1839,7 @@ Python 函数，是最常见的拥有作用域的东西。作用域是 C 语言�
 
 函数就是一个黑盒，函数与外界进行信息传递只有三种方式，参数、返回值和上下文。  
 
-input -> 黑盒操作 -> output  
-
 参数就是输入，返回值就是输出。上下文就是外部可见的东西。  
-
-上下文例子？上下文要再好好看一看。  
 
 把实参赋值给形参，就是变量赋值。  
 
