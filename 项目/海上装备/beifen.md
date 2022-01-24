@@ -45,3 +45,22 @@ function normal_user_login() {
   })
 }
 ```
+
+
+
+```js 
+// 表格展开
+$(function () {
+  $("#collapse-cell td").click(function () {
+    console.log($(this).css("background"))
+    if ($(this).css("background") === "rgb(144, 238, 144) none repeat scroll 0% 0% / auto padding-box border-box"){
+      $(this).css({"background": ""})
+    }else {
+      $(this).css({"background": "lightgreen"})
+      $("#collapse-cell + tr td p").html($(this).text())
+    }
+  })
+})
+```
+
+
