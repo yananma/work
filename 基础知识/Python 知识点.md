@@ -1088,11 +1088,18 @@ In [8]: list(filter(lambda x: int(x), s.split(',')))
 Out[8]: ['1', '2', '3']
 ```
 
-过滤空数据  
+过滤空数据，过滤的是空字符串    
 
 ```python 
 li = list(filter(lambda x: x, li))  
 ```
+
+过滤空格  
+
+```python 
+li = list(filter(lambda x: x.strip(), li))  
+```
+
 
 #### globals 和 locals 函数  
 
@@ -1250,9 +1257,7 @@ f2 函数的 locals 是：{'b': 2, 'a': 3}   # 但是在内层，a 已经是 3 �
 
 #### sorted 函数  
 
-默认升序。  
-
-key 是函数，所以必须用 lambda，其实就是 key=x[0]。  
+默认升序。可以通过 reverse=True，改为降序  
 
 ```python 
 In [1]: l = [(3, 'cat'), (1, 'bag'), (2, 'apple')]
@@ -1607,7 +1612,15 @@ Out[5]: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 ```python 
 ```
 
+
 ### 非 Python  
+
+#### 启动虚拟环境的 ipython  
+
+```python 
+/home/test/anaconda3/envs/reci/bin/ipython
+```
+
 
 #### NaN  
 
