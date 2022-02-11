@@ -1615,6 +1615,18 @@ Out[5]: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 
 ### 非 Python  
 
+#### log 代码  
+
+```python 
+import logging
+from importlib import reload
+reload(logging)
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.DEBUG, datefmt='%I:%M:%S')
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+```
+
+
 #### 启动虚拟环境的 ipython  
 
 ```python 
