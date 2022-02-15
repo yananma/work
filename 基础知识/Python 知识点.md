@@ -1102,6 +1102,12 @@ li = list(filter(lambda x: x, li))
 li = list(filter(lambda x: x.strip(), li))  
 ```
 
+过滤空行  
+
+```python 
+list(filter(lambda x: x.strip(), label_list))
+```
+
 
 #### globals 和 locals 函数  
 
