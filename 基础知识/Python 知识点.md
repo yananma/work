@@ -809,6 +809,11 @@ Out[41]: list
 
 ### 其他  
 
+#### 编码  
+
+`# -*- coding:utf-8 -*-`   
+
+
 #### \n \t  
 
 \n 是 newline  
