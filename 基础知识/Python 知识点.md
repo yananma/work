@@ -737,6 +737,39 @@ In [34]: add(3, 4)
 Out[34]: 7
 ```
 
+lambda 里可以写 print  
+
+```python 
+In [47]: f = lambda x: print(x)
+
+In [48]: f(3)
+3
+
+In [49]: f("hello world")
+hello world
+```
+
+lambda 里可以写 if   
+
+```python 
+In [50]: f = lambda x: print("偶数") if x % 2 == 0 else print("基数")
+
+In [51]: f(5)
+基数
+
+In [52]: f(6)
+偶数
+```
+
+lambda 里可以写列表推导式  
+
+```python 
+In [55]: f = lambda x: [item ** 2 for item in x]
+
+In [56]: f([1, 2, 3])
+Out[56]: [1, 4, 9]
+```
+
 
 #### 参数  
 
