@@ -1,4 +1,13 @@
 
+### 跑数据  
+
+跑数据命令   
+`nohup python main.py &>> command/logs/upload_to_zjgdk_20220302.log &`   
+
+查看日志   
+`tail -f backend.log`   
+
+
 ### 数据统计  
 
 1. 新浪微博，community2 索引，用 entry_name="新浪微博" 
