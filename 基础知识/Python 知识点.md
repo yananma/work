@@ -1458,6 +1458,23 @@ Out[450]: '.csv'
 os.getcwd()
 ```
 
+#### 通过命令复制文件   
+
+```python 
+In [1]: import os
+
+In [2]: with open('/home/crisis/nielsen/video/xhs_name_to_task_id.txt') as f:
+   ...:     video_names = f.readlines()
+   ...:     for video_name in video_names:
+   ...:         video_name = video_name.split(':')[0]
+   ...:         dest_dir = f'/home/crisis/nielsen/video_frames/198/{video_name}'
+   ...:         if not os.path.exists(dest_dir):
+   ...:             os.mkdir(dest_dir)
+   ...:         cmd = f'sshpass -p "JhDd7W4JO97S?U?h" scp -P 17717 -C dingyong@b62:/home/deploy/nielsen_test/upload/{video_name}/images/* {dest_dir}/'
+   ...:         os.system(cmd)
+   ...:         print(f'{video_name} Done.')
+```
+
 
 ### collections 包
 
