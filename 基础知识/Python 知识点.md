@@ -1476,6 +1476,18 @@ In [2]: with open('/home/crisis/nielsen/video/xhs_name_to_task_id.txt') as f:
 ```
 
 
+#### 通过命令删除 3 天前的文件   
+
+```python 
+In [1]: import subprocess
+
+In [2]: import os 
+
+In [3]: for file in subprocess.check_output('find {}  -mtime +3'.format('/home/test/syb/hszb_backend_v2/logs'), shell=True).split():
+   ...:     os.remove(file) 
+```
+
+
 ### collections 包
 
 #### namedtuple 函数  
