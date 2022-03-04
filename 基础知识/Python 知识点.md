@@ -1409,6 +1409,19 @@ partial(函数，参数)，partial 函数，把参数绑定到函数上。
 random.sample(c_groups_result_list, k=1042)   
 ```
 
+
+### pathlib    
+
+```python 
+In [1]: import os
+
+In [2]: from pathlib import Path
+
+In [3]: for file in Path('.').glob('*.xml'):
+   ...:     os.remove(file)   
+```
+
+
 ### os  
 
 #### os.makedirs()  
