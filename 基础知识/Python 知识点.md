@@ -1412,6 +1412,16 @@ random.sample(c_groups_result_list, k=1042)
 
 ### pathlib    
 
+#### 读取文件  
+
+```python 
+img_filenames = sorted(Path(img_base_dir).glob('*.jpg'))
+annotation_filenames = sorted(Path(annotation_base_dir).glob('*.txt'))
+```
+
+
+#### 删除文件   
+
 ```python 
 In [1]: import os
 
