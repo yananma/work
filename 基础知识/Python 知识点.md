@@ -1435,6 +1435,32 @@ In [3]: for file in Path('.').glob('*.xml'):
    ...:     os.remove(file)   
 ```
 
+#### 获取路径和文件名  
+
+```python 
+In [1]: from pathlib import PurePath, Path
+
+In [2]: annotation_filenames = sorted(Path('./txt_result/').glob('*.txt'))
+
+In [3]: for name in annotation_filenames:
+   ...:     print(name)
+   ...: 
+txt_result/feedback1_0001.txt
+txt_result/feedback1_0004.txt
+
+In [5]: for name in annotation_filenames:
+   ...:     print(PurePath(name).name)
+   ...: 
+feedback1_0001.txt
+feedback1_0004.txt
+
+In [6]: for name in annotation_filenames:
+   ...:     print(PurePath(name).parent)
+   ...: 
+txt_result
+txt_result
+```
+
 
 ### os  
 
