@@ -1435,6 +1435,15 @@ In [3]: for file in Path('.').glob('*.xml'):
    ...:     os.remove(file)   
 ```
 
+多层目录删除文件  
+```python 
+In [4]: for root, dirs, files in os.walk('./'):
+   ...:     for file in files:
+   ...:         if file.endswith('.xml'):
+   ...:             os.remove('.xml')
+```
+
+
 #### 获取路径和文件名  
 
 ```python 
