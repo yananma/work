@@ -1112,6 +1112,19 @@ In [25]: eval('x+1')
 Out[25]: 2
 ```
 
+```python 
+In [1]: str_list = '[1, 2, 3, 4, 5]'
+
+In [2]: type(str_list)
+Out[2]: str
+
+In [3]: eval(str_list)
+Out[3]: [1, 2, 3, 4, 5]
+
+In [4]: type(eval(str_list))
+Out[4]: list
+``` 
+
 
 #### filter 类
 
