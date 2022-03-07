@@ -1,6 +1,10 @@
 
 ### 跑数据  
 
+定时任务   
+crontab -e   
+`0 8 * * * cd /home/test/syb/mayanan/zjgdk && /home/test/anaconda3/envs/zjgdk/bin/python main.py &>>command/logs/upload_to_zjgdk_daily_task.log`   
+
 跑数据命令   
 `nohup python main.py &>> command/logs/upload_to_zjgdk_20220302.log &`   
 
