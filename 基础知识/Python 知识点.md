@@ -947,6 +947,14 @@ In [9]: days.days
 Out[9]: 86
 ```
 
+删除一天内的数据    
+
+```python 
+word_time = datetime.datetime.strptime(key, "%Y:%m:%d %H:%M:%S")
+if (datetime.datetime.now() - word_time).days == 0:
+    RedisConnect.cache.delete(delete_word_md5)
+```
+
 
 #### 装饰器  
 
