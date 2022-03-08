@@ -1,4 +1,11 @@
 
+51 服务器，端口 6100   
+
+路径：`/home/test/syb/mayanan/zjgdk`   
+
+`nohup python manage.py runserver 0:6100 &> backend.log &`    
+
+
 ### 跑数据  
 
 定时任务   
