@@ -955,6 +955,14 @@ if (datetime.datetime.now() - word_time).days == 0:
     RedisConnect.cache.delete(delete_word_md5)
 ```
 
+统计运行时间：  
+```python 
+import time 
+
+start = time.time()    
+'%.2f sec' % (time.time() - start)
+```
+
 
 #### 装饰器  
 
