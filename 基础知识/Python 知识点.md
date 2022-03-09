@@ -960,7 +960,7 @@ if (datetime.datetime.now() - word_time).days == 0:
 import time 
 
 start = time.time()    
-'%.2f sec' % (time.time() - start)
+logger.info('%.2f sec' % (time.time() - start))
 ```
 
 
