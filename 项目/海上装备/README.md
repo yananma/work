@@ -7,6 +7,6 @@
 
 目录：`/home/test/syb/hszb_backend_v2`  
 
-`nohup python manage.py runserver 0:8399 &> logs/backend.log &`    
+`nohup python manage.py runserver 0:8399 &>> logs/backend.log &`    
 
 
