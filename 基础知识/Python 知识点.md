@@ -1800,6 +1800,40 @@ Out[5]: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 联合类型；Union[X, Y] 的意思是，非 X 即 Y。  
 
 
+### 性能分析   
+
+#### py-spy    
+
+通过 1 2 3 4 切换排序规则     
+
+
+#### PyCharm   
+
+如果是 Django 项目：Profile 按钮      
+
+如果是 .py 文件：右键     
+
+
+#### 多行 log   
+
+```python 
+start = time.time()
+result_list = []
+logger.info('aaaaaaaaaaaaaaaaaaaaaaa %.2f sec' % (time.time() - start))
+for query_item in query_result:
+    for data in query_item:
+        data_dict = {"url": data["url"],
+                     "title": data["title"],
+                     "subtitle": data["talent_text"],
+                     "post_time": data["post_time"],
+                     "author": data["author"]
+                     }
+        result_list.append(data_dict)
+logger.info('bbbbbbbbbbbbbbbbbbbbb %.2f sec' % (time.time() - start))
+RedisConnect.cache.rpush(search_word_md5, json.dumps(result_list))
+RedisConnect.cache.expire(search_word_md5, time=60*60*24)
+logger.info('cccccccccccccccccccc %.2f sec' % (time.time() - start))
+```
 
 
 ```python 
@@ -1825,11 +1859,6 @@ logger.setLevel(logging.DEBUG)
 ```python 
 /home/test/anaconda3/envs/reci/bin/ipython
 ```
-
-
-#### NaN  
-
-NaN(Not a Number)  
 
 
 #### 哈希  
