@@ -1,4 +1,11 @@
 
+## model 相关   
+
+#### unique_together 唯一联合约束   
+
+去重用的，好处是可以少写处理的代码。不好的地方是，如果出现上传以后很多条只存了一条，要看是不是这个唯一约束造成了覆盖。   
+
+
 #### ForeignKey 查询 
 
 ForeignKey 就是多对一，写在多的多的里面，比如 comment 中写 topic 字段，使用 ForeignKey。  
@@ -23,11 +30,11 @@ to_date = "2021-05-30"
 在 middleware 的 es 函数里面，设置 has_key = 0，这样就不用每次删缓存了。  
 
 
-#### value 和 value_list  
+#### values 和 values_list  
 
-value 返回字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
+values 返回字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
 
-value_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
+values_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
 
 #### Django 字符串拼接  
@@ -46,4 +53,15 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 "budget": "45.423 (2021)",
 "five_years_budget": "237.75 (2021-2025)",
 ```
+
+
+## 其他   
+
+#### Django 命令   
+
+Django 命令必须要放到 management/command 包下面，在别的地方不行。   
+
+自定义管理命令在运行独立脚本命令方面十分有用，也可用于 UNIX 的周期性 crontab 任务，或是 Windows 的定时任务。   
+
+
 
