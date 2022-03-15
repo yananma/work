@@ -12,6 +12,40 @@
 查看数量  
 `GET /kejisousou-testv5/_count`  
 
+多用 filter，会大幅提高查询速度，因为不用评分   
+```python 
+query_dict = {
+    "query": {
+        "bool": {
+            "filter": {
+                "bool": {
+                    "must": [
+                        # {
+                        #     "match_phrase": {
+                        #         "talent_text": query_word
+                        #     }
+                        # },
+                        {
+                            "query_string": {
+                                "default_field": "talent_text",
+                                "query": ' AND '.join(f'"{word}"' for word in query_word.split())
+                            }
+                        },
+                        {
+                            "term": {
+                                "author_type": {
+                                    "value": 1
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+```
+
 query_string 查询  
 
 最常用的是这个  
