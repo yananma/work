@@ -27,5 +27,10 @@ python label_studio/manage.py collectstatic
 python label_studio/manage.py runserver
 ```
 
+要执行一个 `python manage.py migrate`   
+
 DJANGO_SETTINGS_MODULE 是 core.settings.label_studio    
+
+
+
 
