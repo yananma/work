@@ -1839,8 +1839,15 @@ logger.info('cccccccccccccccccccc %.2f sec' % (time.time() - start))
 ```python 
 ```
 
-
 ### 非 Python  
+
+
+#### pip 相关   
+
+查看帮助：`pip --help`     
+设置超时时间：`pip --timeout=100 install label-studio` (默认 15 秒)   
+查看当前 pip 源：`pip3 config list`  
+
 
 #### log 代码  
 
