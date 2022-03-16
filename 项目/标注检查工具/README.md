@@ -26,3 +26,6 @@ python label_studio/manage.py collectstatic
 # Launch
 python label_studio/manage.py runserver
 ```
+
+DJANGO_SETTINGS_MODULE 是 core.settings.label_studio    
+
