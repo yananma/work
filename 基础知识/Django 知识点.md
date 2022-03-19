@@ -1,6 +1,11 @@
 
 ## model 相关   
 
+#### filter 
+
+搜索是用 filter 实现   
+
+
 #### unique_together 唯一联合约束   
 
 去重用的，好处是可以少写处理的代码。不好的地方是，如果出现上传以后很多条只存了一条，要看是不是这个唯一约束造成了覆盖。   
@@ -53,6 +58,12 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 "budget": "45.423 (2021)",
 "five_years_budget": "237.75 (2021-2025)",
 ```
+
+
+## 测试   
+
+
+
 
 
 ## 其他   
