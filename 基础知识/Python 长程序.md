@@ -2,6 +2,72 @@
 ### 这里是写和 Python 相关的稍微长一些的代码  
 
 
+#### 从 ES 取数据，存到新的 ES 中  
+
+```python 
+import logging
+
+from upload_to_zjgdk import get_data
+
+from zjgdk_test.tools import ESBulk
+
+logger = logging.getLogger(__file__)
+
+logger.setLevel(logging.INFO)
+logger_handle = logging.StreamHandler()
+formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+logger_handle.setFormatter(formatter)
+logger.addHandler(logger_handle)
+
+
+def get_data_from_origin_es():
+    """从原始索引中取数据"""
+    query_dict = {
+        "query": {
+            "bool": {
+                "must": [
+                    {
+                        "term": {
+                            "author_type": {
+                                "value": 1
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+    batch_data_list = get_data(index="zjgdk-v2", doc="zjgdk_doc", query_dict=query_dict, time_limit=False, fields=True)
+    for batch_data in batch_data_list:
+        logger.info('batch_data')
+        yield batch_data
+
+
+def bulk_data_to_new_es():
+    """上传数据到新的 ES"""
+    result_list = []
+    for batch_data in get_data_from_origin_es():
+        for data in batch_data:
+            result_list.append(data)
+
+        if len(result_list) >= 1000:
+            logger.info("ESBulk ")
+            bulk_instance = ESBulk(result_list, bulk_index='zjgdk-fullname-v1')
+            success, failed = list(bulk_instance.process_data())[0]
+            result_list.clear()
+    else:
+        logger.info("last ESBulk ")
+        bulk_instance = ESBulk(result_list, bulk_index='zjgdk-fullname-v1')
+        success, failed = list(bulk_instance.process_data())[0]
+        result_list.clear()
+
+
+if __name__ == '__main__':
+    bulk_data_to_new_es()
+    logger.info("完成")
+```
+
+
 #### 截取指定区间的 json 文件  
 
 ```python 
