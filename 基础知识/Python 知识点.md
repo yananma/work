@@ -910,6 +910,32 @@ Out[41]: list
 时间相关的，多用 datetime，少用 time。  
 
 ```python 
+# 把字符串转换成 datetime 对象   
+>>> datetime.datetime.fromisoformat('2022-03-31')
+datetime.datetime(2022, 3, 31, 0, 0)
+
+# 先安装 dateutil，命令是 pip install python-dateutil  
+from dateutil.relativedelta import relativedelta  
+
+>>> current_month = datetime.datetime.now()
+>>> current_month
+datetime.datetime(2022, 3, 21, 17, 20, 6, 843261)
+
+>>> current_month += relativedelta(months=-1)
+>>> current_month
+datetime.datetime(2022, 2, 21, 17, 20, 6, 843261)
+
+>>> datetime.datetime.fromisoformat('2022-03-31')
+datetime.datetime(2022, 3, 31, 0, 0)
+
+>>> end = datetime.datetime.fromisoformat('2022-03-31')
+>>> end += relativedelta(months=-1)
+>>> end
+datetime.datetime(2022, 2, 28, 0, 0)
+```
+
+
+```python 
 In [1]: from datetime import datetime
 
 In [2]: datetime.now()
