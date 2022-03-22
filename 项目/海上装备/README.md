@@ -3,12 +3,10 @@
 
 端口 8399   
 
-虚拟环境：`hszb36`    
-
 `conda activate hszb36`
 
 `cd /home/test/syb/hszb_backend_v2`  
 
 `nohup python manage.py runserver 0:8399 &>> logs/backend.log &`    
 
-
+`tail -f logs/backend.log`   
