@@ -5,7 +5,7 @@
 
 虚拟环境：`hszb36`    
 
-`codna activate hszb36`
+`conda activate hszb36`
 
 `cd /home/test/syb/hszb_backend_v2`  
 
