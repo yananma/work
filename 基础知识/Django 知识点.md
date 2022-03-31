@@ -1,4 +1,6 @@
 
+# 知识点   
+
 ## model 相关   
 
 #### filter 
@@ -92,6 +94,50 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 Django 命令必须要放到 management/command 包下面，在别的地方不行。   
 
 自定义管理命令在运行独立脚本命令方面十分有用，也可用于 UNIX 的周期性 crontab 任务，或是 Windows 的定时任务。   
+
+
+
+# 项目实践    
+
+## 小知识点    
+
+#### 创建模型，创建应用  
+
+```python
+django-admin startproject zjgdk
+cd zjgdk
+django-admin startapp post   
+```
+
+
+#### 重命名 app   
+
+如果没有前移数据库，也没有各种导包引入，那么就只修改文件夹名，和应用下的 apps.py 的类名和 name 类属性     
+
+
+## 大的流程   
+
+#### Django 项目集成静态文件   
+
+1. 在 settings.py 的 TEMPLATES 中配置 DIRS，[BASE_DIR / "templates"]  
+2. 在 settings.py 中自定义一个静态文件目录：STATICFILES_DIRS = [BASE_DIR / "static",]    
+3. 在项目的 urls.py 中先 from django.urls import include，导入应用的 urls `path("", include("words.urls")),`    
+4. 在应用中创建 的 urls.py，在 urls.py 中配置 url   
+```python 
+from . import views
+from django.urls import path
+
+urlpatterns = [
+    path('index', views.index, name='index'),
+    path('detail', views.detail, name='detail'),
+]
+```
+5. 在 views.py 写视图函数   
+```python 
+def index(request):
+    return render(request, "index.html")
+```
+
 
 
 
