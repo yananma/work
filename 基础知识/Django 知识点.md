@@ -62,7 +62,9 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 ```
 
 
-## 测试   
+## [测试](https://docs.djangoproject.com/zh-hans/4.0/topics/testing/)     
+
+测试也要配置 DJANGO_SETTINGS_MODULE    
 
 貌似我们的测试多的快要失去控制了。按照这样发展下去，测试代码就要变得比应用的实际代码还要多了。   
 
@@ -192,5 +194,15 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 
 如果没有前移数据库，也没有各种导包引入，那么就只修改文件夹名，和应用下的 apps.py 的类名和 name 类属性     
 
+
+
+## 报错   
+
+### django.core.exceptions.ImproperlyConfigured: Requested setting DATABASES, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.  
+
+在命令中指定 settings，`--settings=ZKY_backend.settings` 或是在 PyCharm 里指定 DJANGO_SETTINGS_MODULE=ZKY_backend.settings     
+
+
+### Apps aren't loaded yet.   
 
 
