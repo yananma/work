@@ -101,6 +101,8 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 
 ## 小知识点    
 
+### 模型   
+
 #### 创建模型，创建应用  
 
 ```python
@@ -113,6 +115,18 @@ django-admin startapp post
 #### 重命名 app   
 
 如果没有前移数据库，也没有各种导包引入，那么就只修改文件夹名，和应用下的 apps.py 的类名和 name 类属性     
+
+
+### 模板   
+
+#### [url](https://docs.djangoproject.com/zh-hans/4.0/ref/templates/builtins/#url)  
+
+`<a href="{% url 'login' %}" class="login">登录</a>`  
+
+
+#### 
+
+
 
 
 ## 大的流程   
@@ -137,6 +151,7 @@ urlpatterns = [
 def index(request):
     return render(request, "index.html")
 ```
+6. 替换 HTML 里的静态文件路径，加上 static      
 
 
 
