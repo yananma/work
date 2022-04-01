@@ -87,19 +87,27 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 
 
 
-## 其他   
-
-#### Django 命令   
-
-Django 命令必须要放到 management/command 包下面，在别的地方不行。   
-
-自定义管理命令在运行独立脚本命令方面十分有用，也可用于 UNIX 的周期性 crontab 任务，或是 Windows 的定时任务。   
-
-
-
 # 项目实践    
 
 ## 小知识点    
+
+### settigns 配置   
+
+#### [数据库](https://docs.djangoproject.com/zh-hans/4.0/ref/settings/#databases)   
+
+```python 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mydatabase',
+        'USER': 'mydatabaseuser',
+        'PASSWORD': 'mypassword',
+        'HOST': '127.0.0.1',   # 用内网 ip  
+        'PORT': '5432',
+    }
+}
+```
+
 
 ### 模型   
 
@@ -112,20 +120,11 @@ django-admin startapp post
 ```
 
 
-#### 重命名 app   
-
-如果没有前移数据库，也没有各种导包引入，那么就只修改文件夹名，和应用下的 apps.py 的类名和 name 类属性     
-
-
 ### 模板   
 
 #### [url](https://docs.djangoproject.com/zh-hans/4.0/ref/templates/builtins/#url)  
 
 `<a href="{% url 'login' %}" class="login">登录</a>`  
-
-
-#### 
-
 
 
 
@@ -153,6 +152,32 @@ def index(request):
 ```
 6. 替换 HTML 里的静态文件路径，加上 static      
 
+
+
+## 其他   
+
+#### Django 命令   
+
+Django 命令必须要放到 management/command 包下面，在别的地方不行。   
+
+自定义管理命令在运行独立脚本命令方面十分有用，也可用于 UNIX 的周期性 crontab 任务，或是 Windows 的定时任务。   
+
+
+#### favicon   
+
+`<link rel="shortcut icon" href="/media/dist/img/keji.png">`   
+
+
+#### inpectdb   
+
+先配置数据库，配置数据库要用内网 ip。       
+
+`django-admin inspectdb -inspectdb_models.py`    
+
+
+#### 重命名 app   
+
+如果没有前移数据库，也没有各种导包引入，那么就只修改文件夹名，和应用下的 apps.py 的类名和 name 类属性     
 
 
 
