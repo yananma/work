@@ -91,7 +91,7 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 
 ## 小知识点    
 
-### settigns 配置   
+### [settigns 配置](https://docs.djangoproject.com/zh-hans/4.0/ref/settings)       
 
 #### [数据库](https://docs.djangoproject.com/zh-hans/4.0/ref/settings/#databases)   
 
@@ -109,7 +109,20 @@ DATABASES = {
 ```
 
 
+#### 指定 settings   
+
+`--settings=ZKY_Backend.settings`  
+
+
+
+
 ### 模型   
+
+#### [模型字段参考](https://docs.djangoproject.com/zh-hans/4.0/ref/models/fields/)   
+
+
+#### [模型 Meta 选项](https://docs.djangoproject.com/zh-hans/4.0/ref/models/options/)   
+
 
 #### 创建模型，创建应用  
 
@@ -172,7 +185,7 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 
 先配置数据库，配置数据库要用内网 ip。       
 
-`django-admin inspectdb -inspectdb_models.py`    
+`python manage.py inspectdb > inspectdb_models.py`    
 
 
 #### 重命名 app   
