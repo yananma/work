@@ -141,6 +141,8 @@ django-admin startapp post
 
 `<a href="{% url 'login' %}" class="login">登录</a>`  
 
+添加参数    
+`<a href="{% url 'blog-detail' blog.id %}">查看详细</a>`   
 
 
 ## 大的流程   
