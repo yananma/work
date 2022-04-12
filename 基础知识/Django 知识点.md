@@ -62,6 +62,15 @@ Value(')'), output_field=CharField()))   # output_field 为必填字段
 ```
 
 
+## 视图   
+
+#### 获取参数   
+
+获取 query_string 参数（也就是 url 中问号后面的参数）的方法就是使用 `request.GET.get('vid')`     
+
+
+
+
 ## [测试](https://docs.djangoproject.com/zh-hans/4.0/topics/testing/)     
 
 测试也要配置 DJANGO_SETTINGS_MODULE    
