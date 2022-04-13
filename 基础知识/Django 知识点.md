@@ -15,9 +15,26 @@
 
 #### ForeignKey 查询 
 
-ForeignKey 就是多对一，写在多的多的里面，比如 comment 中写 topic 字段，使用 ForeignKey。  
+ForeignKey 就是多对一，写在多的里面，比如 comment 中写 topic 字段，使用 ForeignKey。  
 
-查询的时候，comment 的 topic 字段加两个下划线，就可以拿到 Topic 的字段。两个下划线和点的意思差不多，拿属性和方法。  
+如果是从 Topic 查 comment（查的结果是 comment），就用 comment_set。    
+
+```python 
+topic = Topic.objects.get(id=1)   
+topic.comment_set.all()   
+topic.comment_set.filter()   
+```
+
+
+查询的时候，comment 的 topic 字段加两个下划线，就可以拿到 Topic 的字段。两个下划线和点的意思差不多，拿属性和方法。（看 PyCharm 提示）  
+
+```python 
+Comment.objects.filter(topic__title__contains='first')   
+
+Comment.objects.filter(topic__user__username='admin')  # 跨多层关系，topic 的 user 的 username   
+
+Topic.objects.filter(comment__up__gte=30)  # 反向关联查询    
+```
 
 
 #### 去重  
