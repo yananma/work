@@ -37,21 +37,17 @@ Topic.objects.filter(comment__up__gte=30)  # 反向关联查询
 ```
 
 
-#### 去重  
-
-去重在 cache_worker.py 的 LastUpdatedOrderedDict 类中  
-
-
-#### country_count 和 country_post 访问很慢  
-
-内容很多，可以自己在 views.py 里自己更改时间  
+#### [order_by 按时间排序](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#order-by)   
 
 ```python 
-from_date = "2021-05-30"
-to_date = "2021-05-30"
+Entry.objects.filter(pub_date__year=2005).order_by('-pub_date', 'headline')
 ```
 
-在 middleware 的 es 函数里面，设置 has_key = 0，这样就不用每次删缓存了。  
+
+#### [distinct 去重](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#distinct)  
+
+跨表查询的时候会有查询结果重复的问题。   
+
 
 
 #### values 和 values_list  
