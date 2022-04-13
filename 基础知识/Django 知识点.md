@@ -245,6 +245,11 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 在命令中指定 settings，`--settings=ZKY_backend.settings` 或是在 PyCharm 里指定 DJANGO_SETTINGS_MODULE=ZKY_backend.settings     
 
 
+### label_tool_app.RecognizeResult.video: (models.E006) The field 'video' clashes with the field 'video_id' from model 'label_tool_app.recognizeresult'.
+
+字段名冲突，重命名其中一个字段名。     
+
+
 ### Apps aren't loaded yet.   
 
 
