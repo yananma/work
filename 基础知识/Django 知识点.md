@@ -250,6 +250,11 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 字段名冲突，重命名其中一个字段名。     
 
 
+### PyCharm 没有办法导入 Django  
+
+复制 Django 文件夹到 External Libraries -> Remote Libraries   
+
+
 ### Apps aren't loaded yet.   
 
 
