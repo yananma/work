@@ -1121,6 +1121,13 @@ In [28]: all(map(int, rec_result))
 Out[28]: False
 ```
 
+all([]) 为 True   
+
+```python 
+In [1]: all([])
+Out[1]: True
+```
+
 
 #### any 函数  
 
