@@ -1109,6 +1109,18 @@ In [19]: all([1, 2])
 Out[19]: True
 ```
 
+字符串 '0' 是 True，数字 0 是 False   
+
+```js  
+In [26]: rec_result = ['1', '0', '1', '0', '1']
+
+In [27]: all(rec_result)
+Out[27]: True
+
+In [28]: all(map(int, rec_result))
+Out[28]: False
+```
+
 
 #### any 函数  
 
