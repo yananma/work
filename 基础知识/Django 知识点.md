@@ -64,7 +64,7 @@ QuerySet 转 dict
 def detail_logo_view(request):
     """详细页面 logo 下拉框数据"""
     logo_list = RecognizeResult.objects.filter(video_id=request.GET.get('vid')).values('logo')
-    logo_list = dict(logo_list)
+    logo_list = [item for item in logo_list]
     return JsonResponse({'data': logo_list, 'status': 200})
 ```
 
