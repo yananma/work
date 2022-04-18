@@ -52,14 +52,24 @@ Entry.objects.filter(pub_date__year=2005).order_by('-pub_date', 'headline')
 
 #### [values](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#values)   
 
-values 返回字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
+values 返回 QuerySet 字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
 
 ```python   
 RecognizeResult.objects.filter(video_id=request.GET.get('vid')).values('logo')  
 ```
 
+QuerySet 转 dict   
 
-#### values_list  
+```python 
+def detail_logo_view(request):
+    """详细页面 logo 下拉框数据"""
+    logo_list = RecognizeResult.objects.filter(video_id=request.GET.get('vid')).values('logo')
+    logo_list = dict(logo_list)
+    return JsonResponse({'data': logo_list, 'status': 200})
+```
+
+
+#### [values_list](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#values-list)  
 
 values_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
