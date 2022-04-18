@@ -50,9 +50,16 @@ Entry.objects.filter(pub_date__year=2005).order_by('-pub_date', 'headline')
 
 
 
-#### values 和 values_list  
+#### [values](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#values)   
 
 values 返回字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
+
+```python   
+RecognizeResult.objects.filter(video_id=request.GET.get('vid')).values('logo')  
+```
+
+
+#### values_list  
 
 values_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
