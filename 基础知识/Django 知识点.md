@@ -114,6 +114,8 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 ## [测试](https://docs.djangoproject.com/zh-hans/4.0/topics/testing/)     
 
+学到的第一个深刻的教训就是要每天多次运行测试，一旦停止运行，再解决起来问题就难多了。   
+
 测试也要配置 DJANGO_SETTINGS_MODULE    
 
 貌似我们的测试多的快要失去控制了。按照这样发展下去，测试代码就要变得比应用的实际代码还要多了。   
