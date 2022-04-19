@@ -74,6 +74,21 @@ def detail_logo_view(request):
 values_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
 
+#### [Q()查询](https://docs.djangoproject.com/zh-hans/4.0/topics/db/queries/#complex-lookups-with-q)   
+
+Q 表达式很长的时候，提取 Q 表达式。核心就是外层加一个括号。    
+
+```python 
+def get_detail_q_expr(search_word):
+    """拼接 Q 表达式"""
+    q_expr = (Q(ocr__icontains=search_word) |
+               Q(flower_subtitles__icontains=search_word) |
+               Q(logo__icontains=search_word) |
+               Q(breed__icontains=search_word))
+    return q_expr
+```   
+
+
 #### Django 字符串拼接  
 
 ```python
