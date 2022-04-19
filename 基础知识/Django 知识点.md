@@ -118,6 +118,13 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 在 [django 项目](https://github.com/django/django/find/main)中搜 tests.py，通读 20 遍，然后自己写。    
 
+不用看：  
+tests/str/tests.py   
+
+书签：看到了 https://github.com/django/django/blob/main/tests/apps/tests.py   
+
+
+
 测试也要配置 DJANGO_SETTINGS_MODULE    
 
 貌似我们的测试多的快要失去控制了。按照这样发展下去，测试代码就要变得比应用的实际代码还要多了。   
