@@ -116,6 +116,8 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 学到的第一个深刻的教训就是要每天多次运行测试，一旦停止运行，再解决起来问题就难多了。   
 
+运行测试快捷键：Ctrl + F5   
+
 在 [django 项目](https://github.com/django/django/find/main)中搜 tests.py，通读 20 遍，然后自己写。    
 
 不用看：  
