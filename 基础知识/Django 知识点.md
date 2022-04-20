@@ -139,6 +139,8 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 ## [测试](https://docs.djangoproject.com/zh-hans/4.0/topics/testing/)     
 
+用好测试的秘诀就是**频繁的大量的重复的测试**，这样就可以把 bug 限定在一个非常非常小的范围内，只要几分钟就可以改好 bug。    
+
 学到的第一个深刻的教训就是要每天多次运行测试，一旦停止运行，再解决起来问题就难多了。   
 
 先实现所有的报错都写到测试里。    
