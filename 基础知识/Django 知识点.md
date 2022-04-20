@@ -294,6 +294,11 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 
 ## 报错   
 
+### ValueError: Cannot use None as a query value (3 次)   
+
+看查询语句，查询字段中有的查询值是 None   
+
+
 ### django.core.exceptions.ImproperlyConfigured: Requested setting DATABASES, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.  
 
 在命令中指定 settings，`--settings=ZKY_backend.settings` 或是在 PyCharm 里指定 DJANGO_SETTINGS_MODULE=ZKY_backend.settings     
