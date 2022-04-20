@@ -147,6 +147,8 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 先实现所有的报错都写到测试里。    
 
+不再测试 status_code 200，没用。如果不是 200，浏览器直接就知道了。    
+
 运行测试快捷键：Ctrl + F5   
 
 在 [django 项目](https://github.com/django/django/find/main)中搜 tests.py，通读 20 遍，然后自己写。    
