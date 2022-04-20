@@ -150,7 +150,9 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 不用看：  
 tests/str/tests.py   
 
-书签：看到了 https://github.com/django/django/blob/main/tests/apps/tests.py   
+还是要多读样例，培养写测试的感觉。  
+
+书签：读完了 basic/tests.py   
 
 
 
