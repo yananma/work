@@ -15,6 +15,8 @@
 
 #### ForeignKey 查询 
 
+跨关联关系查询最重要的方法是看 PyCharm 提示   
+
 ForeignKey 就是多对一，写在多的里面，比如 comment 中写 topic 字段，使用 ForeignKey。  
 
 如果是从 Topic 查 comment（查的结果是 comment），就用 comment_set。    
@@ -52,6 +54,12 @@ Entry.objects.filter(pub_date__year=2005).order_by('-pub_date', 'headline')
 
 #### [values](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#values)   
 
+有时候从数据库里取出来的值，用 json.loads 的时候不成功，很可能是要先做把单引号 replace 成双引号。   
+
+```python 
+json.loads(logo_dict['logo'].replace("\'", "\""))
+```  
+
 values 返回 QuerySet 字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
 
 ```python   
@@ -75,6 +83,8 @@ values_list 返回元组列表。源码：value_list 调用了 ValuesListIterabl
 
 
 #### [Q()查询](https://docs.djangoproject.com/zh-hans/4.0/topics/db/queries/#complex-lookups-with-q)   
+
+有多个 filter 和 exclude 的时候，就换成 Q 查询。    
 
 Q 表达式很长的时候，提取 Q 表达式。核心就是外层加一个括号。    
 
@@ -130,6 +140,8 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 ## [测试](https://docs.djangoproject.com/zh-hans/4.0/topics/testing/)     
 
 学到的第一个深刻的教训就是要每天多次运行测试，一旦停止运行，再解决起来问题就难多了。   
+
+先实现所有的报错都写到测试里。    
 
 运行测试快捷键：Ctrl + F5   
 
@@ -195,7 +207,6 @@ DATABASES = {
 #### 指定 settings   
 
 `--settings=ZKY_Backend.settings`  
-
 
 
 
