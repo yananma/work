@@ -1929,6 +1929,30 @@ logger.info('cccccccccccccccccccc %.2f sec' % (time.time() - start))
 ### 非 Python  
 
 
+#### 获取图像宽高   
+
+`pip install opencv-python`     
+
+```python 
+import cv2   
+
+img = cv2.imread(img_path)  
+height = img.shape[0]
+width = img.shape[1]
+depth = img.shape[2]
+```
+
+```python 
+In [1]: import cv2
+
+In [2]: img = cv2.imread("./7070057012599491848_0000.jpg")
+
+In [3]: img.shape
+Out[3]: (1280, 720, 3)
+```
+
+
+
 #### pip 相关   
 
 查看帮助：`pip --help`     
