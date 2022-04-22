@@ -162,6 +162,19 @@ tests/str/tests.py
 书签：读完了 basic/tests.py   
 
 
+测试证明 I have the control of the code.   
+
+测试节省了大量的调试代码的时间，所以可以大幅提高开发速度，可以大幅降低开发难度。不要做一个 good debugger，debug 就是在浪费时间，要多做测试。    
+
+测试驱动 is fun. 每次测试通过都会非常高兴。这是只做 unittest 所没有的 experience，unittest 是一种额外多做工作必须要做的工作的感觉，像刷碗一样。    
+
+计学，验证结果的正确性，是有两套计算，最后用两个计算的结果相减为零。测试驱动开发也是这样，是两套系统。    
+
+一套可以信任的测试能够使代码修改变得异常简单。   
+
+没有测试就不敢重构。没有测试敢重构吗？根本不敢。   
+
+
 
 测试也要配置 DJANGO_SETTINGS_MODULE    
 
