@@ -164,8 +164,6 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 所有的 bug。    
 测边界条件：空容器、空字符串、零、负数。   
 
-把 fixture 写到测试函数里。   
-
 在 [django 项目](https://github.com/django/django/find/main)中搜 tests.py，通读 20 遍，然后自己写。    
 
 不用看：  
