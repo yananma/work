@@ -141,6 +141,8 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 用好测试的秘诀就是要**频繁地大量地重复地运行测试**，这样就可以把 bug 限定在一个非常非常小的范围内，只要几分钟就可以改好 bug。    
 
+测试节省了大量的调试代码的时间，所以可以大幅提高开发速度，可以大幅降低开发难度。通过测试，后端开发就和前端开发一样了。    
+
 测试没有次数限制，一天运行 200 到 300 次。   
 
 一旦停止运行，再运行，如果遇到问题，解决起来问题就难多了。    
@@ -148,11 +150,11 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 测试证明 I have the control of the code.   
 
-测试节省了大量的调试代码的时间，所以可以大幅提高开发速度，可以大幅降低开发难度。不要做一个 good debugger，debug 就是在浪费时间，要多做测试。    
+不要做一个 good debugger，debug 就是在浪费时间，要多做测试。    
 
 测试驱动 is fun. 每次测试通过都会非常高兴。这是只做 unittest 所没有的 experience，unittest 是一种额外多做工作必须要做的工作的感觉，像刷碗一样。    
 
-计学，验证结果的正确性，是有两套计算，最后用两个计算的结果相减为零。测试驱动开发也是这样，是两套系统。    
+会计学，验证结果的正确性，是有两套计算，最后用两个计算的结果相减为零。测试驱动开发也是这样，是两套系统。    
 
 一套可以信任的测试能够使代码修改变得异常简单。   
 
@@ -164,14 +166,10 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 所有的 bug。    
 测边界条件：空容器、空字符串、零、负数。   
 
-在 [django 项目](https://github.com/django/django/find/main)中搜 tests.py，通读 20 遍，然后自己写。    
-
-不用看：  
-tests/str/tests.py   
 
 还是要多读样例，培养写测试的感觉。  
 
-书签：读完了 basic/tests.py   
+书签：读完了 schema/tests.py   
 
 
 
