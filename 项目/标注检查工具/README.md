@@ -1,4 +1,23 @@
 
+标注框坐标含义：   
+ocr 坐标：
+```python 
+self.left_upper, self.right_upper, self.right_bottom, self.left_bottom = self.position     
+```  
+
+处理标注框：   
+```python 
+xmin = min(zimu.left_upper[0], zimu.left_bottom[0])
+ymin = min(zimu.left_upper[1], zimu.right_upper[1])
+width = max(zimu.right_bottom[0] - zimu.left_upper[0], zimu.right_upper[0] - zimu.left_bottom[0])
+height = max(zimu.left_bottom[1] - zimu.right_upper[1], zimu.right_bottom[1] - zimu.left_upper[1])
+```
+
+logo 和 breed 坐标：看起来应该是左上角坐标和右下角坐标。要测一下。      
+
+
+
+
 ## 需求   
 
 目的：修订；标注  
