@@ -139,7 +139,7 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 ## [测试](https://docs.djangoproject.com/zh-hans/4.0/topics/testing/)     
 
-用好测试的秘诀就是要**频繁地大量地重复地运行测试**，这样就可以把 bug 限定在一个非常非常小的范围内，只要几分钟就可以改好 bug。    
+秘诀就是要**频繁地大量地重复地运行测试**，这样就可以把 bug 限定在一个非常非常小的范围内，消除了查找 bug 的时间，bug 没有了深度，大部分 bug 在一分钟内就可以改好。非常容易，非常愉快。    
 
 测试节省了大量的调试代码的时间，所以可以大幅提高开发速度，可以大幅降低开发难度。通过测试，后端开发就和前端开发一样了。    
 
@@ -165,12 +165,7 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 每个函数至少要有一个测试。   
 所有的 bug。    
 测边界条件：空容器、空字符串、零、负数。   
-
-
-还是要多读样例，培养写测试的感觉。  
-
-书签：读完了 schema/tests.py   
-
+写测试的时候，是一个破坏者的状态。测出不对来才是完成了测试。     
 
 
 测试也要配置 DJANGO_SETTINGS_MODULE    
