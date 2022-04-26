@@ -13,9 +13,9 @@ width = max(zimu.right_bottom[0] - zimu.left_upper[0], zimu.right_upper[0] - zim
 height = max(zimu.left_bottom[1] - zimu.right_upper[1], zimu.right_bottom[1] - zimu.left_upper[1])
 ```
 
-logo 和 breed 坐标：看起来应该是左上角坐标和右下角坐标。要测一下。      
+logo 和 breed 坐标：是左上角和右下角坐标。    
 
-
+方法：坐标基本上就是两种形式：两个坐标点，或者是一个坐标点和 width height。判断方法就是看后面两个元素是不是有比前面对应的元素小的数，如果有小的就是 width height，如果都是大的数字，就应该是两个坐标点。           
 
 
 ## 需求   
