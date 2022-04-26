@@ -1473,11 +1473,6 @@ Out[3]: [(2, 'apple'), (1, 'bag'), (3, 'cat')]
 
 #### map 类  
 
-map(func, \*iterables) --> map object
-
-Make an iterator that computes the function using arguments from
-each of the iterables.
-
 ```python 
 In [14]: list(map(abs, [-2, -1, 0, 2, 5]))
 Out[14]: [2, 1, 0, 2, 5]
@@ -1527,6 +1522,16 @@ Out[13]: 15
 #### partial 函数  
 
 partial(函数，参数)，partial 函数，把参数绑定到函数上。  
+
+
+#### [property 类](https://docs.python.org/zh-cn/3/library/functions.html?highlight=property#property)   
+
+用在封装变量上。    
+
+一般通过装饰器使用。    
+
+fget 就是 function get，就是要有一个 get function。   
+
 
 
 
