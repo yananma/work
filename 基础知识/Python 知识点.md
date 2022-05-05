@@ -1158,6 +1158,21 @@ Out[1]: True
 
 #### any 函数  
 
+any(iterable)，要存可迭代对象  
+
+错误用法：  
+
+```python 
+[any(rec.ocr_modify_if, rec.flower_subtitles_modify_if) for rec in rec_result]    
+```
+
+正确用法：   
+
+```python 
+[any([rec.ocr_modify_if, rec.flower_subtitles_modify_if]) for rec in rec_result]    
+```
+
+
 有一个为 True 就是 True  
 
 ```python 
