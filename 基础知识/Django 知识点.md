@@ -291,7 +291,7 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 `<link rel="shortcut icon" href="/media/dist/img/keji.png">`   
 
 
-#### inpectdb   
+#### inspectdb    
 
 先配置数据库，配置数据库要用内网 ip。       
 
