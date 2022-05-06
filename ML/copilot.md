@@ -1,7 +1,7 @@
 
 非常强大。  
 1. 结对编程。
-2. 一直有人手把手教，可以跳出自己的狭隘的知识圈，可以学到很多东西，每天都在学习新的知识，而且是在实践中学习。
+2. 一直有人手把手教，可以跳出自己的狭隘的知识圈，可以学到很多东西，每天都在学习新的知识，而且是在实践中学习。    
 3. 两个人写，肯定是会有更低的错误率。   
 4. 工作效率提高 70%。   
 
@@ -10,6 +10,26 @@
 
 
 ### 05.03    
+
+
+print(df['Brand（品牌）'])
+
+print(df['Brand（品牌）']['PNT'])
+
+print(type(df1.columns))
+
+
+
+df1 = pd.read_excel('./护发素视频0-1数据(1)\_语音_OCR.xlsx', header=[0, 1])
+
+for col in df1.columns:
+    if "Unnamed" not in col[0]:
+        print(col)
+
+
+
+['二级标签', 'Unnamed: 1', '拆解/合并三级标签项建议', '提及数量', '原三级标签', 'Unnamed: 5']
+
 
 green_col_list = ['Brand（品牌）', 'Product Benefit（产品功效）', 'Ingredient（成分）', 'Texture（质地）', 'Scent（香味）',
                   'Platform（平台）', 'Subordinate Campaign（话题）', 'In-wash Experience（使用体验感）', 'Tension Point/痛点',
