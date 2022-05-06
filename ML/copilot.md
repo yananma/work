@@ -9,6 +9,13 @@
 不再写中文注释。   
 
 
+### 05.03    
+
+green_col_list = ['Brand（品牌）', 'Product Benefit（产品功效）', 'Ingredient（成分）', 'Texture（质地）', 'Scent（香味）',
+                  'Platform（平台）', 'Subordinate Campaign（话题）', 'In-wash Experience（使用体验感）', 'Tension Point/痛点',
+                  'Seasonal Message（春夏秋冬、节日）', 'Promotion（大促活动）', 'Call for action（是否推动消费者下单，附带购买链接）',
+                  '发质（中性、干性、油性、酸性、碱性）']
+
 
 ### 05.02
 
