@@ -11,15 +11,6 @@
 
 ### 05.03    
 
-
-print(df['Brand（品牌）'])
-
-print(df['Brand（品牌）']['PNT'])
-
-print(type(df1.columns))
-
-
-
 df1 = pd.read_excel('./护发素视频0-1数据(1)\_语音_OCR.xlsx', header=[0, 1])
 
 for col in df1.columns:
