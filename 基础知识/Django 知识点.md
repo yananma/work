@@ -54,6 +54,14 @@ Entry.objects.filter(pub_date__year=2005).order_by('-pub_date', 'headline')
 
 #### [values](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#values)   
 
+返回结果为列表套字典格式的 QuerySet：   
+
+```python 
+>>> Blog.objects.values('id', 'name')
+<QuerySet [{'id': 1, 'name': 'Beatles Blog'}]>
+```  
+
+
 有时候从数据库里取出来的值，用 json.loads 的时候不成功，很可能是要先做把单引号 replace 成双引号。   
 
 ```python 
@@ -78,6 +86,17 @@ def detail_logo_view(request):
 
 
 #### [values_list](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#values-list)  
+
+flat 参数。如果 True，这将意味着返回的结果是单个值，而不是一个元组。    
+
+```python 
+>>> Entry.objects.values_list('id').order_by('id')
+<QuerySet[(1,), (2,), (3,), ...]>
+
+>>> Entry.objects.values_list('id', flat=True).order_by('id')
+<QuerySet [1, 2, 3, ...]>
+```
+
 
 values_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
