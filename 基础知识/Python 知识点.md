@@ -555,6 +555,15 @@ In [60]: for value in d.values():
 
 列表套字典格式，取 .values()，结果是 dict_values 格式，不是原本的字符串格式。办法就是通过 list 转换。    
 
+再来一层遍历就行  
+
+```python 
+for tag in tag_list:
+    for key, value in tag.items():
+        value = str(value)
+```  
+
+
 ```python 
 for tag in tag_list:
     key = list(tag.keys())[0]
