@@ -1,5 +1,5 @@
 
-# Python 文档就是最好的笔记，多读文档     
+# 文档就是最好的笔记，多读文档     
 
 
 ## Python 相关  
@@ -1845,7 +1845,26 @@ Out[39]: 4
 ```
 
 
-### itertools 包  
+### [itertools 包](https://docs.python.org/zh-cn/3/library/itertools.html)  
+
+#### [groupby](https://docs.python.org/zh-cn/3/library/itertools.html#itertools.groupby)   
+
+groupby 可以做相邻元素去重。   
+
+```python 
+In [1]: from itertools import groupby
+
+In [2]: li = ['a', 'a', 'a', 'b', 'b']
+
+In [3]: groupby(li)
+Out[3]: <itertools.groupby at 0x7ff73d91fa90>
+
+In [4]: list(groupby(li))
+Out[4]: 
+[('a', <itertools._grouper at 0x7ff73cfea9d0>),
+ ('b', <itertools._grouper at 0x7ff73cfea5e0>)]
+```
+
 
 #### zip_longest  
 
