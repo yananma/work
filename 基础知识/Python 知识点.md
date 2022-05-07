@@ -903,6 +903,34 @@ In [409]: foo(a=1, b=2)
 
 ### 类  
 
+#### 简单例子   
+
+```python 
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def talk(self):
+        print("I'm an animal, and my name is", self.name)
+
+
+class Cat(Animal):
+    def talk(self):
+        print("Meow")
+
+
+class Dog(Animal):
+    pass
+
+
+cat = Cat("Fluffy")
+dog = Dog("Spot")
+cat.talk()
+dog.talk()
+```   
+
+
+
 不加括号是类，加了括号就是返回值，就是实例  
 
 ```python 
