@@ -330,11 +330,6 @@ difflib.SequenceMatcher(None, last_word, sentence).quick_ratio() > 0.8
 ```
 
 
-#### 列表取值  
-
-一种是通过索引取值，比如 li[3]，一种是通过 for 循环遍历  
-
-
 #### 列表推导式  
 
 **看到 for 循环就要想一想能不能用列表推导式写**
@@ -556,6 +551,19 @@ In [60]: for value in d.values():
 2
 ```
 
+#### 字典取值
+
+列表套字典格式，取 .values()，结果是 dict_values 格式，不是原本的字符串格式。办法就是通过 list 转换。    
+
+```python 
+for tag in tag_list:
+    key = list(tag.keys())[0]
+    value = list(tag.values())[0]
+    if value == '欧莱雅大金瓶护发素':
+        print(tag)
+```
+
+
 #### fromkeys()  
 
 创建同 key 字典  
@@ -573,8 +581,9 @@ Out[41]: {'a': None, 'b': None}
 
 降序排列  
 
-`(ocr_dict.items(), key=lambda d:d[1], reverse=True)`  
-
+```python
+(ocr_dict.items(), key=lambda d:d[1], reverse=True)
+```
 
 ### 集合  
 
