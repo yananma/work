@@ -272,6 +272,35 @@ django-admin startapp post
 
 ## 大的流程   
 
+
+#### 上传文件  
+
+```html
+        <form method="post" id="my_form" enctype="multipart/form-data" action="/notice/do_export_changcheng_short_video" >
+            <div class="custom-file">
+                <label for="photoCover">请选择文件:</label>
+                <input type="file" id="csvfile" name="csvfile" style="width: 23%">
+                <button id="btn_save" type="button" onclick="checkData()" style="background-color: #0066cc; margin-top: 10px; color: white; border: none; width: 6%; height: 35px; font-size: 16px">上传文件</button>
+            </div>
+        </form>
+```
+
+```python 
+def do_export_changcheng_short_video(request):
+    """长城短视频"""
+    if request.method == 'POST':
+        upload_dir = os.path.join(settings.BASE_DIR, 'static', 'upload', 'changcheng_short_video', 'upload')
+        if not os.path.exists(upload_dir):
+            os.makedirs(upload_dir)
+        upload_file = request.FILES.get('csvfile')
+        file_obj = open(os.path.join(upload_dir, upload_file.name), 'wb')
+        for chunk in upload_file.chunks():
+            file_obj.write(chunk)
+        file_obj.close()
+    return render(request, 'notice/short_video_export_data.html', locals())
+```
+
+
 #### Django 项目集成静态文件   
 
 1. 在 settings.py 的 TEMPLATES 中配置 DIRS，[BASE_DIR / "templates"]  
