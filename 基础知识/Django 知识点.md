@@ -403,6 +403,11 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 复制 Django 文件夹到 External Libraries -> Remote Libraries   
 
 
+### Can't get remote credentials for deployment server    
+
+左键左下角 Interpreter -> Interpreter Settings -> 配置 Path Mapping   
+
+
 ### Apps aren't loaded yet.   
 
 
