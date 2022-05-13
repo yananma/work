@@ -388,7 +388,7 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 看查询语句，查询字段中有的查询值是 None   
 
 
-### django.core.exceptions.ImproperlyConfigured: Requested setting DATABASES, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.  
+### django.core.exceptions.ImproperlyConfigured: Requested setting DATABASES, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.（3 次）  
 
 在命令中指定 settings，`--settings=ZKY_backend.settings` 或是在 PyCharm 里指定 DJANGO_SETTINGS_MODULE=ZKY_backend.settings     
 
@@ -405,7 +405,9 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 
 ### Can't get remote credentials for deployment server    
 
-左键左下角 Interpreter -> Interpreter Settings -> 配置 Path Mapping   
+第一种情况：左键右下角 Interpreter -> Interpreter Settings -> 配置 Path Mapping   
+
+第二种情况：左键右下角 Interpreter -> Interpreter Settings -> Python Interpreter 右侧齿轮 -> Show All -> 左上角第三个 icon edit -> 看 Deployment configuration -> -> ->
 
 
 ### Apps aren't loaded yet.   
