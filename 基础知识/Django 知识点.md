@@ -301,6 +301,35 @@ def do_export_changcheng_short_video(request):
 ```
 
 
+#### 下载文件  
+
+```html   
+<div class="row" style="margin-left: 3%; margin-top: 1%">
+    <a id='download_file' class="btn btn-primary" href="/notice/download_changcheng_short_video_data">下载</a>
+</div>
+```
+
+
+```python 
+from urllib import quote  # python2   
+# from urllib.parse import quote  # python3 未测试   
+
+
+def download_changcheng_short_video_data(request):
+    """短视频下载文件"""
+    result_dir = os.path.join(settings.BASE_DIR, 'static', 'upload', 'changcheng_short_video', 'result')
+    file_name = '20220512173038_5月9日长城全品牌短视频敏感信息汇总(1).xlsx'
+    file_path = os.path.join(result_dir, file_name)
+    file_obj = open(file_path, 'rb')
+    response = FileResponse(file_obj)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="%s"' % quote(file_name.encode('utf-8'))  # 成功  
+    # response['Content-Disposition'] = 'attachment;filename="{}"'.format(filename)  # 测试不成功，也不知道为什么。
+    return response
+```
+
+
+
 #### Django 项目集成静态文件   
 
 1. 在 settings.py 的 TEMPLATES 中配置 DIRS，[BASE_DIR / "templates"]  
