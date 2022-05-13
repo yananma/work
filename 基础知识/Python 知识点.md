@@ -66,6 +66,19 @@ s = s.replace("-", "")
 print("Hello, {0}".format(username.title())) 
 ```
 
+月日左侧补零   
+
+```python 
+In [10]: '{:2d}{:2d}'.format(5, 9)
+Out[10]: ' 5 9'
+
+In [11]: '{:0>2d}{:2d}'.format(5, 9)
+Out[11]: '05 9'
+
+In [12]: '{:0>2d}{:0>2d}'.format(5, 9)
+Out[12]: '0509'
+```  
+
 
 #### translate() 和 maketrans() 
 
