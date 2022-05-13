@@ -2395,3 +2395,18 @@ property 装饰器，和 property() 是完全等效的。作用就是把一个�
 
 
 
+# 报错  
+
+### UnicodeEncodeError: 'ascii' codec can't encode characters in position 10-13:   
+
+```python 
+import sys 
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
+```   
+
+
+
+
+
