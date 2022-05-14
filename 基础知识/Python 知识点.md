@@ -1075,6 +1075,31 @@ In [9]: days.days
 Out[9]: 86
 ```
 
+```python 
+In [10]: import datetime
+
+In [11]: now_time = datetime.datetime.now()
+
+In [12]: now_time.year
+Out[12]: 2022
+
+In [13]: now_time.month
+Out[13]: 5
+
+In [14]: now_time.day
+Out[14]: 14
+
+In [15]: now_time.hour
+Out[15]: 17
+
+In [16]: now_time.minute
+Out[16]: 30
+
+In [17]: now_time.second
+Out[17]: 48
+```   
+
+
 删除一天内的数据    
 
 ```python 
