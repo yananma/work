@@ -61,18 +61,18 @@ Entry.objects.filter(pub_date__year=2005).order_by('-pub_date', 'headline')
 <QuerySet [{'id': 1, 'name': 'Beatles Blog'}]>
 ```  
 
-
-有时候从数据库里取出来的值，用 json.loads 的时候不成功，很可能是要先做把单引号 replace 成双引号。   
-
-```python 
-json.loads(logo_dict['logo'].replace("\'", "\""))
-```  
-
-values 返回 QuerySet 字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
+values 返回 QuerySet 形式的字典列表。源码：`yield {names[i]: row[i] for i in indexes}`  
 
 ```python   
 RecognizeResult.objects.filter(video_id=request.GET.get('vid')).values('logo')  
 ```
+
+QuerySet 转 list   
+
+```python 
+list(QuerySet)   
+```
+
 
 QuerySet 转 dict   
 
@@ -83,6 +83,12 @@ def detail_logo_view(request):
     logo_list = [item for item in logo_list]
     return JsonResponse({'data': logo_list, 'status': 200})
 ```
+
+有时候从数据库里取出来的值，用 json.loads 的时候不成功，很可能是要先做把单引号 replace 成双引号。   
+
+```python 
+json.loads(logo_dict['logo'].replace("\'", "\""))
+```  
 
 
 #### [values_list](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#values-list)  
