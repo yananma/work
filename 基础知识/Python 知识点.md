@@ -202,6 +202,14 @@ In [8]: s.find('l', 4)
 Out[8]: 9
 ```
 
+#### rfind()   
+
+最后一个 ; 替换为 。     
+
+```python 
+result[:result.rfind(';')] + '。\n'   
+```
+
 
 #### isspace()  
 
