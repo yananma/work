@@ -491,6 +491,8 @@ Out[6]: [2, 3, 5, 6]
 
 格式为 [{}, {}, {}]，要按字典的某一个值进行排序   
 
+**注意要把结果赋值给变量，否则不起作用。**    
+
 ```python 
 img_list = sorted(img_list, key=lambda item: item['image_name'])   
 ```
