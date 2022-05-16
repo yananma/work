@@ -2108,6 +2108,10 @@ logger.setLevel(logging.DEBUG)
 /home/test/anaconda3/envs/reci/bin/ipython
 ```
 
+```python 
+/home/deploy/.crisis/bin/pip list
+```  
+
 
 #### 哈希  
 
