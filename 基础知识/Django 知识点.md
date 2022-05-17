@@ -353,6 +353,9 @@ def download_changcheng_short_video_data(request):
     return response
 ```
 
+#### office 报错文件已损坏，无法打开  
+
+保存格式从 docx 改成 doc    
 
 
 #### Django 项目集成静态文件   
