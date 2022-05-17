@@ -1395,6 +1395,13 @@ Out[8]: ['1', '2', '3']
 li = list(filter(lambda x: x, li))  
 ```
 
+过滤空格和空行的标准写法   
+
+```python 
+lines = f.readlines()
+lines = [line for line in lines if line.strip()]
+``` 
+
 过滤空格  
 
 ```python 
