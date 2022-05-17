@@ -8,6 +8,24 @@
 搜索是用 filter 实现   
 
 
+#### 查询关键字 in  
+
+不要用 for 循环遍历多次查询，而是用 in 一次查询。   
+
+不好的做法，会查询很多次，如果数量多了以后：   
+```python 
+result = []   
+for url in query_urls:
+    one_result = Post.objects.filter(url=url).values()
+    result.extend(one_result)   
+```
+
+好的做法：   
+```python 
+result = Post.objects.filter(url__in=query_urls).values()       
+```
+
+
 #### unique_together 唯一联合约束   
 
 去重用的，好处是可以少写处理的代码。不好的地方是，如果出现上传以后很多条只存了一条，要看是不是这个唯一约束造成了覆盖。   
