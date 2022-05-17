@@ -435,6 +435,17 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 第二种情况：左键右下角 Interpreter -> Interpreter Settings -> Python Interpreter 右侧齿轮 -> Show All -> 左上角第三个 icon edit -> 看 Deployment configuration -> -> ->
 
 
+### MySQLdb.\_exceptions.OperationalError: (1054, "Unknown column 'nielsen_item.ocr_modify_if' in 'field list'")    
+
+数据库中缺少字段。设计表，添加字段就可以了。      
+
+
+### 测试，数据库没有 test_ 表   
+
+1. 如果本来用的是正常表，而没有测试表，就自己通过导出导入实现复制表。新表叫做 test_ 。
+2. 如果用的是 test_ 表，没有 test_test_ 表，就先改配置改成正常表。或者再复制一张表。     
+
+
 ### Apps aren't loaded yet.   
 
 
