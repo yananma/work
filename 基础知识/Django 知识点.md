@@ -348,6 +348,7 @@ def download_changcheng_short_video_data(request):
     response = FileResponse(file_obj)
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename="%s"' % quote(file_name.encode('utf-8'))  # 成功  
+    # response['Content-Disposition'] = 'attachment;filename="%s"' % quote(file_name.split('_')[1].encode('utf-8'))  # 可以指定导出的文件的名字    
     # response['Content-Disposition'] = 'attachment;filename="{}"'.format(filename)  # 测试不成功，也不知道为什么。
     return response
 ```
