@@ -2482,6 +2482,32 @@ TypeError: 'int' object is not iterable
 ```
 
 
+### ValueError: invalid literal for int() with base 10: ''  
+
+int 里面传了字符串了   
+
+```python 
+In [28]: int('')
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-28-e4f84bb32d50> in <module>()
+----> 1 int('')
+
+ValueError: invalid literal for int() with base 10: ''
+```
+
+```python 
+In [29]: int('a')
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-29-233884bacd4e> in <module>()
+----> 1 int('a')
+
+ValueError: invalid literal for int() with base 10: 'a'
+```  
+
+
+
 ### UnicodeEncodeError: 'ascii' codec can't encode characters in position 10-13:   
 
 解决办法：    
