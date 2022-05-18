@@ -1,6 +1,8 @@
 
 b25 正式环境 python：/home/deploy/.crisis/bin/python    
-查看 pip：/home/deploy/.crisis/bin/python    
+测试环境 python：/home/test/testenv/bin/python    
+查看 pip：/home/deploy/.crisis/bin/pip    
+查看 pip 版本：/home/deploy/.crisis/bin/pip --version     
 
 
 危机预警系统后端 b25 /home/deploy/crisis_admin（新）    
