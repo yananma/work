@@ -259,6 +259,7 @@ DATABASES = {
 
 #### [时区（不配置日志时间不对）](https://docs.djangoproject.com/zh-hans/4.0/ref/settings/#time-zone-1)   
 
+TIME_ZONE = 'Asia/Shanghai'   
 
 
 #### 指定 settings   
