@@ -2462,16 +2462,33 @@ property 装饰器，和 property() 是完全等效的。作用就是把一个�
 
 # 报错  
 
+
+### TypeError: 'int' object is not iterable  
+
+原因是在遍历数字，一种可能是本来应该传列表，结果传的是列表里的元素，比如 list[0] 这样。    
+
+```python 
+In [26]: for i in 3:
+    ...:     print i
+    ...:     
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-26-fff5c9178157> in <module>()
+----> 1 for i in 3:
+      2     print i
+      3 
+
+TypeError: 'int' object is not iterable
+```
+
+
 ### UnicodeEncodeError: 'ascii' codec can't encode characters in position 10-13:   
 
+解决办法：    
 ```python 
 import sys 
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 ```   
-
-
-
-
 
