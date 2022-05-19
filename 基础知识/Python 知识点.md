@@ -1713,7 +1713,39 @@ txt_result
 ```
 
 
-### os  
+### re 正则  
+
+匹配所有的数字   
+
+```python 
+In [8]: li
+Out[8]: 
+['\xe5\xbe\xae\xe5\x8d\x9a site id\xe5\xaf\xb9\xe5\xba\x942',
+ ' \xe6\x87\x82\xe8\xbd\xa6\xe5\xb8\x9d site id\xe5\xaf\xb9\xe5\xba\x94625751',
+ ' \xe6\xb1\xbd\xe8\xbd\xa6\xe4\xb9\x8b\xe5\xae\xb6 site id\xe5\xaf\xb9\xe5\xba\x9412',
+ ' \xe4\xbb\x8a\xe6\x97\xa5\xe5\xa4\xb4\xe6\x9d\xa1 site id\xe5\xaf\xb9\xe5\xba\x9450998',
+ ' \xe8\xa5\xbf\xe7\x93\x9c\xe8\xa7\x86\xe9\xa2\x91 site id\xe5\xaf\xb9\xe5\xba\x9471809',
+ ' \xe7\xbd\x91\xe6\x98\x93\xe6\x96\xb0\xe9\x97\xbb site id\xe5\xaf\xb9\xe5\xba\x9453445',
+ ' \xe5\x87\xa4\xe5\x87\xb0\xe7\xbd\x91 site id\xe5\xaf\xb9\xe5\xba\x9499',
+ ' \xe6\x8a\x96\xe9\x9f\xb3 site id\xe5\xaf\xb9\xe5\xba\x94625400']
+
+In [9]: import re
+
+In [10]: for item in li:
+    ...:     print re.findall('\d+', item)
+    ...:     
+['2']
+['625751']
+['12']
+['50998']
+['71809']
+['53445']
+['99']
+['625400']
+```   
+
+
+### os 模块 
 
 #### os.makedirs()  
 
@@ -2452,11 +2484,6 @@ property 装饰器，和 property() 是完全等效的。作用就是把一个�
 [super()](https://rhettinger.wordpress.com/2011/05/26/super-considered-super/).\_\_init__(make, model, year)  
 
 就是调用父类的初始化方法，使得子类拥有父类初始化方法中的属性，说白了就是把父类中的初始化方法中的代码复制到了子类的初始化方法中，如果不写 super，子类的初始化方法中没有父类定义的这些属性，因为子类方法会覆盖父类的同名方法。  
-
-
-# 《Effective Python》   
-
-### 第 2 条 遵循 PEP8 风格指南  
 
 
 
