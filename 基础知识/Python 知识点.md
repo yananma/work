@@ -2146,18 +2146,7 @@ Out[3]: (1280, 720, 3)
 查看帮助：`pip --help`     
 设置超时时间：`pip --timeout=100 install label-studio` (默认 15 秒)   
 查看当前 pip 源：`pip config list`  
-
-
-#### log 代码  
-
-```python 
-import logging
-from importlib import reload
-reload(logging)
-logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.DEBUG, datefmt='%I:%M:%S')
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-```
+安装包的时候，如果不知道版本，就随便写一个版本，然后会报错，错误信息里面有所有的版本号。     
 
 
 #### 启动虚拟环境的 ipython  
@@ -2169,6 +2158,17 @@ logger.setLevel(logging.DEBUG)
 ```python 
 /home/deploy/.crisis/bin/pip list
 ```  
+
+#### log 代码  
+
+```python 
+import logging
+from importlib import reload
+reload(logging)
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', level=logging.DEBUG, datefmt='%I:%M:%S')
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+```
 
 
 #### 哈希  
