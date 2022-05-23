@@ -2089,7 +2089,7 @@ Out[5]: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 如果是 .py 文件：右键     
 
 
-#### 多行 log   
+#### 多行 log，统计运行时间     
 
 ```python 
 start = time.time()
