@@ -31,6 +31,9 @@ result = Post.objects.filter(url__in=query_urls).values()
 去重用的，好处是可以少写处理的代码。不好的地方是，如果出现上传以后很多条只存了一条，要看是不是这个唯一约束造成了覆盖。   
 
 
+#### ForeignKey 写在 comment 里，查询的时候考虑 topic 就是跨关联关系查询，比如 comment.objects.filter(topic__title__contains='first')。查询 topic 就是反向查询。比如 Topic.objects.filter(comment__up__gte=30)。意思就是查的不是它自己，而是别的东西。
+
+
 #### ForeignKey 查询 
 
 跨关联关系查询最重要的方法是看 PyCharm 提示   
@@ -57,6 +60,11 @@ Topic.objects.filter(comment__up__gte=30)  # 反向关联查询
 ```
 
 
+#### [OneToOneField](https://docs.djangoproject.com/zh-hans/4.0/topics/db/examples/one_to_one/)    
+
+
+
+
 #### [order_by 按时间排序](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#order-by)   
 
 ```python 
@@ -68,6 +76,8 @@ Entry.objects.filter(pub_date__year=2005).order_by('-pub_date', 'headline')
 
 跨表查询的时候会有查询结果重复的问题。   
 
+
+#### 返回 QuerySet 的好处是可以做到链式查询。     
 
 
 #### [values](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#values)   
