@@ -62,7 +62,18 @@ Topic.objects.filter(comment__up__gte=30)  # 反向关联查询
 
 #### [OneToOneField](https://docs.djangoproject.com/zh-hans/4.0/topics/db/examples/one_to_one/)    
 
+```python 
+class PostIsCleaned(models.Model):
+    post = models.OneToOneField(Post, on_delete=models.CASCADE, unique=True)
+    # 更新粉丝数，爬虫返回的 is_cleaned 的结果，0 为 false，1 为 true，默认为 1
+    is_cleaned = models.IntegerField(default=1)
 
+    class Meta:
+        managed = False
+        db_table = 'post_is_cleaned'
+```  
+
+数据库里应该是 3 个字段，id、post_id 和 is_cleaned。    
 
 
 #### [order_by 按时间排序](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#order-by)   
