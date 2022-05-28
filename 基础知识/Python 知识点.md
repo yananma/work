@@ -257,6 +257,13 @@ Out[2]: '[0]北[1]国[2]风[3]光'
 比如把 `&ldquo;` 转换成左双引号，这要就可以通过 translate() 和 maketrans() 去掉了   
 
 
+#### python2 保存到文件以后乱码   
+
+```python 
+final_text.decode('utf-8').encode('GB18030')   
+```
+
+
 ### 数字  
 
 #### Python 给数字前固定位数加零  
