@@ -368,7 +368,15 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 
 先配置数据库，配置数据库要用内网 ip。       
 
-`python manage.py inspectdb > inspectdb_models.py`    
+```python
+python manage.py inspectdb > inspectdb_models.py
+```       
+
+指定数据库   
+
+```python 
+/home/test/testenv/bin/python manage.py inspectdb --database notice   
+```
 
 
 #### 重命名 app   
@@ -420,9 +428,5 @@ Django 命令必须要放到 management/command 包下面，在别的地方不�
 
 
 ### Apps aren't loaded yet.   
-
-
-
-
 
 
