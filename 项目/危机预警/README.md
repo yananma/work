@@ -7,6 +7,8 @@ b25 正式环境 python：/home/deploy/.crisis/bin/python
 查看 pip 版本：/home/deploy/.crisis/bin/pip --version     
 危机预警nohup /home/deploy/.crisis/bin/python manage.py runserver 0:6085 --settings=crisis_admin.settings_new_product &>>logs/crisis_admin.log &    
 
+**正式环境看不到爬虫日志**  
+
 
 ### 测试环境  
 
