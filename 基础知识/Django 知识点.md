@@ -200,9 +200,6 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 
 
 
-
-
-
 # 项目实践    
 
 ## 小知识点    
@@ -357,6 +354,8 @@ def index(request):
 Django 命令必须要放到 management/command 包下面，在别的地方不行。   
 
 自定义管理命令在运行独立脚本命令方面十分有用，也可用于 UNIX 的周期性 crontab 任务，或是 Windows 的定时任务。   
+
+如果在参数里指定了 type=int，如果传了小数就会报错。    
 
 
 #### favicon   
