@@ -106,6 +106,8 @@ values 返回 QuerySet 形式的字典列表。源码：`yield {names[i]: row[i]
 RecognizeResult.objects.filter(video_id=request.GET.get('vid')).values('logo')  
 ```
 
+QuerySet 没有 append 方法，要转成 list 再 append   
+
 QuerySet 转 list   
 
 ```python 
