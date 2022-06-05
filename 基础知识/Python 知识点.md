@@ -1839,7 +1839,7 @@ In [1]: import subprocess
 
 In [2]: import os 
 
-In [3]: for file in subprocess.check_output('find {}  -mtime +3'.format('/home/test/syb/hszb_backend_v2/logs'), shell=True).split():
+In [3]: for file in subprocess.check_output('find {}  -mtime +2(应该是从 0 开始的)'.format('/home/test/syb/hszb_backend_v2/logs'), shell=True).split():
    ...:     os.remove(file) 
 ```
 
