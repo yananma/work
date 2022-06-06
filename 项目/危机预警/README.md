@@ -5,7 +5,14 @@ b25 正式环境 python：/home/deploy/.crisis/bin/python
 危机预警系统路径 b25 /home/deploy/crisis_admin    
 查看 pip：/home/deploy/.crisis/bin/pip    
 查看 pip 版本：/home/deploy/.crisis/bin/pip --version     
-危机预警nohup /home/deploy/.crisis/bin/python manage.py runserver 0:6085 --settings=crisis_admin.settings_new_product &>>logs/crisis_admin.log &    
+危机预警nohup /home/deploy/.crisis/bin/python manage.py runserver 0:6085 --settings=crisis_admin.settings_new_product &>>logs/crisis_admin.log &   
+
+跑粉丝数定时任务   
+```sql   
+*/2 * * * * cd /home/deploy/crisis_admin && /home/deploy/.crisis/bin/python manage.py fill_empty_account_id --last 0.067 --settings=crisis_admin.settings_new_product &   
+*/2 * * * * cd /home/deploy/crisis_admin && /home/deploy/.crisis/bin/python manage.py fill_empty_account_id --last 0.067 --daily12 --settings=crisis_admin.settings_new_product &  
+```  
+
 
 **正式环境看不到爬虫日志**  
 
