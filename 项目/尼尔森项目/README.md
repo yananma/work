@@ -8,7 +8,7 @@ pycharm 远程代码在 b64 上。
 
 
 
-正式项目的文件目录。   
+#### 正式项目的文件目录。   
 
 是 deploy 用户，不是 dingyong 用户。    
 
@@ -17,6 +17,8 @@ pycharm 远程代码在 b64 上。
 文件在 62  /home/deploy/nielsen_test/upload    
 
 ocr 代码：62 /home/deploy/xyj/nielsen-pet/mxrec_api/start_rec.py    
+
+log 位置：b62 /home/deploy/xyj/nielsen-pet/mxrec_api/logs/rec.log   
 
 
 
