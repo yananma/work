@@ -1120,6 +1120,19 @@ In [17]: now_time.second
 Out[17]: 48
 ```   
 
+#### strptime   
+
+datetime parsed from a string 把字符串解析为时间类型   
+
+参数是 string 和 string 的格式。   
+
+```python    
+In [47]: data['extra']['logid'][:14]
+Out[47]: '20220608174427'
+
+In [48]: datetime.datetime.strptime(data['extra']['logid'][:14], "%Y%m%d%H%M%S")
+Out[48]: datetime.datetime(2022, 6, 8, 17, 44, 27)
+```
 
 删除一天内的数据    
 
