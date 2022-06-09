@@ -351,7 +351,7 @@ def index(request):
 
 ## 其他   
 
-#### Django 命令   
+#### [Django 命令](https://docs.djangoproject.com/zh-hans/4.0/howto/custom-management-commands/)   
 
 Django 命令必须要放到 management/command 包下面，在别的地方不行。   
 
