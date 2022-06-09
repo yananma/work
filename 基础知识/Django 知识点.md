@@ -78,6 +78,8 @@ class PostIsCleaned(models.Model):
 
 #### [order_by 按时间排序](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#order-by)   
 
+如果是：order_by('-include_time')，就是新的在最上面。  
+
 ```python 
 Entry.objects.filter(pub_date__year=2005).order_by('-pub_date', 'headline')
 ```
