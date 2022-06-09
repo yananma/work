@@ -353,7 +353,7 @@ def index(request):
 
 #### [Django 命令](https://docs.djangoproject.com/zh-hans/4.0/howto/custom-management-commands/)   
 
-Django 命令必须要放到 management/command 包下面，在别的地方不行。   
+Django 命令必须要放到 management/**commands**(有一个 s) 包下面，在别的地方不行。   
 
 自定义管理命令在运行独立脚本命令方面十分有用，也可用于 UNIX 的周期性 crontab 任务，或是 Windows 的定时任务。   
 
