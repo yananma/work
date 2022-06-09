@@ -150,6 +150,15 @@ flat 参数。如果 True，这将意味着返回的结果是单个值，而不�
 values_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
 
+#### [first](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#first)   
+
+一版前面要写 order_by，取到值以后，如果要去其中的属性，就直接用点儿取就行。   
+
+```python 
+TopicPlayQuantity.objects.order_by('include_time').last().view_count   
+```   
+
+
 #### [Q()查询](https://docs.djangoproject.com/zh-hans/4.0/topics/db/queries/#complex-lookups-with-q)   
 
 有多个 filter 和 exclude 的时候，就换成 Q 查询。    
