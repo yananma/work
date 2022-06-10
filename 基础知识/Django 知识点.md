@@ -424,6 +424,17 @@ class Command(BaseCommand):
 ```
 
 
+#### PyCharm 配置运行命令  
+
+先右键 run，然后配置。    
+
+Script Path：C:\Users\mx\PycharmProjects\aima_monitor_backend\manage.py    
+Parameters：命令名   
+
+Environment variables：DJANGO_SETTINGS_MODULE=aima_monitor_backend.settings   
+
+
+
 #### favicon   
 
 `<link rel="shortcut icon" href="/media/dist/img/keji.png">`   
