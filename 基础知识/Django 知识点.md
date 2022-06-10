@@ -396,7 +396,7 @@ def index(request):
 
 Django 命令必须要放到 management/**commands**(有一个 s) 包下面，在别的地方不行。   
 
-如果找不到命令，还有一个原因可能就是配置的 DJANGO_SETTINGS_MODULE=aima_monitor_backend **.settings**没有写后面的 .settigns    
+如果找不到命令，还有一个原因可能就是配置的 DJANGO_SETTINGS_MODULE=aima_monitor_backend **.settings**没有写后面的 .settings    
 
 自定义管理命令在运行独立脚本命令方面十分有用，也可用于 UNIX 的周期性 crontab 任务，或是 Windows 的定时任务。   
 
