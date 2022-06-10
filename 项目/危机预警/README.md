@@ -7,6 +7,12 @@ b25 正式环境 python：/home/deploy/.crisis/bin/python
 查看 pip 版本：/home/deploy/.crisis/bin/pip --version     
 危机预警nohup /home/deploy/.crisis/bin/python manage.py runserver 0:6085 --settings=crisis_admin.settings_new_product &>>logs/crisis_admin.log &   
 
+跑数据命令：  
+
+```sql  
+cd /home/test/syb/crisis_admin && /home/test/testenv/bin/python manage.py fill_empty_account_id --last 1230 --end "2022-06-10 16:30:00" --settings=crisis_admin.settings_new_product &>> logs/daily12.log &
+```   
+
 跑粉丝数定时任务   
 ```sql   
 */2 * * * * cd /home/deploy/crisis_admin && /home/deploy/.crisis/bin/python manage.py fill_empty_account_id --last 0.067 --settings=crisis_admin.settings_new_product &   
