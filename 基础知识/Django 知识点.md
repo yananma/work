@@ -159,7 +159,7 @@ TopicPlayQuantity.objects.order_by('include_time').last().view_count
 ```   
 
 
-#### [create]()
+#### [create](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#create)   
 
 创建一个对象并保存。
 ```python  
@@ -186,6 +186,36 @@ TopicPlayQuantity.objects.create(
     is_commerce=data['ch_info']['is_commerce'],
     include_time=datetime.datetime.strptime(data['extra']['logid'][:14], "%Y%m%d%H%M%S"),
 )
+```
+
+
+#### [update](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#update)    
+
+可以同时更新多个字段。   
+
+```python 
+Entry.objects.filter(pub_date__year=2010).update(comments_on=False, headline='This is old')   
+```
+
+```python 
+import datetime
+import pandas as pd
+from django.core.management.base import BaseCommand
+from video.models import DouyinVideo
+
+
+class Command(BaseCommand):
+    help = 'update interaction number'
+
+    def handle(self, *args, **options):
+        df = pd.read_excel('/home/test/syb/aima_monitor_backend/video/management/commands/data/更新video互动.xlsx')
+        for i, row in df.iterrows():
+            DouyinVideo.objects.filter(url=row['视频链接']).update(collect_num=row['collect_count'],
+                                                               share_num=row['share_count'],
+                                                               comment_num=row['comment_count'],
+                                                               like_num=row['like_count'],
+                                                               update_time=datetime.datetime.now())
+        print('update interaction number success')
 ```
 
 
