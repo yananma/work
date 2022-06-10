@@ -159,6 +159,36 @@ TopicPlayQuantity.objects.order_by('include_time').last().view_count
 ```   
 
 
+#### [create]()
+
+创建一个对象并保存。
+```python  
+p = Person.objects.create(first_name="Bruce", last_name="Springsteen")   
+```
+和：
+```python 
+p = Person(first_name="Bruce", last_name="Springsteen")
+p.save(force_insert=True)
+```
+是等效的。
+
+```python 
+TopicPlayQuantity.objects.create(
+    cha_name=data['ch_info']['cha_name'],
+    cid=data['ch_info']['cid'],
+    view_count=data['ch_info']['view_count'],
+    user_count=data['ch_info']['user_count'],
+    view_increment=data['ch_info']['view_count'] - TopicPlayQuantity.objects.order_by('include_time').last().view_count,
+    user_increment=data['ch_info']['user_count'] - TopicPlayQuantity.objects.order_by('include_time').last().user_count,
+    hash_tag_profile=data['ch_info']['hash_tag_profile'],
+    desc=data['ch_info']['desc'],
+    type=data['ch_info']['type'],
+    is_commerce=data['ch_info']['is_commerce'],
+    include_time=datetime.datetime.strptime(data['extra']['logid'][:14], "%Y%m%d%H%M%S"),
+)
+```
+
+
 #### [Q()查询](https://docs.djangoproject.com/zh-hans/4.0/topics/db/queries/#complex-lookups-with-q)   
 
 有多个 filter 和 exclude 的时候，就换成 Q 查询。    
