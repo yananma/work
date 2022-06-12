@@ -124,6 +124,15 @@ l = ['长征精神', '红军精神', '第二次世界大战', '抗日战争', '�
 `print('["' + '", "'.join(li) + '"]')` 列表  
 
 
+#### 计算文本相似度  
+
+```python 
+import difflib 
+
+difflib.SequenceMatcher(None, last_word, sentence).quick_ratio() > 0.8
+```
+
+
 #### ord() 和 chr()
 
 ordinals 序列数，就是第几第几  
@@ -354,15 +363,6 @@ In [22]: for item in li:
 ```
 
 
-#### 计算文本相似度  
-
-```python 
-import difflib 
-
-difflib.SequenceMatcher(None, last_word, sentence).quick_ratio() > 0.8
-```
-
-
 #### 列表推导式  
 
 **看到 for 循环就要想一想能不能用列表推导式写**
@@ -511,6 +511,12 @@ Out[6]: [2, 3, 5, 6]
 ```python 
 img_list = sorted(img_list, key=lambda item: item['image_name'])   
 ```
+
+#### 列表交集   
+
+```python 
+list(set(url1_list) & set(url2_list))  
+```  
 
 
 ### 字典  
