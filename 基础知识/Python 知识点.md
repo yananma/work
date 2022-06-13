@@ -2263,6 +2263,20 @@ Out[1]: '{"a": 1}'    # json.dumps() 把 Python 的格式转化成 str
 
 #### or 和 and  
 
+**or**  
+
+```python 
+x or y   
+
+等同于   
+
+if x:
+    x 
+else:   
+    y
+```
+
+
 **or 找第一个真的，and 找第一个假的**  
 
 这本来就是 and 和 or 的字面意思，and 是都为真才返回真，所以找到一个假的，那就不用找别的了，就是假。  
