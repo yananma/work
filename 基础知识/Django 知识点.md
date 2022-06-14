@@ -162,13 +162,17 @@ TopicPlayQuantity.objects.filter(cid=cid).order_by('include_time').last().view_c
 函数调用用这种，可以传入字符串形式的字段名称。    
 
 ```python 
-TopicPlayQuantity.objects.filter(cid=cid).order_by('include_time').values_list('view_count').last()[0]   
+TopicPlayQuantity.objects.filter(cid=cid).order_by('include_time').values_list('view_count').[0][0]    
+或   
+TopicPlayQuantity.objects.filter(cid=cid).order_by('include_time').values_list('view_count').first()[0]   
+不支持负数索引，如果要取最后一个，要用 last   
+TopicPlayQuantity.objects.filter(cid=cid).order_by('include_time').values_list('view_count').last()[0]    
 ```   
 
 
 #### [first](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#first)   
 
-一版前面要写 order_by，取到值以后，如果要去其中的属性，就直接用点儿取就行。   
+一版前面要写 order_by，取到值以后，如果要取其中的属性值，就直接用点儿取就行。   
 
 ```python 
 TopicPlayQuantity.objects.order_by('include_time').last().view_count   
