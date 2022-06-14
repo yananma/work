@@ -150,6 +150,22 @@ flat 参数。如果 True，这将意味着返回的结果是单个值，而不�
 values_list 返回元组列表。源码：value_list 调用了 ValuesListIterable，ValuesListIterable 里调用了 results_iter，在 results_iter 里有一句 `rows = map(tuple, rows)`  
 
 
+#### 获取属性值   
+
+一般来说有两种取值方法：      
+
+可以直接取属性的值。    
+```python 
+TopicPlayQuantity.objects.filter(cid=cid).order_by('include_time').last().view_count
+```
+
+函数调用用这种，可以传入字符串形式的字段名称。    
+
+```python 
+TopicPlayQuantity.objects.filter(cid=cid).order_by('include_time').values_list('view_count').last()[0]   
+```   
+
+
 #### [first](https://docs.djangoproject.com/zh-hans/4.0/ref/models/querysets/#first)   
 
 一版前面要写 order_by，取到值以后，如果要去其中的属性，就直接用点儿取就行。   
