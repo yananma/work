@@ -1050,14 +1050,6 @@ Out[5]: datetime.datetime(2022, 6, 15, 15, 25, 17, 499622)
 In [6]: datetime.datetime.now()
 Out[6]: datetime.datetime(2022, 6, 15, 15, 26, 22, 866659)
 
-In [7]: datetime.datetime.now() - datatime_stamp
----------------------------------------------------------------------------
-NameError                                 Traceback (most recent call last)
-<ipython-input-7-2f7e3a5ff389> in <module>
-----> 1 datetime.datetime.now() - datatime_stamp
-
-NameError: name 'datatime_stamp' is not defined
-
 In [8]: datetime.datetime.now() - datetime_stamp
 Out[8]: datetime.timedelta(seconds=112, microseconds=709421)
 
