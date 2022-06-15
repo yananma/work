@@ -1032,6 +1032,44 @@ Out[41]: list
 
 时间相关的，多用 datetime，少用 time。  
 
+时间戳转换    
+
+```python 
+In [1]: import time, datetime
+
+In [2]: time_stamp = time.time()
+
+In [3]: time_stamp
+Out[3]: 1655277917.499622
+
+In [4]: datetime_stamp = datetime.datetime.fromtimestamp(time_stamp)
+
+In [5]: datetime_stamp
+Out[5]: datetime.datetime(2022, 6, 15, 15, 25, 17, 499622)
+
+In [6]: datetime.datetime.now()
+Out[6]: datetime.datetime(2022, 6, 15, 15, 26, 22, 866659)
+
+In [7]: datetime.datetime.now() - datatime_stamp
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-7-2f7e3a5ff389> in <module>
+----> 1 datetime.datetime.now() - datatime_stamp
+
+NameError: name 'datatime_stamp' is not defined
+
+In [8]: datetime.datetime.now() - datetime_stamp
+Out[8]: datetime.timedelta(seconds=112, microseconds=709421)
+
+In [9]: (datetime.datetime.now() - datetime_stamp).days
+Out[9]: 0
+
+In [10]: (datetime.datetime.now() - datetime_stamp).seconds
+Out[10]: 143
+```
+
+
+
 ```python 
 # 把字符串转换成 datetime 对象   
 >>> datetime.datetime.fromisoformat('2022-03-31')
