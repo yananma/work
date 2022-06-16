@@ -515,14 +515,21 @@ python manage.py inspectdb > inspectdb_models.py
 
 ## 报错   
 
+### django.core.exceptions.ImproperlyConfigured: Requested setting DATABASES, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.（4 次）  
+
+在命令中指定 settings，`--settings=ZKY_backend.settings` 或是在 PyCharm 里指定 DJANGO_SETTINGS_MODULE=ZKY_backend.settings     
+
+如果是 python 脚本（也就是说不是 django 脚本），要在前面设置环境变量。要写到导入 settings 前面。   
+
+```python 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "zjgdk.settings")
+from django.conf import settings
+``` 
+
+
 ### ValueError: Cannot use None as a query value (3 次)   
 
 看查询语句，查询字段中有的查询值是 None   
-
-
-### django.core.exceptions.ImproperlyConfigured: Requested setting DATABASES, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.（3 次）  
-
-在命令中指定 settings，`--settings=ZKY_backend.settings` 或是在 PyCharm 里指定 DJANGO_SETTINGS_MODULE=ZKY_backend.settings     
 
 
 ### label_tool_app.RecognizeResult.video: (models.E006) The field 'video' clashes with the field 'video_id' from model 'label_tool_app.recognizeresult'.
