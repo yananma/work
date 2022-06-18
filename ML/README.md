@@ -1,4 +1,6 @@
 
+“Whoever wins that competition，will rule the world.”   
+
 一个非常重要的时刻就是刚用 copilot 的时候，功能之强大，超出预料。一下子在心里点了一团火。    
 
 如果用在军事上，而我们没有足够强大的智能防御能力和系统，代价将是无法估量的。    
