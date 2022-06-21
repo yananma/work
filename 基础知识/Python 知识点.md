@@ -1822,6 +1822,19 @@ In [10]: for item in li:
 
 ### os 模块 
 
+
+#### [os.listdir()](https://docs.python.org/zh-cn/3/library/os.html#os.listdir)  
+
+```python 
+In [1]: import os 
+
+In [2]: file_list = os.listdir('./')
+
+In [3]: len(file_list)
+Out[3]: 203
+```
+
+
 #### os.makedirs()  
 
 ```python 
