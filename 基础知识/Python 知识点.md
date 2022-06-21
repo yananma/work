@@ -1834,6 +1834,27 @@ In [3]: len(file_list)
 Out[3]: 203
 ```
 
+删除文件  
+
+```python 
+def delete_files(file_dir, keep_num):
+    """删除文件"""
+    file_list = os.listdir(file_dir)
+    if len(file_list) > keep_num:
+        file_list = sorted(file_list, reverse=True)[keep_num:]
+        for file_name in file_list:
+            file_path = os.path.join(file_dir, file_name)
+            os.remove(file_path)
+            logger.info("删除文件：{}".format(file_path))
+            
+upload_dir = os.path.join(settings.BASE_DIR, 'static', 'upload', 'changcheng_short_video', 'upload')
+result_dir = os.path.join(settings.BASE_DIR, 'static', 'upload', 'changcheng_short_video', 'result')
+delete_files(upload_dir, 10)
+delete_files(result_dir, 30)
+```  
+
+
+
 
 #### os.makedirs()  
 
