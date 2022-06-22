@@ -532,6 +532,11 @@ from django.conf import settings
 看查询语句，查询字段中有的查询值是 None   
 
 
+### 网页报错 503  
+
+看看服务器是不是挂了    
+
+
 ### label_tool_app.RecognizeResult.video: (models.E006) The field 'video' clashes with the field 'video_id' from model 'label_tool_app.recognizeresult'.
 
 字段名冲突，重命名其中一个字段名。     
