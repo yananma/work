@@ -192,6 +192,12 @@ Out[10]: 'hello'
 
 #### find()  
 
+**要特别注意，find 的返回值是起始索引，如果要做切片，一定要注意加上字符串的长度。**   
+
+```python 
+sheet_data[u"title"][sheet_data[u"title"].find(u">正文") + 3:].strip()
+``` 
+
 str.find(sub[, start[, end]])  
 返回子字符串 sub 在 s[start:end] 切片内被找到的最小索引。 可选参数 start 与 end 可以理解为切片。 如果 sub 未被找到则返回 -1。  
 
