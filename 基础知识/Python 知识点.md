@@ -2659,7 +2659,6 @@ ValueError: invalid literal for int() with base 10: 'a'
 ```  
 
 
-
 ### UnicodeEncodeError: 'ascii' codec can't encode characters in position 10-13:   
 
 解决办法：    
@@ -2669,4 +2668,23 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 ```   
+
+
+### Python2 TypeError: sequence item 1: expected string or Unicode, NoneType found   
+
+元素有 NoneType   
+
+```python 
+In [71]: question_list1 = ['a', None]
+
+In [72]: ','.join(question_list1)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-72-878c08315203> in <module>
+----> 1 ','.join(question_list1)
+
+TypeError: sequence item 1: expected str instance, NoneType found
+```   
+
+
 
