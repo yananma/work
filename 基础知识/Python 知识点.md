@@ -2182,6 +2182,19 @@ Out[5]: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 通过 1 2 3 4 切换排序规则     
 
 
+#### [timeit](https://docs.python.org/zh-cn/3/library/timeit.html)   
+
+```python 
+In [74]: import timeit
+
+In [75]: timeit.timeit('"baidu" in "www.baidu.com"', number=1000000)
+Out[75]: 0.05949470400810242
+
+In [76]: timeit.timeit('"baidu" == "www.baidu.com"', number=1000000)
+Out[76]: 0.03276960551738739
+``` 
+
+
 #### PyCharm   
 
 如果是 Django 项目：Profile 按钮      
