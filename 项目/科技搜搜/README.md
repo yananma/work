@@ -30,6 +30,10 @@ nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --setti
 nohup cd /opt/ZKYYuceAndZhili && /home/deploy/anaconda3/envs/mxnlp/bin/python yuce.py --last 9 --point_index "kejisousou-points-formal" --yuce_index "kejisousou-yuce-formal-v4" --search_time_field "zky_include_time" &>> /tmp/yuce_20220623.log &
 
 nohup cd /opt/ZKYYuceAndZhili && /home/deploy/anaconda3/envs/mxnlp/bin/python zhili.py --last 9 --point_index "kejisousou-points-formal" --zhili_index "kejisousou-zhili-formal-v3" --search_time_field "zky_include_time" &>> /tmp/zhili_20220623.log &   
+
+nohup cd /opt/ZKYYuceAndZhili && /home/deploy/anaconda3/envs/mxnlp/bin/python yuce_en.py --last 9 --point_index "kejisousou-en-formal" --yuce_index "kejisousou-en-yuce-formal-v3" --search_time_field "zky_include_time" &>> /tmp/yuce_en_20220623.log &  
+
+nohup cd /opt/ZKYYuceAndZhili && /home/deploy/anaconda3/envs/mxnlp/bin/python zhili_en.py --last 9 --point_index "kejisousou-en-formal" --zhili_index "kejisousou-en-zhili-formal-v2" --search_time_field "zky_include_time" &>> /tmp/zhili_en_20220623.log &  
 ``` 
 
 
