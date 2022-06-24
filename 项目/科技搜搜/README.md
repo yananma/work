@@ -16,6 +16,8 @@
 
 指定 -l 参数，跑之前多少天的数据。   
 
+要写自己的日志，不要用定时任务的日志，因为定时任务的日志没有权限。   
+
 先跑基本的数据，这些跑完才能去跑别的。     
 
 ```python 
@@ -37,6 +39,29 @@ nohup cd /opt/ZKYYuceAndZhili && /home/deploy/anaconda3/envs/mxnlp/bin/python zh
 ``` 
 
 
+跑完预测治理，再跑数据库    
 
+```python 
+
+# 中文  
+nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --settings=ZKY_Backend.settings upload_posts_to_db -l 10 &>> /tmp/upload_posts_to_db_20220624.log &   
+
+nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --settings=ZKY_Backend.settings upload_hotposts_to_db &>> /tmp/upload_hotposts_to_db_20220624.log &  
+
+nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --settings=ZKY_Backend.settings upload_yuce_to_db &>> /tmp/upload_yuce_to_db_20220624.log &
+
+nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --settings=ZKY_Backend.settings upload_zhili_to_db &>> /tmp/upload_zhili_to_db_20220624.log &
+
+
+# 英文  
+
+nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --settings=ZKY_Backend.settings upload_posts_to_db_en &>> /tmp/upload_posts_to_db_en_20220624.log &  
+
+nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --settings=ZKY_Backend.settings upload_hotposts_to_db_en &>> /tmp/upload_hotposts_to_db_en_20220624.log &  
+
+nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --settings=ZKY_Backend.settings upload_yuce_to_db_en &>> /tmp/upload_yuce_to_db_en_20220624.log &  
+
+nohup cd /opt/zky_backend && /usr/local/python37/bin/python3.7 manage.py --settings=ZKY_Backend.settings upload_zhili_to_db_en &>> /tmp/upload_zhili_to_db_en_20220624.log &
+``` 
 
 
