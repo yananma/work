@@ -1018,7 +1018,9 @@ Out[41]: list
 
 #### 编码  
 
-`# -*- coding:utf-8 -*-`   
+```python
+# -*- coding:utf-8 -*-   
+```
 
 
 #### \n \t  
