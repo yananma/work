@@ -38,6 +38,15 @@ cd /home/test/syb/crisis_admin && /home/test/testenv/bin/python manage.py fill_e
 
 # 报错  
 
+### 危机预警平台无法登录   
+
+看用的是哪个 settings，改 SESSION_COOKIE_DOMAIN 的域名。    
+
+启动以后再改回来。   
+
+
+
+
 ### file_path 报错  
 
 utils/changcheng_short_video.py 中的 changcheng_short_video_export_word_files 函数，是不是没有调用 write_to_file 函数。     
