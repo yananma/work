@@ -56,9 +56,14 @@ now_time = datetime.datetime.now()
 
 使用 f 字符串可以实现信息个性化显示。  
 
-格式化输出：{math.pi:.3f}   
+格式化输出：  
+
+```python 
+{math.pi:.3f}   
+```
 
 在 ':' 后传递整数，为该字段设置最小字符宽度，常用于列对齐：   
+
 ```python 
 f'{name:10} ==> {phone:10d}'
 ``` 
