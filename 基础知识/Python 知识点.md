@@ -56,6 +56,25 @@ now_time = datetime.datetime.now()
 
 使用 f 字符串可以实现信息个性化显示。  
 
+格式化输出：{math.pi:.3f}   
+
+在 ':' 后传递整数，为该字段设置最小字符宽度，常用于列对齐：   
+```python 
+f'{name:10} ==> {phone:10d}'
+``` 
+
+还有一些修饰符可以在格式化前转换值。 '!a' 应用 ascii() ，'!s' 应用 str()，'!r' 应用 repr()： 
+
+```python 
+In [128]: animals = 'eels'
+
+In [129]: print(f'My hovercraft is full of {animals}.')
+My hovercraft is full of eels.
+
+In [130]: print(f'My hovercraft is full of {animals!r}.')
+My hovercraft is full of 'eels'.
+``` 
+
 
 #### [replace](https://docs.python.org/zh-cn/3/library/stdtypes.html#str.replace)  
 
@@ -1218,6 +1237,61 @@ logger.info('%.2f sec' % (time.time() - start))
 
 
 #### 装饰器  
+
+要点：   
+1. 函数是可以传递的。
+2. 函数内可以嵌套函数。
+3. 函数可以返回函数。
+4. 函数加括号就是调用，不加括号就不执行，可以传递。
+5. 函数可以作为参数传给另一个函数。
+
+```python 
+import time
+from functools import wraps
+
+
+def log_time(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"{func.__name__} took {end - start:.2f} seconds")
+        return result
+    return wrapper
+
+
+@log_time
+def sum_num(num):
+    s = 0
+    for x in range(num):
+        s += x
+    return s
+
+
+result = sum_num(100000000)
+```
+
+```python 
+from functools import wraps
+
+
+def logit(func):
+    @wraps(func)
+    def with_logging(*args, **kwargs):
+        print(func.__name__ + " was called")
+        return func(*args, **kwargs)
+    return with_logging
+
+
+@logit
+def add_two(a, b):
+    return a + b
+
+
+add_two(1, 2)
+```
+
 
 `__call__` 方法在可调用对象加括号的时候调用。  
 
