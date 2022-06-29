@@ -1,6 +1,8 @@
 
 
-备份```b66  /home/deploy/mx_tools``` 
+```b66  /home/deploy/mx_tools``` 
+
+日志`/home/deploy/mx_tools/log/tools.log`    
 
 python路径```/home/deploy/mx_tools_env``` 
 
