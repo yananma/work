@@ -44,7 +44,7 @@ cd /home/test/syb/crisis_admin && /home/test/testenv/bin/python manage.py fill_e
 
 启动以后再改回来。   
 
-
+测试环境是 test.\*.com，不是 112.\*.\*.\*    
 
 
 ### file_path 报错  
