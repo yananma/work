@@ -679,12 +679,12 @@ In [41]: d1.fromkeys(d)
 Out[41]: {'a': None, 'b': None}
 ```
 
-#### 字典按值排序  
-
-降序排列  
+#### 字典按键排序  
 
 ```python
-(ocr_dict.items(), key=lambda d:d[1], reverse=True)
+cc_sourcetype = {1: u"新闻", 2: u"论坛", 5: u"微博", 6: u"问答", 7: u"视频", 15: u"新闻", 12: u"微信", 18: u"视频", }
+
+dict(sorted(cc_sourcetype.items(), key=lambda d: d[0]))
 ```
 
 ### 集合  
