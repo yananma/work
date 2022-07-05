@@ -1938,6 +1938,18 @@ Out[3]: 203
 删除文件  
 
 ```python 
+import subprocess
+import os 
+
+def delete_files(file_path, days):
+    for file in subprocess.check_output('find {}  -mtime +{}'.format(file_path, days - 1), shell=True).split():
+        if os.path.isfile(file):
+            os.remove(file)
+            logger.info("删除文件：{}".format(file))
+``` 
+
+
+```python 
 def delete_files(file_dir, keep_num):
     """删除文件"""
     file_list = os.listdir(file_dir)
@@ -2021,20 +2033,6 @@ In [2]: with open('/home/crisis/nielsen/video/xhs_name_to_task_id.txt') as f:
    ...:         cmd = f'sshpass -p "密码" scp -P 17717 -C dingyong@b62:/home/deploy/nielsen_test/upload/{video_name}/images/* {dest_dir}/'
    ...:         os.system(cmd)
    ...:         print(f'{video_name} Done.')
-```
-
-
-#### 通过命令删除 3 天前的文件   
-
-```python 
-In [1]: import subprocess
-
-In [2]: import os 
-
-# 应该是从 0 开始的
-In [3]: for file in subprocess.check_output('find {}  -mtime +2'.format('/home/test/syb/hszb_backend_v2/logs'), shell=True).split():
-   ...:     if file.endswith('.xlsx')
-   ...:         os.remove(file) 
 ```
 
 
