@@ -1942,10 +1942,10 @@ import subprocess
 import os 
 
 def delete_files(file_path, days):
-    for file in subprocess.check_output('find {}  -mtime +{}'.format(file_path, days - 1), shell=True).split():
-        if os.path.isfile(file):
-            os.remove(file)
-            logger.info("删除文件：{}".format(file))
+    for file_name in subprocess.check_output('find {}  -mtime +{}'.format(file_path, days - 1), shell=True).split():
+        if os.path.isfile(file_name):
+            os.remove(file_name)
+            logger.info("删除文件：{}".format(file_name))
 ``` 
 
 
