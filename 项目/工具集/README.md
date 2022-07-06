@@ -1,5 +1,7 @@
 
 
+## 正式环境 git pull 之前要在群里说一声   
+
 正式项目路径：```b66  /home/deploy/mx_tools```  
 
 日志`/home/deploy/mx_tools/log/tools.log`    
