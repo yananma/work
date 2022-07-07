@@ -330,6 +330,11 @@ assert s == "00123"
 print(f'CNN的测试准确率为{result[1] * 100:.2f}%')
 ```
 
+```python 
+'{:.2f}%'.format(float(result_dict.get(u'发布库+编辑库', 0)) / result_dict.get(u'总量', 1) * 100)
+``` 
+
+
 如果是数字格式，就用格式化方法  
 ```python 
 In [13]: "%04d" % 50
@@ -341,6 +346,20 @@ Out[14]: '0050.0'
 In [15]: "%04d.0"% 1234
 Out[15]: '1234.0'
 ```
+
+
+#### Python2 中的除法  
+
+要用 float       
+
+```python 
+In [64]: 3 / 5
+Out[64]: 0
+
+In [65]: float(3) / 5
+Out[65]: 0.6
+```  
+
 
 
 ### 列表  
