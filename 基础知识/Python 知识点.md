@@ -1976,7 +1976,7 @@ import subprocess
 import os 
 
 def delete_files(file_path, days):
-    for file_name in subprocess.check_output('find {}  -mtime +{}'.format(file_path, days - 1), shell=True).split():
+    for file_name in subprocess.check_output('find {} -maxdepth 1 -mtime +{}'.format(file_path, days - 1), shell=True).split():
         if os.path.isfile(file_name):
             os.remove(file_name)
             logger.info("删除文件：{}".format(file_name))
