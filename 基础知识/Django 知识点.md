@@ -532,6 +532,11 @@ from django.conf import settings
 看查询语句，查询字段中有的查询值是 None   
 
 
+### Access denied，没有权限看 "192.169.241.%"（2 次）  
+
+看配置是不是把 database 配置成了表。database 应该配置库。    
+
+
 ### 网页报错 503  
 
 看看服务器是不是挂了    
