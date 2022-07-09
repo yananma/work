@@ -256,6 +256,23 @@ def get_detail_q_expr(search_word):
 ```   
 
 
+#### group by  
+
+```python 
+from django.db import models
+from django.db.models.functions import TruncDate
+
+from notice.models import Post
+
+
+sql_res = list(Post.objects.filter(noise_rank=0)
+               .annotate(posttime_date=TruncDate('posttime'))
+               .values('facetid', 'posttime_date', 'status')
+               .annotate(count=models.Count(models.Value(1, models.IntegerField())))
+               .values('facetid', 'posttime_date', 'status', 'count'))
+```
+
+
 #### Django 字符串拼接  
 
 ```python
