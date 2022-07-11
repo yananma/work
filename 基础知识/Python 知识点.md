@@ -2072,7 +2072,7 @@ In [2]: with open('/home/crisis/nielsen/video/xhs_name_to_task_id.txt') as f:
 
 ### collections 包
 
-#### namedtuple 函数  
+#### namedtuple 函数(https://docs.python.org/zh-cn/3/library/collections.html#collections.namedtuple)  
 
 ```python 
 In [27]: from collections import namedtuple
