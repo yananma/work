@@ -375,27 +375,55 @@ django-admin startapp post
 #### 上传文件  
 
 ```html
-        <form method="post" id="my_form" enctype="multipart/form-data" action="/notice/do_export_changcheng_short_video" >
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row" style="margin-left: 3%; margin-top: 1%">
+        <form method="post" id="my_form" enctype="multipart/form-data" action="/（目标接口）" >
             <div class="custom-file">
                 <label for="photoCover">请选择文件:</label>
                 <input type="file" id="csvfile" name="csvfile" style="width: 23%">
-                <button id="btn_save" type="button" onclick="checkData()" style="background-color: #0066cc; margin-top: 10px; color: white; border: none; width: 6%; height: 35px; font-size: 16px">上传文件</button>
+                <button id="btn_save" type="button" onclick="checkData()" style="background-color: #0066cc; margin-top: 10px; color: white; border: none; width: 5%; height: 35px; font-size: 16px">上传</button>
             </div>
         </form>
+        <h3 style="color:{{ msg_color }}">{{ msg }}</h3>
+    </div>
+
+
+<script>
+    function checkData() {
+        let csv_file = $("#csvfile").val()
+        if(!csv_file) {
+            alert("请先选择文件！");
+            return false;
+        }
+        let strs = csv_file.split('.');
+        if((strs[strs.length-1] !== "xlsx")){
+            alert("请上传xlsx格式的文件！");
+            return false;
+        }
+        $("#my_form").submit();
+    }
+</script>
+{% endblock %}
 ```
 
 ```python 
 def do_export_changcheng_short_video(request):
     """长城短视频"""
     if request.method == 'POST':
-        upload_dir = os.path.join(settings.BASE_DIR, 'static', 'upload', 'changcheng_short_video', 'upload')
-        if not os.path.exists(upload_dir):
-            os.makedirs(upload_dir)
-        upload_file = request.FILES.get('csvfile')
-        file_obj = open(os.path.join(upload_dir, upload_file.name), 'wb')
-        for chunk in upload_file.chunks():
-            file_obj.write(chunk)
-        file_obj.close()
+        try:
+            upload_dir = os.path.join(settings.BASE_DIR, 'static', 'upload', 'changcheng_short_video', 'upload')
+            if not os.path.exists(upload_dir):
+                os.makedirs(upload_dir)
+            upload_file = request.FILES.get('csvfile')
+            file_obj = open(os.path.join(upload_dir, upload_file.name), 'wb')
+            for chunk in upload_file.chunks():
+                file_obj.write(chunk)
+            file_obj.close()
+            return render(request, 'notice/short_video_export_data.html', {'msg': '上传成功', 'msg_color': 'green'})
+        except Exception as e:
+            return render(request, 'notice/short_video_export_data.html', {'msg': '上传失败', 'msg_color': 'red'})        
     return render(request, 'notice/short_video_export_data.html', locals())
 ```
 
