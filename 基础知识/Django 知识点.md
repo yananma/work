@@ -427,6 +427,15 @@ def do_export_changcheng_short_video(request):
     return render(request, 'notice/short_video_export_data.html', locals())
 ```
 
+直接接收上传的文件，而不是写入再读取    
+
+这里是 Python2，read 完以后，就是 str     
+
+```python 
+upload_file = request.FILES.get('json_file').read()
+lines = upload_file.splitlines()
+``` 
+
 
 #### 下载文件  
 
