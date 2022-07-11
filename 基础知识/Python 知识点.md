@@ -1044,6 +1044,15 @@ In [409]: foo(a=1, b=2)
 ```
 
 
+#### 异常处理   
+
+防错性编程   
+
+```python 
+import traceback   
+
+traceback.print_exc    
+```   
 
 
 ### 类  
