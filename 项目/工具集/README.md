@@ -12,6 +12,11 @@ python路径```/home/deploy/mx_tools_env```
 
 
 
+## 测试环境
+
+用 112 访问     
+
+
 # 报错  
 
 ### 测试启动项目报错：IOError: [Errno 13] Permission denied: '/home/deploy/deploy_env/bin/activate_this.py' No handlers could be found for logger "sentry.errors"
