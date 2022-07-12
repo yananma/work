@@ -6,7 +6,9 @@
 
 日志`/home/deploy/mx_tools/log/tools.log`    
 
-python路径```/home/deploy/mx_tools_env``` 
+python路径```/home/deploy/mx_tools_env/bin/python```   
+
+pip `/home/deploy/mx_tools_env/bin/pip`
 
 备份重启方式`source  /home/deploy/mx_tools_env/bin/activate && sh /home/deploy/scripts/update_tools.sh update`
 
