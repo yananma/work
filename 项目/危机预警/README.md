@@ -1,6 +1,7 @@
 
 ### 正式环境 
 
+正式环境查看日志：tail -f /home/deploy/crisis_admin/logs/crisis_admin.log   
 b25 正式环境 python：/home/deploy/.crisis/bin/python    
 危机预警系统路径 b25 /home/deploy/crisis_admin    
 查看 pip：/home/deploy/.crisis/bin/pip    
