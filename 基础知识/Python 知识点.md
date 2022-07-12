@@ -2402,6 +2402,7 @@ Out[3]: (1280, 720, 3)
 设置超时时间：`pip --timeout=100 install label-studio` (默认 15 秒)   
 查看当前 pip 源：`pip config list`  
 安装包的时候，如果不知道版本，就随便写一个版本，然后会报错，错误信息里面有所有的版本号。     
+pip 更新包：`/home/deploy/.crisis/bin/pip install anytools --upgrade`   
 
 
 #### 启动虚拟环境的 ipython  
