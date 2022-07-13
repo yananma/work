@@ -306,6 +306,22 @@ Out[7]: True
 ```
 
 
+#### 拼接字符串   
+
+```python 
+def _get_label(annotation_text):
+    label = ''
+    tag_list = TagInfo.objects.filter(delete_if=0).values_list('tag_name', flat=True)
+    for tag in tag_list:
+        if tag in annotation_text:
+            if label == '':
+                label = tag
+            else:
+                label = label + ',' + tag
+    return label
+``` 
+
+
 #### 字符串和索引拼接  
 
 ```python 
