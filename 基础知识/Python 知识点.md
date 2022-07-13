@@ -221,18 +221,28 @@ Out[10]: 'hello'
 错误的写法：   
 
 ```python 
-title = title[title.find(u">正文") + 4:].strip()   
+title = title[title.find(u">正文") + 3:].strip()   
 ```  
 
 正确的写法：    
 
 ```python 
 if title.find(u">正文") != -1:
-    title = title[title.find(u">正文") + 4:].strip()
+    title = title[title.find(u">正文") + 3:].strip()
 ```
 
 
-find 的返回值是起始索引，如果要做切片，一定要注意加上字符串的长度。   
+find 的返回值是起始索引，如果要做切片，一定要注意加上字符串的长度。加了 len 之后，才是去掉要找的字符本身    
+
+```python 
+In [32]: s = '123>12345'
+
+In [33]: s[s.find('>'):]
+Out[33]: '>12345'
+
+In [34]: s[s.find('>') + 1:]
+Out[34]: '12345'
+```
 
 ```python 
 sheet_data[u"title"][sheet_data[u"title"].find(u">正文") + 3:].strip()
