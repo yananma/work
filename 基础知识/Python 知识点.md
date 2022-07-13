@@ -216,7 +216,23 @@ Out[10]: 'hello'
 
 #### find()  
 
-**要特别注意，find 的返回值是起始索引，如果要做切片，一定要注意加上字符串的长度。**   
+**要特别注意，只要用 find 就要想到可能没有的情况，要做判断**   
+
+错误的写法：   
+
+```python 
+title = title[title.find(u">正文") + 4:].strip()   
+```  
+
+正确的写法：    
+
+```python 
+if title.find(u">正文") != -1:
+    title = title[title.find(u">正文") + 4:].strip()
+```
+
+
+find 的返回值是起始索引，如果要做切片，一定要注意加上字符串的长度。   
 
 ```python 
 sheet_data[u"title"][sheet_data[u"title"].find(u">正文") + 3:].strip()
