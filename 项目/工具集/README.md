@@ -16,7 +16,11 @@ pip `/home/deploy/mx_tools_env/bin/pip`
 
 ## 测试环境
 
-用 112 访问     
+浏览器用 112.*.*.* 访问    
+
+Python: `/home/dingyong/.venv/x_mx_tools/bin/python`   
+
+路径：`/home/dingyong/mayanan/mx_tools`   
 
 
 # 报错  
