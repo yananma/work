@@ -1645,7 +1645,14 @@ Out[8]: ['1', '2', '3']
 li = list(filter(lambda x: x, li))  
 ```
 
-过滤空格和空行的标准写法   
+过滤空字符串、空格和空行的标准写法    
+
+
+```python
+In [18]: bool('')
+Out[18]: False
+``` 
+
 
 ```python 
 lines = f.readlines()
