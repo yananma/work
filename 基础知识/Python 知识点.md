@@ -40,6 +40,8 @@ for 循环是变量赋值；函数传参也是变量赋值；函数位置实参�
 从 ES 取出的一批数据叫做 batch_data    
 前缀：prefix   
 后缀：suffix   
+索引：index   
+总数：count  
 now_time = datetime.datetime.now()   
 
 
