@@ -102,10 +102,10 @@ print("Hello, {0}".format(username.title()))
 In [10]: '{:2d}{:2d}'.format(5, 9)
 Out[10]: ' 5 9'
 
-In [11]: '{:0>2d}{:2d}'.format(5, 9)
+In [11]: '{:02d}{:2d}'.format(5, 9)
 Out[11]: '05 9'
 
-In [12]: '{:0>2d}{:0>2d}'.format(5, 9)
+In [12]: '{:02d}{:02d}'.format(5, 9)
 Out[12]: '0509'
 ```  
 
