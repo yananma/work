@@ -547,6 +547,10 @@ Parameters：命令名
 Environment variables：DJANGO_SETTINGS_MODULE=aima_monitor_backend.settings   
 
 
+#### PyCharm 同时运行同一个命令   
+
+不能再两个 PyCharm 窗口中打开同一个项目，可以把脚本复制出来，换一个名字，运行就可以了。     
+
 
 #### favicon   
 
