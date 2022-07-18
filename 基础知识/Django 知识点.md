@@ -309,6 +309,13 @@ json.loads(response.content.decode(encoding='utf-8'))['data']
 ```
 
 
+## 模板  
+
+#### [verbatim](https://docs.djangoproject.com/zh-hans/4.0/ref/templates/builtins/#verbatim)  
+
+对于 {{ }} 符号，Vue 和 Django 模板语法冲突，会优先 Django 渲染，Vue 就没有办法运行，解决办法就是在代码外层添加 verbatim    
+
+
 
 # 项目实践    
 
