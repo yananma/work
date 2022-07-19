@@ -2493,6 +2493,20 @@ pip 更新包：`/home/deploy/.crisis/bin/pip install anytools --upgrade`
 
 #### log 代码  
 
+logger.info() 不能用逗号分隔打印两个值，如果要打印两个值，就要分两条 log 打印   
+
+想一下，这种设计是合理的，否则日志打印出来分不清谁是谁    
+
+```python 
+# 错误用法   
+logger.info(post['post_time'], post['include_time'])  
+
+# 正确用法   
+logger.info(post['post_time'])  
+logger.info(post['include_time'])  
+```
+
+
 ```python 
 import logging
 from importlib import reload
