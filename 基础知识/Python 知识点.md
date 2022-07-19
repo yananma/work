@@ -2219,10 +2219,34 @@ Out[19]: defaultdict(set, {'a': {1, 2}, 'b': {3, 4}})
 
 ```
 
-也可以使用字典自带的 setdefault 实现  
+也可以使用字典自带的 [setdefault](https://docs.python.org/zh-cn/3/library/stdtypes.html#dict.setdefault) 实现   
 
 ```python 
+
+In [69]: d = {}
+
+In [70]: d.setdefault('a', {})
+Out[70]: {}
+
+In [71]: d
+Out[71]: {'a': {}}
+
+In [72]: d.setdefault('a', {})['key'] = 1
+
+In [73]: d
+Out[73]: {'a': {'key': 1}}
+
+# 如果键存在，可以取值   
+In [74]: d.setdefault('a')
+Out[74]: {'key': 1}
+
 In [20]: d = {}
+
+In [61]: d.setdefault('a', [])
+Out[61]: []
+
+In [62]: d
+Out[62]: {'a': []}
 
 In [21]: d.setdefault('a', []).append(1)  # 先取值，没有，返回空列表，然后 append  
 
@@ -2239,6 +2263,7 @@ In [25]: d.setdefault('b', []).append(3)
 In [26]: d
 Out[26]: {'a': [1, 2], 'b': [3]}
 ```
+
 
 #### OrderedDict 类  
 
