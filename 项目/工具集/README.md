@@ -10,8 +10,9 @@ python路径```/home/deploy/mx_tools_env/bin/python```
 
 pip `/home/deploy/mx_tools_env/bin/pip`
 
-备份重启方式`source  /home/deploy/mx_tools_env/bin/activate && sh /home/deploy/scripts/update_tools.sh update`
+备份重启方式`source  /home/deploy/mx_tools_env/bin/activate && sh /home/deploy/scripts/update_tools.sh update`    
 
+重启：`sh ~/scripts/update_tools.sh update`      
 
 
 ## 测试环境
