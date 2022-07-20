@@ -2312,6 +2312,39 @@ Out[39]: 4
 ```
 
 
+### operator  
+
+#### [itemgetter](https://docs.python.org/zh-cn/3/library/operator.html#operator.itemgetter)    
+
+```python 
+In [10]: from operator import itemgetter
+
+In [11]: itemgetter(1)('ABCDEF')
+Out[11]: 'B'
+
+In [12]: itemgetter(1, 3, 5)('ABCDEF')
+Out[12]: ('B', 'D', 'F')
+
+In [13]: itemgetter(slice(2, None))('ABCDEF')
+Out[13]: 'CDEF'
+
+In [14]: soldier = dict(rank='captain', name='dotterbart')
+
+In [15]: itemgetter('rank')(soldier)
+Out[15]: 'captain'
+
+In [16]: inventory = [('apple', 1), ('banana', 2), ('pear', 5), ('orange', 1)]
+
+In [17]: getcount = itemgetter(1)
+
+In [18]: list(map(getcount, inventory))
+Out[18]: [1, 2, 5, 1]
+
+In [19]: sorted(inventory, key=getcount)
+Out[19]: [('apple', 1), ('orange', 1), ('banana', 2), ('pear', 5)]
+```   
+
+
 ### [itertools 包](https://docs.python.org/zh-cn/3/library/itertools.html)  
 
 #### [groupby](https://docs.python.org/zh-cn/3/library/itertools.html#itertools.groupby)   
