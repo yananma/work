@@ -1674,6 +1674,25 @@ list(filter(lambda x: x.strip(), label_list))
 ```
 
 
+#### [bool](https://docs.python.org/zh-cn/3/library/stdtypes.html#truth-value-testing)    
+
+bool 值为 False 的   
+
+* 被定义为假值的常量: None 和 False。   
+* 任何数值类型的零: 0, 0.0, 0j, Decimal(0), Fraction(0, 1)   
+* 空的序列和多项集: '', (), [], {}, set(), range(0)   
+
+要注意的是 NaN 不是 False   
+
+```python 
+In [73]: float("NaN")
+Out[73]: nan
+
+In [74]: bool(float("NaN"))
+Out[74]: True
+```
+
+
 #### globals 和 locals 函数  
 
 在模块层级上，globals 和 locals 是同一个字段。`set(globals()) - set(locals())` 是空 set()。  
