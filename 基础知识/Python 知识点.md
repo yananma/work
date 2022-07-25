@@ -2335,6 +2335,21 @@ Out[39]: 4
 
 #### [itemgetter](https://docs.python.org/zh-cn/3/library/operator.html#operator.itemgetter)    
 
+等价于：    
+
+```python 
+def itemgetter(*items):  # 比如 itemgetter(1)，*items=1，items=(1)，所以才成了元组。    
+    if len(items) == 1:
+        item = items[0]
+        def g(obj):
+            return obj[item]
+    else:
+        def g(obj):
+            return tuple(obj[item] for item in items)
+    return g
+``` 
+
+
 ```python 
 In [10]: from operator import itemgetter
 
