@@ -365,6 +365,15 @@ cd zjgdk
 django-admin startapp post   
 ```
 
+#### 量太大，没有办法一次更新完的解决办法   
+
+```python 
+from notice.models import Post
+from more_itertools import chunked
+for batch in chunked(Post.objects.filter(domain=u'今日头条', is_clean=0, sourcetype__in=[1, 15]).force_index('idx_sourcetype').values_list('postid', flat=True), 10000):
+    Post.objects.filter(postid__in=batch).force_index(key=True).update(is_clean=None)
+```  
+
 
 ### 模板   
 
