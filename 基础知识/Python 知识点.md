@@ -2183,29 +2183,29 @@ import sys; sys.exit()
 
 ### collections 包
 
-#### namedtuple 函数(https://docs.python.org/zh-cn/3/library/collections.html#collections.namedtuple)  
+#### [namedtuple 函数](https://docs.python.org/zh-cn/3/library/collections.html#collections.namedtuple)  
 
 ```python 
 In [27]: from collections import namedtuple
 
 In [29]: Person = namedtuple('Person', ['name', 'age'])
 
-In [30]: type(Person)
-Out[30]: type
-
 In [32]: person = Person('mayanan', 30)
-
-In [33]: person
-Out[33]: Person(name='mayanan', age=30)
-
-In [34]: type(person)
-Out[34]: __main__.Person
 
 In [35]: person.name
 Out[35]: 'mayanan'
 
 In [36]: person.age
 Out[36]: 30
+
+In [33]: person
+Out[33]: Person(name='mayanan', age=30)
+
+In [30]: type(Person)
+Out[30]: type
+
+In [34]: type(person)
+Out[34]: __main__.Person
 ```
 
 
