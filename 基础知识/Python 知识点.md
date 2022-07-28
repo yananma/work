@@ -2172,6 +2172,14 @@ import sys
 sys.version
 ```
 
+#### sys.exit()   
+
+```python 
+import sys; sys.exit()   
+```
+
+这种退出方式不会被 try 捕捉   
+
 
 ### collections 包
 
