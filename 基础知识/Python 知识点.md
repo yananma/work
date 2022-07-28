@@ -2149,6 +2149,21 @@ In [2]: with open('/home/crisis/nielsen/video/xhs_name_to_task_id.txt') as f:
 ```
 
 
+### sys 模块    
+
+#### 获取 Python 版本  
+
+cmd 中：Python \-\-version   
+
+命令行中：   
+
+```python 
+import sys 
+
+sys.version
+```
+
+
 ### collections 包
 
 #### namedtuple 函数(https://docs.python.org/zh-cn/3/library/collections.html#collections.namedtuple)  
