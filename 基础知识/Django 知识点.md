@@ -238,6 +238,8 @@ class Command(BaseCommand):
         print('update interaction number success')
 ```
 
+更新数据库为 NULL，在 ORM 里就是赋值为 None。   
+
 
 #### [Q()查询](https://docs.djangoproject.com/zh-hans/4.0/topics/db/queries/#complex-lookups-with-q)   
 
