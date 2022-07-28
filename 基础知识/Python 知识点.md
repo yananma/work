@@ -2243,7 +2243,7 @@ Out[10]: defaultdict(list, {'a': [1, 2, 3], 'b': [4, 5]})
 
 ```
 
-也可以是集合  
+可以是集合  
 
 ```python 
 In [13]: d = defaultdict(set)
@@ -2259,10 +2259,44 @@ In [18]: d['b'].add(4)
 
 In [19]: d
 Out[19]: defaultdict(set, {'a': {1, 2}, 'b': {3, 4}})
-
 ```
 
-也可以使用字典自带的 [setdefault](https://docs.python.org/zh-cn/3/library/stdtypes.html#dict.setdefault) 实现   
+可以是字典   
+
+```python 
+In [11]: from collections import defaultdict
+
+In [12]: d = defaultdict(dict)
+
+In [13]: d
+Out[13]: defaultdict(dict, {})
+
+In [14]: d['a'] = {'A': 1}
+
+In [15]: d
+Out[15]: defaultdict(dict, {'a': {'A': 1}})
+
+In [16]: d['b']
+Out[16]: {}
+
+In [17]: type(d['b'])
+Out[17]: dict
+
+In [18]: d['b']['B'] = 2
+
+In [19]: d
+Out[19]: defaultdict(dict, {'a': {'A': 1}, 'b': {'B': 2}})
+
+# default 只是说了一个默认值，也可以设置成别的类型   
+In [20]: d['c'] = [6, 7, 8]
+
+In [21]: d
+Out[21]: defaultdict(dict, {'a': {'A': 1}, 'b': {'B': 2}, 'c': [6, 7, 8]})
+```
+
+
+
+也可以使用字典自带的 [setdefault](https://docs.python.org/zh-cn/3/library/stdtypes.html#dict.setdefault) 实现(自己统一用 defaultdict)   
 
 ```python 
 
