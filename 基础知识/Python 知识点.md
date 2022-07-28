@@ -2111,6 +2111,15 @@ Out[445]: 'work/v13'
 
 In [446]: file_name = os.path.basename(path)
 
+# django/core/management/__init__.py   
+
+ManagementUtility 类  
+self.prog_name = os.path.basename(self.argv[0])
+
+import os   
+os.path.basename('/home/test/syb/mayanan/crisis_admin/manage.py')   
+Out[14]: 'manage.py'   
+
 In [447]: file_name
 Out[447]: '危机预警.csv'
 
